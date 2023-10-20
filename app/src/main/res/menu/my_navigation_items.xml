@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/menu_dashboard"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:title="Dashboard" />
+        <item
+            android:id="@+id/menu_store"
+            android:icon="@drawable/cart"
+            android:title="Store" />
+        <item
+            android:id="@+id/menu_sell"
+            android:icon="@drawable/sell"
+            android:title="Sell" />
+        <item
+            android:id="@+id/menu_loan"
+            android:icon="@drawable/loan"
+            android:title="Loan" />
+
+        <item
+            android:id="@+id/menu_requirements"
+            android:icon="@drawable/baseline_input_24"
+            android:title="Input Requirements" />
+        <item
+            android:id="@+id/menu_transaction"
+            android:icon="@drawable/transaction_history"
+            android:title="Transaction History" />
+
+        <item
+            android:id="@+id/menu_cropadvisory"
+            android:icon="@drawable/crops_history"
+            android:title="Crop Advisory" />
+
+        <item
+            android:id="@+id/menu_training"
+            android:icon="@drawable/training"
+            android:title="Training Programs" />
+
+        <item
+            android:id="@+id/menu_chatbot"
+            android:icon="@drawable/ic_baseline_message_24"
+            android:title="ChatBot" />
+
+
+
+    </group>
+
+
+    <item android:title="Profile">
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/menu_profile"
+                    android:icon="@drawable/baseline_person_24"
+                    android:title="Profile" />
+
+                <item
+                    android:id="@+id/menu_settings"
+                    android:icon="@drawable/ic_baseline_settings_24"
+                    android:title="Settings" />
+
+                <item
+                    android:id="@+id/menu_support"
+                    android:icon="@drawable/support"
+                    android:title="Support" />
+
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Log Out">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/menu_logout"
+                    android:icon="@drawable/logout"
+                    android:title="Logout" />
+
+            </group>
+        </menu>
+    </item>
+
+</menu>

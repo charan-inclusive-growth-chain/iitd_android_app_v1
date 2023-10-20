@@ -1,0 +1,184 @@
+<resources>
+    <string name="app_name">IIT Dhanbad</string>
+    <string name="url" translatable="false">http://52.66.41.156:3000/api</string>
+    <!-- Login page -->
+    <string name="login">Login</string>
+    <string name="are_you_a_farmer">Are you a farmer?</string>
+    <string name="register_as_farmer">Register As Farmer</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="mobile">Mobile</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="dob">Date of Birth</string>
+    <string name="age">Age</string>
+    <string name="gender">Gender</string>
+    <string name="father_name">Father Name</string>
+    <string name="mother_name">Mother Name</string>
+    <string name="door_number">Door Number</string>
+    <string name="street_name">Street Name</string>
+    <string name="village">Village</string>
+    <string name="taluk">Taluk</string>
+    <string name="district">District</string>
+    <string name="state">State</string>
+    <string name="pincode">Pin Code</string>
+    <string name="occupation">Occupation</string>
+    <string name="education">Education</string>
+    <string name="nature_of_place">Nature of Place</string>
+    <string name="residence">Residence</string>
+    <string name="caste">Caste</string>
+    <string name="religion">Religion</string>
+    <string name="bank_name">Bank Name</string>
+    <string name="account_number">Account Number</string>
+    <string name="ifsc_code">IFSC Code</string>
+    <string name="branch_name">Branch Name</string>
+    <string name="pan_card_number">Pan Card Number</string>
+    <string name="upload_pan">Upload PAN Card</string>
+    <string name="aadhar_card_number">Aadhar Card Number</string>
+    <string name="upload_aadhar">Upload Aadhar</string>
+    <string name="select_fpo">Select FPO</string>
+
+    <!-- Dashboard Page -->
+    <string name="farmer_dashboard">Farmer Dashboard</string>
+    <string name="training_programs">Training Programs</string>
+    <string name="current_weather">Current Weather</string>
+    <string name="crop_advisory">Crop Advisory</string>
+    <string name="store">Store</string>
+    <string name="selling_price">Selling Price</string>
+    <string name="loan_updates">Loan Updates</string>
+    <string name="date">Date</string>
+    <string name="loan_id">Loan ID</string>
+    <string name="amount">Amount</string>
+    <string name="status">Status</string>
+    <string name="shop_from_fpo">Shop from FPO</string>
+    <string name="transaction_history">Transaction History</string>
+    <string name="sell">Sell</string>
+    <string name="loan">Loan</string>
+    <string name="chatbot">Chatbot</string>
+    <string name="settings">Settings</string>
+    <string name="support">Support</string>
+
+    <!-- Selling Price Page -->
+    <string name="sell_to_fpo">Sell to FPO</string>
+    <string name="enter_your_produce">Enter Produce</string>
+    <string name="market_price">Market Price</string>
+    <string name="fpo_price">FPO Price</string>
+
+    <!-- Enter Details -->
+    <string name="lac_strain_type">Lac Strain Type</string>
+    <string name="source_of_tree">Source of Tree</string>
+    <string name="origin">Origin</string>
+    <string name="quantity">Quantity</string>
+    <string name="upload_image">Upload Image</string>
+    <string name="submit">Submit</string>
+    <string name="prev">prev</string>
+    <string name="next">next</string>
+
+    <!-- Transaction History Page -->
+    <string name="purchase_history">Purchase History</string>
+    <string name="sale_history">Sale History</string>
+    <string name="purchase_id">Purchase ID</string>
+    <string name="date_of_purchase">Date of Purchase</string>
+    <string name="total_amount">Total Amount</string>
+    <string name="item_details">Item Details</string>
+    <string name="sale_id">Sale ID</string>
+    <string name="date_of_sale">Date of Sale</string>
+
+    <!-- Training Updates Page -->
+    <string name="course_name">Course Name</string>
+    <string name="course_start_date">Course Start Date</string>
+    <string name="duration">Duration</string>
+    <string name="application_start_date">Application Start Date</string>
+    <string name="application_end_date">Application End Date</string>
+    <string name="fee">Fee</string>
+    <string name="remarks">Remarks</string>
+
+    <!-- Crop Advisory Page -->
+    <string name="created_date">Created at</string>
+    <string name="last_updated_date">Last Updated at</string>
+    <string name="read_more">Read More</string>
+
+    <!-- Profile Page -->
+    <string name="personal_information">Personal Information</string>
+    <string name="profile_update">Profile Update</string>
+    <string name="address">Address</string>
+    <string name="view">View</string>
+    <string name="farmer_signup">Farmer signup</string>
+    <string name="address_details">Address Details</string>
+    <string name="bank_details">Bank Details</string>
+    <string name="id_proofs">ID Proofs</string>
+    <string name="aadhar_card">Aadhar Card</string>
+    <string name="pan_card">PAN Card</string>
+    <string name="choose_file">Choose File</string>
+    <string name="fpo">FPO</string>
+    <string name="personal_details">Personal Details</string>
+    <string name="transaction">Transaction</string>
+    <string name="history">History</string>
+    <string name="crop">Crop</string>
+    <string name="advisory">Advisory</string>
+    <string name="training">Training</string>
+    <string name="programs">Programs</string>
+    <string name="change_fields">Only change the fields that need to be updated</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="logout">Logout</string>
+    <string name="profile_details">Profile Details</string>
+    <string name="co_applicant_name">Co-Applicant Name</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="co_applicant_age">Co-Applicant Age</string>
+    <string name="relationship">Relationship with Applicant</string>
+    <string name="land_holding">Land Holding</string>
+    <string name="type_of_land_holding">Type of Land Holding</string>
+    <string name="monthly_hh_income">Monthly HH Income</string>
+    <string name="monthly_hh_expenses">Monthly HH Expenses</string>
+    <string name="loan_requested_amount">Loan Requested Amount</string>
+    <string name="loan_purpose">Loan Purpose</string>
+    <string name="loan_tenure">Loan Tenure (in months)</string>
+    <string name="interest_rate">Interest Rate</string>
+    <string name="loan_app_date">Loan Application Date</string>
+    <string name="loan_amount">Loan Amount</string>
+    <string name="loan_date">Loan Date</string>
+    <string name="outstanding_amount">Outstanding Amount</string>
+    <string name="next_payment_amount">Next Payment Amount</string>
+    <string name="next_payment_date">Next Payment Date</string>
+    <string name="loan_app">Loan Application</string>
+    <string name="repayment_structure">Repayment Structure</string>
+    <string name="approved">approved</string>
+    <string name="reason_for_rejection">Reason for Rejection</string>
+    <string name="farmer_name">Farmer Name</string>
+    <string name="loan_period">Loan Period in Months</string>
+    <string name="no_of_repay">No of Repayment</string>
+    <string name="serial_no">S.No.</string>
+    <string name="scheduled_repay_date">Scheduled Repayment Date</string>
+    <string name="scheduled_emi_amount">Scheduled EMI Amount</string>
+    <string name="actual_repay_date">Actual Repayment Date</string>
+    <string name="actual_repay_amount">Actual Repayment Amount</string>
+    <string name="balance_amount">Balance Amount</string>
+    <string name="input_requirements">Input Requirement</string>
+    <string name="application_date">Application Date</string>
+    <string name="input_type">Input Type</string>
+    <string name="brand">Brand</string>
+    <string name="month">Month</string>
+    <string name="place_requirement">Place a Requirement</string>
+    <string name="enter_details">Enter Details</string>
+    <string name="input">Input</string>
+    <string name="requirement">Requirement</string>
+    <string name="granted_loans">Granted Loans</string>
+    <string name="in_progress_loans">In Progress Loans</string>
+    <string name="rejected_loans">Rejected Loans</string>
+    <string name="no_account">Don\'t Have an Account?</string>
+    <string name="register">Register</string>
+    <string name="change_lang">Change Language</string>
+    <string name="apply_loan">Apply for Loan</string>
+    <string name="submit_request">Submit a Request</string>
+    <string name="add_produce">Add Produce</string>
+    <string name="apply_by">Apply By</string>
+    <string name="application_opens">Application Opens</string>
+    <string name="edit_profile">Edit Profile</string>
+    <string name="update_password">Update Password</string>
+    <string name="enter_old_pass">Enter Old Password</string>
+    <string name="enter_new_pass">Enter New Password</string>
+    <string name="content_description_media">Content Description</string>
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
