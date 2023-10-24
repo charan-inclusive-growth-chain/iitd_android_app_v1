@@ -49,9 +49,9 @@ public class MainActivity extends AppCompatActivity {
                 }else if (id == R.id.menu_store) {
                     replaceFragment(new StoreFrag());
                 } else if (id == R.id.menu_sell) {
-                    Toast.makeText(MainActivity.this, "Sell is Clicked", Toast.LENGTH_SHORT).show();
+                    replaceFragment(new SellFrag());
                 } else if (id == R.id.menu_transaction) {
-                    Toast.makeText(MainActivity.this, "Transaction is Clicked", Toast.LENGTH_SHORT).show();
+                    replaceFragment(new TransactionHistoryFrag());
                 } else if (id == R.id.menu_cropadvisory) {
                     Toast.makeText(MainActivity.this, "Crop Advisory is Clicked", Toast.LENGTH_SHORT).show();
                 } else if (id == R.id.menu_chatbot) {

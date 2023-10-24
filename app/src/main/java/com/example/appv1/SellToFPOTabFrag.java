@@ -1,23 +1,22 @@
 package com.example.appv1;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-import androidx.viewpager2.widget.ViewPager2;
-
+import android.widget.AdapterView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.google.android.material.tabs.TabLayout;
-import com.google.android.material.tabs.TabLayoutMediator;
+import android.widget.Toast;
+import com.example.appv1.databinding.FragmentSellToFPOTabBinding;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link LoanListFrag#newInstance} factory method to
+ * Use the {@link SellToFPOTabFrag#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class LoanListFrag extends Fragment {
+public class SellToFPOTabFrag extends Fragment {
+
+    FragmentSellToFPOTabBinding binding;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,7 +27,7 @@ public class LoanListFrag extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public LoanListFrag() {
+    public SellToFPOTabFrag() {
         // Required empty public constructor
     }
 
@@ -38,11 +37,11 @@ public class LoanListFrag extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment LoanListFrag.
+     * @return A new instance of fragment SellToFPOTabFrag.
      */
     // TODO: Rename and change types and number of parameters
-    public static LoanListFrag newInstance(String param1, String param2) {
-        LoanListFrag fragment = new LoanListFrag();
+    public static SellToFPOTabFrag newInstance(String param1, String param2) {
+        SellToFPOTabFrag fragment = new SellToFPOTabFrag();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -63,27 +62,28 @@ public class LoanListFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_loan_list, container, false);
+        binding = FragmentSellToFPOTabBinding.inflate(inflater,container,false);
 
-        // Initialize your ViewPager2 and TabLayout here
-        ViewPager2 viewPager = view.findViewById(R.id.viewpager2);
-        TabLayout tabLayout = view.findViewById(R.id.tabLayout);
+        View view = binding.getRoot();
+        String[] flowerName = {"Rose", "Lotus", "Lily", "Jasmine",
+                "Tulip", "Orchid", "Levender", "RoseMarry", "Sunflower", "Carnation"};
+        int[] flowerImages = {
+                R.drawable.apples, R.drawable.brinjals, R.drawable.carrots, R.drawable.figs,
+                R.drawable.guavas, R.drawable.lemons, R.drawable.mangoes,
+                R.drawable.pineapples, R.drawable.strawberries, R.drawable.testimage
+        };
+        GridAdapter gridAdapter = new GridAdapter(requireActivity(), flowerName, flowerImages);
+        binding.gridView.setAdapter(gridAdapter);
 
-        // Create an adapter for the ViewPager2
-        VPLoanAdapter vpLoanAdapter = new VPLoanAdapter(this);
-        vpLoanAdapter.addFragment(new LoanApprovedTabFrag(), "Approved");
-        vpLoanAdapter.addFragment(new LoanPendingTabFrag(), "Pending");
-        vpLoanAdapter.addFragment(new LoanRejectedTabFrag(), "Rejected");
-
-        viewPager.setAdapter(vpLoanAdapter);
-
-        // Attach the TabLayoutMediator
-        new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
-            tab.setText(vpLoanAdapter.getFragmentTitle(position));
-        }).attach();
-
+        binding.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(requireContext(), "You Clicked on " + flowerName[position], Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         return view;
+
     }
 }
