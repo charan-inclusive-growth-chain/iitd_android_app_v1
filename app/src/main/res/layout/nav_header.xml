@@ -1,39 +1,50 @@
-<?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/primary_green"
+    android:theme="@style/ThemeOverlay.AppCompat.Dark"
+    android:orientation="vertical"
+    android:gravity="bottom">
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profilepic"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/profile" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="16dp"
+        android:background="@drawable/green_card_background"
+        android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Robin Singla"
-        android:layout_below="@id/profilepic"
-        android:textColor="@color/primary_green"
-        android:layout_marginTop="10dp"
-        android:textStyle="bold"
-        android:textSize="16dp"
-        android:layout_marginLeft="16dp"/>
+        <com.google.android.material.imageview.ShapeableImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/profile_image"
+            app:srcCompat="@drawable/default_user_image"
+            android:background="@color/white"
+            android:layout_margin="10dp"
+            app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+            app:strokeWidth="1dp"
+            />
 
-    <TextView
-        android:id="@+id/username"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Farmer"
-        android:layout_below="@id/name"
-        android:textColor="@color/light_green"
-        android:textSize="12dp"
-        android:layout_marginLeft="16dp"/>
+        <TextView
+            android:id="@+id/nav_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Robin Singla"
+            android:textStyle="bold"
+            android:layout_marginLeft="10dp"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/header_size"/>
+
+        <TextView
+            android:id="@+id/nav_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Farmer"
+            android:textColor="@android:color/white"
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+    </LinearLayout>
 
 
-
-
-</RelativeLayout>
+</LinearLayout>
