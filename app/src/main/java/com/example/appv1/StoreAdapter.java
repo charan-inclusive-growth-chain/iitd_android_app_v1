@@ -8,52 +8,56 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 public class StoreAdapter extends BaseAdapter {
 
-    Context context;
-    String[] flowerName;
-    int[] image;
+    private Context context;
+    private List<String> itemNames;
+    private List<String> images;
+    private List<String> fpoPrices;
+    private List<String> marketPrices;
 
-    LayoutInflater inflater;
+    private LayoutInflater inflater;
 
-    public StoreAdapter(Context context, String[] flowerName, int[] image) {
+    public StoreAdapter(Context context, List<String> itemNames, List<String> images, List<String> fpoPrices, List<String> marketPrices) {
         this.context = context;
-        this.flowerName = flowerName;
-        this.image = image;
+        this.itemNames = itemNames;
+        this.images = images;
+        this.fpoPrices = fpoPrices;
+        this.marketPrices = marketPrices;
+        inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public int getCount() {
-        return flowerName.length;
+        return itemNames.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return itemNames.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-
-        if (inflater == null)
-            inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
-        if (convertView == null){
-
-            convertView = inflater.inflate(R.layout.store_item,null);
-
+        if (convertView == null) {
+            convertView = inflater.inflate(R.layout.store_item, null);
         }
 
         ImageView imageView = convertView.findViewById(R.id.grid_image);
-        TextView textView = convertView.findViewById(R.id.item_name);
-
-        imageView.setImageResource(image[position]);
-        textView.setText(flowerName[position]);
+        TextView itemTextView = convertView.findViewById(R.id.item_name);
+        TextView fpoPriceTextView = convertView.findViewById(R.id.store_fpo);
+        TextView marketPriceTextView = convertView.findViewById(R.id.store_market);
+        new DisplayImage(imageView).execute(images.get(position));
+        itemTextView.setText(itemNames.get(position));
+        fpoPriceTextView.setText("FPO Price: ₹" + fpoPrices.get(position));
+        marketPriceTextView.setText("Market Price: ₹" + marketPrices.get(position));
 
         return convertView;
     }

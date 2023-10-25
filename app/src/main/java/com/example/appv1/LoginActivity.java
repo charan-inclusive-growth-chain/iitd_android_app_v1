@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import android.util.Log;
 
-import static java.security.AccessController.getContext;
 import static java.util.Objects.isNull;
 
 import android.annotation.SuppressLint;
@@ -31,8 +30,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.example.appv1.R;
 
 import java.io.IOException;
 
@@ -358,4 +355,9 @@ public class LoginActivity extends AppCompatActivity
         view.startAnimation(shake); // starts animation
     }
 
+    public static String getToken(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String token = preferences.getString("token", "");
+        return token;
+    }
 }

@@ -1,15 +1,35 @@
 package com.example.appv1;
 
+import android.media.Image;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.widget.AdapterView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.w3c.dom.Text;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 
 /**
@@ -18,9 +38,7 @@ import android.widget.Toast;
  * create an instance of this fragment.
  */
 public class StoreFrag extends Fragment {
-
-
-
+    GridView gridView;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -65,29 +83,87 @@ public class StoreFrag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_store, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_store, container, false);
 
-        String[] flowerName = {"Rose","Lotus","Lily","Jasmine",
-                "Tulip","Orchid","Levender","RoseMarry","Sunflower","Carnation"};
-        int[] flowerImages = {R.drawable.apples,R.drawable.brinjals,R.drawable.carrots,R.drawable.figs,R.drawable.guavas,R.drawable.lemons,R.drawable.mangoes,
-                R.drawable.pineapples,R.drawable.strawberries,R.drawable.testimage};
+        gridView = rootView.findViewById(R.id.gridView);
 
-        GridView gridView = rootView.findViewById(R.id.gridView);
-        StoreAdapter storeAdapter = new StoreAdapter(requireActivity(), flowerName, flowerImages);
-        gridView.setAdapter(storeAdapter);
-
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(requireContext(), "You Clicked on " + flowerName[position], Toast.LENGTH_SHORT).show();
-            }
-        });
-
-
-
-
+        // Load and populate the data
+        loadTrainingData();
 
         return rootView;
+    }
+
+    private void loadTrainingData() {
+        String url = getContext().getString(R.string.url) + "/farmer/fpo/products";
+        String token = LoginActivity.getToken(getContext()); // Use getContext() to get the context
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", "Bearer " + token)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String responseData = response.body().string();
+                    try {
+                        JSONObject responseObject = new JSONObject(responseData);
+                        JSONArray dataArray = responseObject.getJSONArray("data");
+                        Log.d("Store Data", dataArray.toString());
+
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                populateTrainingUpdates(dataArray);
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+    private void populateTrainingUpdates(JSONArray dataArray) {
+        List<String> itemNames = new ArrayList<>();
+        List<String> fpoPrices = new ArrayList<>();
+        List<String> marketPrices = new ArrayList<>();
+        List<String> images = new ArrayList<>();
+
+        for (int i = 0; i < dataArray.length(); i++) {
+            try {
+                JSONObject trainingObj = dataArray.getJSONObject(i);
+
+                String available = trainingObj.getString("isAvailable");
+                if (available.equals("false")) continue;
+
+                String productName = trainingObj.getString("productName");
+                String capitalizedProductName = productName.substring(0, 1).toUpperCase() + productName.substring(1);
+
+                String marketPrice = trainingObj.getString("marketPrice");
+                String fpoPrice = trainingObj.getString("fpoPrice");
+                String imageUrl = trainingObj.getString("imageUrl");
+
+                itemNames.add(capitalizedProductName);
+                fpoPrices.add(fpoPrice);
+                marketPrices.add(marketPrice);
+                images.add(imageUrl);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Create an adapter to populate the GridView
+        StoreAdapter storeAdapter = new StoreAdapter(requireActivity(), itemNames, images, fpoPrices, marketPrices);
+        gridView.setAdapter(storeAdapter);
     }
 }
