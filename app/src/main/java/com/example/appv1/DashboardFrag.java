@@ -1,5 +1,6 @@
 package com.example.appv1;
 import android.content.SharedPreferences;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -7,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -19,6 +21,16 @@ import com.smarteist.autoimageslider.SliderAnimations;
 import com.smarteist.autoimageslider.SliderView;
 import com.example.appv1.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.HttpUrl;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link DashboardFrag#newInstance} factory method to
@@ -28,7 +40,7 @@ public class DashboardFrag extends Fragment {
 
     LinearLayout storeShortCut;
     LinearLayout loanShortCut;
-
+    TextView temp, perc, rain;
     LinearLayout cropAdvisoryShortCut;
     LinearLayout trainingShortCut;
 
@@ -75,6 +87,7 @@ public class DashboardFrag extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        showWeather();
     }
 
     @Override
@@ -82,6 +95,9 @@ public class DashboardFrag extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_dashboard, container, false);
+        temp = rootView.findViewById(R.id.weather_temp);
+        perc = rootView.findViewById(R.id.weather_percentage);
+        rain = rootView.findViewById(R.id.weather_mm);
 
         sliderView = rootView.findViewById(R.id.image_slider);
 
@@ -230,6 +246,64 @@ public class DashboardFrag extends Fragment {
         }
 
 
+    }
+
+    private class WeatherTask extends AsyncTask<Void, Void, String> {
+        @Override
+        protected String doInBackground(Void... params) {
+            String apiKey = "b4b3541a0cecd771dfaa3dc064abe5ae";
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+            String pincode = preferences.getString("pincode", "");
+
+            OkHttpClient client = new OkHttpClient();
+
+            HttpUrl url = HttpUrl.parse("https://api.openweathermap.org/data/2.5/weather?zip=" + pincode + ",IN&appid=" + apiKey);
+            Log.d("Url", url.toString());
+
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
+
+            try {
+                Response response = client.newCall(request).execute();
+
+                if (response.isSuccessful()) {
+                    return response.body().string();
+                } else {
+                    return "Error: " + response.code() + " - " + response.message();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+                return "Network error: " + e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (result.startsWith("Error")) {
+            } else {
+                try {
+                    JSONObject json = new JSONObject(result);
+
+                    double kelvinTemperature = Double.parseDouble(json.getJSONObject("main").getString("temp"));
+                    double celsiusTemperature = kelvinTemperature - 273.15;
+                    String cloudCoverage = json.getJSONObject("clouds").getString("all");
+                    String rain1h = "0";
+                    if(json.has("rain"))
+                        rain1h = json.optJSONObject("rain").optString("1h", "0");
+
+                    temp.setText(String.format("%.0f", celsiusTemperature));
+                    perc.setText(cloudCoverage);
+                    rain.setText(rain1h);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void showWeather() {
+        new WeatherTask().execute();
     }
 
 

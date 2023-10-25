@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/light_grey"
+    android:id="@+id/dashboard_layout"
     tools:context=".MainActivity">
 
     <com.smarteist.autoimageslider.SliderView
@@ -220,6 +221,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/weather_temp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -267,6 +269,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/weather_percentage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"
@@ -314,6 +317,7 @@
                     android:layout_height="wrap_content">
 
                     <TextView
+                        android:id="@+id/weather_mm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:gravity="center"

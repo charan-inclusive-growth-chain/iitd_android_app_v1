@@ -264,6 +264,7 @@ public class LoginActivity extends AppCompatActivity
                             String FarmerID = dataObject.getString("_id");
                             String FarmerName = dataObject.getString("userName");
                             String FpoID = dataObject.getString("fpoId");
+                            String PinCode = dataObject.getString("pinCode");
 
                             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                             SharedPreferences.Editor editor = preferences.edit();
@@ -272,6 +273,7 @@ public class LoginActivity extends AppCompatActivity
                             editor.putString("farmerId", FarmerID);
                             editor.putString("farmerName", FarmerName);
                             editor.putString("fpoId", FpoID);
+                            editor.putString("pincode", PinCode);
                             editor.apply();
 
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
