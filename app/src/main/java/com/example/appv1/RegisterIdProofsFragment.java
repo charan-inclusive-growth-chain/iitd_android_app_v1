@@ -1,0 +1,333 @@
+package com.example.appv1;
+
+import android.Manifest;
+import android.app.Activity;
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+
+import com.example.appv1.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+public class RegisterIdProofsFragment extends Fragment
+{
+    private static final int CAMERA_PERMISSION_REQUEST_CODE = 123;
+    Spinner fpoDropdown;
+    List<String> fpoOptions;
+    String selectedFPOId;
+    Button aadharCardButton;
+    Button panCardButton;
+
+    Uri selectedAadharCard;
+    Uri selectedPanCard;
+    EditText aadharNo, panNo;
+    TextView aadharT, panT, fpoT;
+    JSONObject registerAsFarmerJson;
+
+    public final static int PICK_PHOTO_CODE_AADHAR = 1046;
+    public final static int PICK_PHOTO_CODE_PAN = 1047;
+
+    public RegisterIdProofsFragment()
+    {
+        // Required empty public constructor
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.register_id_proofs, container, false);
+
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
+    {
+        aadharNo = getView().findViewById(R.id.register_id_aadhar_number);
+        panNo = getView().findViewById(R.id.register_id_pan_card_number);
+
+        aadharCardButton = getView().findViewById(R.id.register_id_card_button);
+        addOnClickListenerForAadharCardButton();
+
+        panCardButton = getView().findViewById(R.id.register_id_pan_card_button);
+        addOnClickListenerForPanCardButton();
+
+        aadharT = getView().findViewById(R.id.register_id_name);
+        panT = getView().findViewById(R.id.register_id_pan_card);
+        fpoT = getView().findViewById(R.id.register_id_fpo);
+
+        registerAsFarmerJson = RegisterActivity.getRegisterAsFarmerJson();
+
+        fpoDropdown = getView().findViewById(R.id.register_fpo_dropdown);
+        fpoOptions = new ArrayList<>();
+
+        // Fetch FPO options from the API
+        fetchFPOOptions();
+
+        // Set a listener for the dropdown selection
+        fpoDropdown.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                // Get the selected FPO ID
+                selectedFPOId = getSelectedFPOId(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                fpoT.setError("Select FPO");
+            }
+        });
+    }
+
+    public boolean checkFields() {
+        String aadharNoS = aadharNo.getText().toString().trim();
+        String panNoS = panNo.getText().toString().trim();
+        String fpoS = selectedFPOId.toString().trim();
+
+        if(selectedAadharCard == null) {
+            aadharCardButton.setError("Upload aadhar");
+            return false;
+        }
+        if(selectedPanCard == null) {
+            panCardButton.setError("Upload PAN");
+            return false;
+        }
+
+        if (aadharNoS.isEmpty()) {
+            aadharNo.setError("Enter aadhar number");
+            return false;
+        } else if(!aadharNoS.matches("^[0-9]+$")) {
+            aadharT.setError("Only numbers allowed");
+            return false;
+        }else {
+            aadharNo.setError(null);
+        }
+
+        if (panNoS.isEmpty()) {
+            panNo.setError("Enter PAN number");
+            return false;
+        } else {
+            panNo.setError(null);
+        }
+
+        if (fpoS.isEmpty()) {
+            fpoT.setError("Select FPO");
+            return false;
+        } else {
+            fpoT.setError(null);
+        }
+
+        if(aadharT.getError() != null) {
+            return false;
+        }
+        if(panT.getError() != null) {
+            return false;
+        }
+
+        try {
+            registerAsFarmerJson.put("panCardNumber", panNoS);
+            registerAsFarmerJson.put("panCardImage", selectedPanCard.toString().trim());
+            registerAsFarmerJson.put("aadharCardNumber", aadharNoS);
+            registerAsFarmerJson.put("aadharCardImage", selectedAadharCard.toString().trim());
+            registerAsFarmerJson.put("fpoId", fpoS);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return true;
+    }
+
+    private void addOnClickListenerForAadharCardButton()
+    {
+        aadharCardButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override public void onClick(View v)
+            {
+                pick(PICK_PHOTO_CODE_AADHAR);
+            }
+        });
+    }
+
+    private void addOnClickListenerForPanCardButton()
+    {
+        panCardButton.setOnClickListener(new View.OnClickListener()
+        {
+            @Override public void onClick(View v)
+            {
+                pick(PICK_PHOTO_CODE_PAN);
+            }
+        });
+    }
+
+    public void pick(int code) {
+        String[] mimeTypes = {"image/png", "image/jpeg", "image/jpg", "image/jfif", "image/img"};
+        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        galleryIntent.setType("image/*");
+        galleryIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions((Activity) requireContext(),
+                    new String[]{Manifest.permission.CAMERA},
+                    CAMERA_PERMISSION_REQUEST_CODE);
+        } else {
+            startActivityForResult(cameraIntent, code);
+        }
+
+        Intent chooserIntent = Intent.createChooser(galleryIntent, "Open Gallery");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] { cameraIntent });
+
+        startActivityForResult(chooserIntent, code);
+    }
+
+
+    // Method to get the absolute path of the selected image from its URI
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == getActivity().RESULT_OK)
+        {
+            switch(requestCode)
+            {
+                case PICK_PHOTO_CODE_AADHAR:
+                    selectedAadharCard = data.getData();
+                    String imageMimeType = getMimeType(selectedAadharCard);
+                    if (!imageMimeType.equals("image/png") &&
+                            !imageMimeType.equals("image/jpeg") &&
+                            !imageMimeType.equals("image/jpg") &&
+                            !imageMimeType.equals("image/jfif") &&
+                            !imageMimeType.equals("image/img")) {
+                        aadharT.setError("Invalid image format");
+                    }
+                    break;
+                case PICK_PHOTO_CODE_PAN:
+                    selectedPanCard = data.getData();
+                    String imageMimeType2 = getMimeType(selectedPanCard);
+                    if (!imageMimeType2.equals("image/png") &&
+                            !imageMimeType2.equals("image/jpeg") &&
+                            !imageMimeType2.equals("image/jpg") &&
+                            !imageMimeType2.equals("image/jfif") &&
+                            !imageMimeType2.equals("image/img")) {
+                        aadharT.setError("Invalid image format");
+                    }
+                    break;
+            }
+
+        }
+    }
+
+    private String getMimeType(Uri uri) {
+        String mimeType = null;
+        if (uri != null) {
+            ContentResolver cr = getActivity().getContentResolver();
+            mimeType = cr.getType(uri);
+        }
+        return mimeType;
+    }
+
+    private void fetchFPOOptions() {
+        String url = getContext().getString(R.string.url) + "/signup/fpo";
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                // Handle network request failure
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String responseData = response.body().string();
+                    try {
+                        // Parse the JSON response and extract the FPO options
+                        JSONObject responseObject = new JSONObject(responseData);
+                        JSONArray fpoArray = responseObject.getJSONArray("data");
+                        fpoOptions = extractFPOOptions(fpoArray);
+
+                        // Update the UI on the main thread
+                        Activity activity = getActivity();
+                        activity.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                // Set the options in the Spinner adapter
+                                ArrayAdapter<String> adapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item, fpoOptions);
+                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                                fpoDropdown.setAdapter(adapter);
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+    private List<String> extractFPOOptions(JSONArray dataArray) throws JSONException {
+        List<String> options = new ArrayList<>();
+        for (int i = 0; i < dataArray.length(); i++) {
+            JSONObject object = dataArray.getJSONObject(i);
+            String fpoId = object.getString("_id");
+            String userName = object.getString("userName");
+            options.add(userName);
+        }
+        return options;
+    }
+
+    private String getSelectedFPOId(int position) {
+        // Extract the FPO ID from the selected option
+        String selectedOption = fpoOptions.get(position);
+        String[] parts = selectedOption.split(" - ");
+        if (parts.length > 0) {
+            return parts[0];
+        }
+        return null;
+    }
+}

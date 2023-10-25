@@ -12,11 +12,13 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.appv1.MainActivity;
-import com.example.appv1.R;
-
 import java.lang.ref.WeakReference;
 import java.util.Locale;
+
+import com.example.appv1.LoginActivity;
+import com.example.appv1.MainActivity;
+import com.example.appv1.R;
+import com.example.appv1.Utils;
 
 public class InitialSplashScreenActivity extends AppCompatActivity
 {
@@ -41,11 +43,10 @@ public class InitialSplashScreenActivity extends AppCompatActivity
             finish();
         }
         else {
-
             if (!savedLanguage.isEmpty()) {
                 setAppLocale(savedLanguage);
                 languageSelected = true;
-                com.example.appv1.Utils.loginUserBasedOnRole(getApplicationContext(), this);
+                Utils.loginUserBasedOnRole(getApplicationContext(), this);
                 //restartApp();
             } else {
                 showLanguageSelectionDialog();
@@ -113,7 +114,7 @@ public class InitialSplashScreenActivity extends AppCompatActivity
 
     private void restartApp() {
         if (languageSelected) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
             finish();
         }

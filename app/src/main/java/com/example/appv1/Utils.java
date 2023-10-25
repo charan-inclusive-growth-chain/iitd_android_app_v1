@@ -12,7 +12,7 @@ public class Utils
 
     public static void loginUserBasedOnRole(Context context, Activity parentActivity)
     {
-        Intent userBasedIntent = new Intent(parentActivity, MainActivity.class);
+        Intent userBasedIntent = new Intent(parentActivity, LoginActivity.class);
 
         //        LoginResponse loginResponse = new Gson().fromJson(PreferenceManager.getDefaultSharedPreferences(context).getString("user", ""), LoginResponse.class);
         //
