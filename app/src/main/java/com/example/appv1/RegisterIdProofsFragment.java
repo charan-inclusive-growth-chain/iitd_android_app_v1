@@ -25,6 +25,8 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
 import com.example.appv1.R;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +53,8 @@ public class RegisterIdProofsFragment extends Fragment
 
     Uri selectedAadharCard;
     Uri selectedPanCard;
-    EditText aadharNo, panNo;
+    TextInputEditText aadharNo, panNo;
+    TextInputLayout aadharno, panno;
     TextView aadharT, panT, fpoT;
     JSONObject registerAsFarmerJson;
 
@@ -83,6 +86,9 @@ public class RegisterIdProofsFragment extends Fragment
     {
         aadharNo = getView().findViewById(R.id.register_id_aadhar_number);
         panNo = getView().findViewById(R.id.register_id_pan_card_number);
+
+        aadharno = getView().findViewById(R.id.reg_aadhar_no);
+        panno = getView().findViewById(R.id.reg_pan_no);
 
         aadharCardButton = getView().findViewById(R.id.register_id_card_button);
         addOnClickListenerForAadharCardButton();
@@ -132,20 +138,20 @@ public class RegisterIdProofsFragment extends Fragment
         }
 
         if (aadharNoS.isEmpty()) {
-            aadharNo.setError("Enter aadhar number");
+            aadharno.setError("Enter aadhar number");
             return false;
         } else if(!aadharNoS.matches("^[0-9]+$")) {
-            aadharT.setError("Only numbers allowed");
+            aadharno.setError("Only numbers allowed");
             return false;
         }else {
-            aadharNo.setError(null);
+            aadharno.setError(null);
         }
 
         if (panNoS.isEmpty()) {
-            panNo.setError("Enter PAN number");
+            panno.setError("Enter PAN number");
             return false;
         } else {
-            panNo.setError(null);
+            panno.setError(null);
         }
 
         if (fpoS.isEmpty()) {

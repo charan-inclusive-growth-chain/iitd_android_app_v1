@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
 
@@ -48,66 +49,43 @@
             android:orientation="vertical">
 
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_weight="0.2"
-                android:orientation="vertical"
-                android:padding="10dp">
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="@color/white"
+                android:id="@+id/reg_aadhar_no"
+                app:boxStrokeWidth="2dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="20dp"
+                app:hintEnabled="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:text="@string/aadhar_card_number"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
-
-                <EditText
+                    android:hint="@string/aadhar_card_number"
                     android:id="@+id/register_id_aadhar_number"
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/edit_text_selector_bg"
-                    android:drawableLeft="@drawable/aadhar_drawable"
-                    android:drawablePadding="10dp"
-                    android:hint="1234567891234"
-                    android:inputType="number"
-                    android:paddingLeft="10dp" />
-            </LinearLayout>
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:layout_gravity="center"
-                android:layout_weight="0.2"
-                android:orientation="vertical"
-                android:padding="5dp">
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="@color/white"
+                android:id="@+id/reg_pan_no"
+                app:boxStrokeWidth="2dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="20dp"
+                app:hintEnabled="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:text="@string/pan_card_number"
-                    android:textColor="@color/black"
-                    android:textSize="18dp"
-                    android:textStyle="bold" />
-
-                <EditText
+                    android:hint="@string/pan_card_number"
                     android:id="@+id/register_id_pan_card_number"
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/edit_text_selector_bg"
-                    android:drawableLeft="@drawable/aadhar_drawable"
-                    android:drawablePadding="10dp"
-                    android:hint="123456789"
-                    android:paddingLeft="10dp" />
-            </LinearLayout>
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
             <LinearLayout
@@ -132,8 +110,7 @@
                         android:padding="5dp"
                         android:text="@string/aadhar_card"
                         android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
+                        android:textSize="18dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -183,8 +160,7 @@
                         android:padding="5dp"
                         android:text="@string/pan_card"
                         android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
+                        android:textSize="18dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -225,8 +201,7 @@
                         android:padding="5dp"
                         android:text="@string/fpo"
                         android:textColor="@color/black"
-                        android:textSize="18dp"
-                        android:textStyle="bold" />
+                        android:textSize="18dp" />
                 </LinearLayout>
 
                 <LinearLayout

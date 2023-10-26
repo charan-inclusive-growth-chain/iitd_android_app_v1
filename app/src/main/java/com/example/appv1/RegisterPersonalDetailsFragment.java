@@ -21,6 +21,8 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import com.example.appv1.R;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,8 +30,10 @@ import org.json.JSONObject;
 public class RegisterPersonalDetailsFragment extends Fragment
 {
     final Calendar myCalendar = Calendar.getInstance();
-    EditText dateOfBirth, name, mobile, password, confirmPassword, fatherName, motherName, occupation;
-    EditText education, nop, residence, caste, religion;
+    TextInputEditText dateOfBirth, name, mobile, password, confirmPassword, fatherName, motherName, occupation;
+    TextInputEditText education, nop, residence, caste, religion;
+
+    TextInputLayout dob, n, m, pass, confpass, fname, mname, occ, edu, nat, res, cas, rel;
     RadioButton male, female;
     RadioGroup genderRadioGroup;
     JSONObject registerAsFarmerJson;
@@ -75,6 +79,21 @@ public class RegisterPersonalDetailsFragment extends Fragment
         residence = getView().findViewById(R.id.register_residence);
         caste = getView().findViewById(R.id.register_caste);
         religion = getView().findViewById(R.id.register_religion);
+
+        dob = getView().findViewById(R.id.reg_dob);
+        n = getView().findViewById(R.id.reg_name);
+        m = getView().findViewById(R.id.reg_mobile);
+        pass = getView().findViewById(R.id.reg_pass);
+        confpass = getView().findViewById(R.id.reg_conf_pass);
+        fname = getView().findViewById(R.id.reg_fname);
+        mname = getView().findViewById(R.id.reg_mname);
+        occ = getView().findViewById(R.id.reg_occ);
+        edu = getView().findViewById(R.id.reg_education);
+        nat = getView().findViewById(R.id.reg_nop);
+        res = getView().findViewById(R.id.reg_res);
+        cas = getView().findViewById(R.id.reg_caste);
+        rel = getView().findViewById(R.id.reg_religion);
+
         registerAsFarmerJson = RegisterActivity.getRegisterAsFarmerJson();
 
         genderRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -105,26 +124,26 @@ public class RegisterPersonalDetailsFragment extends Fragment
         String ageS = String.valueOf(age);
 
         if (nameS.isEmpty()) {
-            name.setError("Enter name");
+            n.setError("Enter name");
             return false;
         } else if (nameS.contains(" ")) {
-            name.setError("Name should not contain spaces");
+            n.setError("Name should not contain spaces");
             return false;
         } else if (!nameS.equals(nameS.toLowerCase())) {
-            name.setError("Name should be lowercase");
+            n.setError("Name should be lowercase");
             return false;
         } else {
-            name.setError(null);
+            n.setError(null);
         }
 
         if (mobileS.isEmpty()) {
-            mobile.setError("Enter mobile number");
+            m.setError("Enter mobile number");
             return false;
         } else if (!mobileS.matches("\\d{10}")) {
-            mobile.setError("Invalid mobile number");
+            m.setError("Invalid mobile number");
             return false;
         } else {
-            mobile.setError(null);
+            m.setError(null);
         }
 
         if (gender.isEmpty()) {
@@ -135,104 +154,104 @@ public class RegisterPersonalDetailsFragment extends Fragment
         }
 
         if (dobS.isEmpty()) {
-            dateOfBirth.setError("Select DOB");
+            dob.setError("Select DOB");
             return false;
         } else {
-            dateOfBirth.setError(null);
+            dob.setError(null);
         }
 
         if (passwordS.isEmpty()) {
-            password.setError("Enter password");
+            pass.setError("Enter password");
             return false;
         } else {
-            password.setError(null);
+            pass.setError(null);
         }
 
         if (confirmS.isEmpty()) {
-            confirmPassword.setError("Enter confirm password");
+            confpass.setError("Enter confirm password");
             return false;
         } else if (!confirmS.equals(passwordS)) {
-            confirmPassword.setError("Passwords do not match");
+            confpass.setError("Passwords do not match");
             return false;
         } else {
-            confirmPassword.setError(null);
+            confpass.setError(null);
         }
 
         if (fatherS.isEmpty()) {
-            fatherName.setError("Enter father's name");
+            fname.setError("Enter father's name");
             return false;
         } else if(!fatherS.matches("^[A-Za-z ]+$")) {
-            fatherName.setError("Only alpha allowed");
+            fname.setError("Only alpha allowed");
             return false;
         }else {
-            fatherName.setError(null);
+            fname.setError(null);
         }
 
         if (motherS.isEmpty()) {
-            motherName.setError("Enter mother's name");
+            mname.setError("Enter mother's name");
             return false;
         } else if(!motherS.matches("^[A-Za-z ]+$")) {
-            motherName.setError("Only alpha allowed");
+            mname.setError("Only alpha allowed");
             return false;
         }else {
-            motherName.setError(null);
+            mname.setError(null);
         }
 
         if (occupationS.isEmpty()) {
-            occupation.setError("Enter occupation");
+            occ.setError("Enter occupation");
             return false;
         } else if(!occupationS.matches("^[A-Za-z ]+$")) {
-            occupation.setError("Only alpha allowed");
+            occ.setError("Only alpha allowed");
             return false;
         }else {
-            occupation.setError(null);
+            occ.setError(null);
         }
 
         if (educationS.isEmpty()) {
-            education.setError("Enter education");
+            edu.setError("Enter education");
             return false;
         } else {
-            education.setError(null);
+            edu.setError(null);
         }
 
         if (nopS.isEmpty()) {
-            nop.setError("Enter nature of place");
+            nat.setError("Enter nature of place");
             return false;
         } else if(!nopS.matches("^[A-Za-z ]+$")) {
-            nop.setError("Only alpha allowed");
+            nat.setError("Only alpha allowed");
             return false;
         }else {
-            nop.setError(null);
+            nat.setError(null);
         }
 
         if (residenceS.isEmpty()) {
-            residence.setError("Enter residence");
+            res.setError("Enter residence");
             return false;
         }else if(!residenceS.matches("^[A-Za-z ]+$")) {
-            residence.setError("Only alpha allowed");
+            res.setError("Only alpha allowed");
             return false;
         } else {
-            residence.setError(null);
+            res.setError(null);
         }
 
         if (casteS.isEmpty()) {
-            caste.setError("Enter caste");
+            cas.setError("Enter caste");
             return false;
         } else if(!casteS.matches("^[A-Za-z ]+$")) {
-            caste.setError("Only alpha allowed");
+            cas.setError("Only alpha allowed");
             return false;
         }else {
-            caste.setError(null);
+            cas.setError(null);
         }
 
         if (religionS.isEmpty()) {
-            religion.setError("Enter religion");
+            rel.setError("Enter religion");
             return false;
         } else if(!religionS.matches("^[A-Za-z ]+$")) {
-            religion.setError("Only alpha allowed");
+            rel.setError("Only alpha allowed");
             return false;
         }else {
-            religion.setError(null);
+            rel.setError(null);
         }
 
         try {

@@ -28,6 +28,8 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputEditText;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -44,7 +46,7 @@ import okhttp3.Response;
 public class LoginActivity extends AppCompatActivity
 {
 
-    EditText userNameNode, passwordNode;
+    TextInputEditText userNameNode, passwordNode;
     TextView forgotPassNode, createNewAccountNode;
     ImageView loginBackNode;
     Button loginButtonNode;
@@ -192,7 +194,7 @@ public class LoginActivity extends AppCompatActivity
                             Toast.makeText(getApplicationContext(), "visible", Toast.LENGTH_SHORT).show();
                             passwordNode.setInputType(InputType.TYPE_CLASS_TEXT);
                             passwordNode.setSelection(passwordNode.getText().length());
-                            passwordNode.setCompoundDrawablesWithIntrinsicBounds(R.drawable.pass_lock, 0, R.drawable.pass_eye_hide_drawable, 0);
+                            //passwordNode.setCompoundDrawablesWithIntrinsicBounds(R.drawable.pass_lock, 0, R.drawable.pass_eye_hide_drawable, 0);
 
                         }
                         else
@@ -200,7 +202,7 @@ public class LoginActivity extends AppCompatActivity
                             Toast.makeText(getApplicationContext(), "hide", Toast.LENGTH_SHORT).show();
                             passwordNode.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                             passwordNode.setSelection(passwordNode.getText().length());
-                            passwordNode.setCompoundDrawablesWithIntrinsicBounds(R.drawable.pass_lock, 0, R.drawable.pass_eye, 0);
+                            //passwordNode.setCompoundDrawablesWithIntrinsicBounds(R.drawable.pass_lock, 0, R.drawable.pass_eye, 0);
 
                         }
                         return false;
@@ -215,7 +217,7 @@ public class LoginActivity extends AppCompatActivity
     {
         passwordNode.setText("");
         passwordNode.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-        passwordNode.setCompoundDrawablesWithIntrinsicBounds(R.drawable.pass_lock, 0, R.drawable.pass_eye, 0);
+        //passwordNode.setCompoundDrawablesWithIntrinsicBounds(R.drawable.pass_lock, 0, R.drawable.pass_eye, 0);
 
         userNameNode.setText("");
         userNameNode.requestFocus();
@@ -359,5 +361,11 @@ public class LoginActivity extends AppCompatActivity
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String token = preferences.getString("token", "");
         return token;
+    }
+
+    public static String getFarmerID(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String id = preferences.getString("farmerId", "");
+        return id;
     }
 }

@@ -15,6 +15,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.appv1.R;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -24,9 +26,10 @@ import java.util.List;
 
 public class RegisterAddressDetailsFragment extends Fragment
 {
-    EditText doorNumber, streetName, village, taluk, pincode;
+    TextInputEditText doorNumber, streetName, village, taluk, pincode;
     Spinner district, state;
     TextView districtT, stateT;
+    TextInputLayout door, street, v, t, pin, d, st;
     JSONObject registerAsFarmerJson;
 
     public RegisterAddressDetailsFragment()
@@ -52,13 +55,19 @@ public class RegisterAddressDetailsFragment extends Fragment
     {
         doorNumber = getView().findViewById(R.id.register_door_number);
         streetName = getView().findViewById(R.id.register_street_name);
-        village = getView().findViewById(R.id.register_Village);
+        village = getView().findViewById(R.id.register_village);
         taluk = getView().findViewById(R.id.register_taluk);
         district = getView().findViewById(R.id.register_district);
         state = getView().findViewById(R.id.register_state);
-        districtT = getView().findViewById(R.id.register_district_text);
-        stateT = getView().findViewById(R.id.register_state_text);
         pincode = getView().findViewById(R.id.register_pincode);
+
+        door = getView().findViewById(R.id.reg_door_no);
+        street = getView().findViewById(R.id.reg_street);
+        v = getView().findViewById(R.id.reg_v);
+        t = getView().findViewById(R.id.reg_t);
+        d = getView().findViewById(R.id.reg_d);
+        st = getView().findViewById(R.id.reg_st);
+        pin = getView().findViewById(R.id.reg_pin);
         registerAsFarmerJson = RegisterActivity.getRegisterAsFarmerJson();
         fillStates();
     }
@@ -110,64 +119,64 @@ public class RegisterAddressDetailsFragment extends Fragment
         String pinS = pincode.getText().toString().trim();
 
         if (doorS.isEmpty()) {
-            doorNumber.setError("Enter door number");
+            door.setError("Enter door number");
             return false;
         } else {
-            doorNumber.setError(null);
+            door.setError(null);
         }
 
         if (streetS.isEmpty()) {
-            streetName.setError("Enter street name");
+            street.setError("Enter street name");
             return false;
         } else if(!streetS.matches("^[A-Za-z0-9 ]+$")) {
-            streetName.setError("Incorrect format");
+            street.setError("Incorrect format");
             return false;
         }else {
-            streetName.setError(null);
+            street.setError(null);
         }
 
         if (villageS.isEmpty()) {
-            village.setError("Enter vilage");
+            v.setError("Enter vilage");
             return false;
         } else if(!villageS.matches("^[A-Za-z ]+$")) {
-            village.setError("Only alpha allowed");
+            v.setError("Only alpha allowed");
             return false;
         }else {
-            village.setError(null);
+            v.setError(null);
         }
 
         if (talukS.isEmpty()) {
-            taluk.setError("Enter taluk");
+            t.setError("Enter taluk");
             return false;
         } else if(!talukS.matches("^[A-Za-z ]+$")) {
-            taluk.setError("Only alpha allowed");
+            t.setError("Only alpha allowed");
             return false;
         }else {
-            taluk.setError(null);
+            t.setError(null);
         }
 
         if (districtS.equals("Select a District")) {
-            districtT.setError("Enter district");
+            d.setError("Enter district");
             return false;
         } else {
-            districtT.setError(null);
+            d.setError(null);
         }
 
         if (stateS.equals("Select a State")) {
-            stateT.setError("Enter state");
+            st.setError("Enter state");
             return false;
         } else {
-            stateT.setError(null);
+            st.setError(null);
         }
 
         if (pinS.isEmpty()) {
-            pincode.setError("Enter pin code");
+            pin.setError("Enter pin code");
             return false;
         } else if(!pinS.matches("\\d{6}")) {
-            pincode.setError("Enter a valid pin code");
+            pin.setError("Enter a valid pin code");
             return false;
         } else {
-            pincode.setError(null);
+            pin.setError(null);
         }
 
         try {

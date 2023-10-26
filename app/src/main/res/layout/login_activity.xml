@@ -84,31 +84,41 @@
             android:layout_weight="4"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/username"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginBottom="10dp"
-                android:background="@drawable/edit_text_selector_bg"
-                android:drawableLeft="@drawable/user_icon_drawable"
-                android:drawablePadding="10dp"
-                android:hint="@string/username"
-                android:paddingLeft="10dp" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeWidth="2dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="55dp"
+                android:layout_marginBottom="20dp"
+                app:hintEnabled="true">
 
-            <EditText
-                android:id="@+id/password"
-                android:layout_width="300dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="15dp"
-                android:background="@drawable/edit_text_selector_bg"
-                android:drawableLeft="@drawable/pass_lock"
-                android:drawableRight="@drawable/pass_eye"
-                android:drawablePadding="10dp"
-                android:hint="@string/password"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/username"
+                    android:id="@+id/username"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeWidth="2dp"
+                android:layout_marginRight="55dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginBottom="20dp"
+                app:hintEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/password"
+                    android:id="@+id/password"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
 
         <LinearLayout

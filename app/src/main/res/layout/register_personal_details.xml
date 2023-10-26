@@ -46,98 +46,62 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:orientation="vertical">
+                app:boxBackgroundColor="@color/white"
+                android:id="@+id/reg_name"
+                app:boxStrokeWidth="2dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="20dp"
+                app:hintEnabled="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="@string/username" />
-
-                <EditText
-                    android:id="@+id/register_name"
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="10dp"
-                    android:drawableLeft="@drawable/user_icon_drawable"
-                    android:background="@drawable/edit_text_selector_bg"
-                    android:drawablePadding="10dp"
                     android:hint="@string/username"
-                    android:paddingLeft="10dp" />
+                    android:id="@+id/register_name"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:orientation="vertical">
+                app:boxBackgroundColor="@color/white"
+                android:id="@+id/reg_mobile"
+                app:boxStrokeWidth="2dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="20dp"
+                app:hintEnabled="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="@string/mobile" />
-
-                <EditText
+                    android:hint="@string/mobile"
                     android:id="@+id/register_mobile"
-                    android:inputType="number"
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
-                    android:drawableLeft="@drawable/phone_drawable"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/edit_text_selector_bg"
-                    android:drawablePadding="10dp"
-                    android:hint="00000000000"
-                    android:paddingLeft="10dp" />
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:orientation="vertical">
+                app:boxBackgroundColor="@color/white"
+                android:id="@+id/reg_dob"
+                app:boxStrokeWidth="2dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="20dp"
+                app:hintEnabled="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="@string/dob" />
-
-                <EditText
+                    android:hint="@string/dob"
                     android:id="@+id/register_dob"
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:drawableRight="@drawable/calendar_drawable"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/edit_text_selector_bg"
-                    android:drawablePadding="10dp"
-                    android:focusableInTouchMode="false"
-                    android:hint="dd/mm/yy"
-                    android:paddingRight="10dp"
-                    android:paddingLeft="10dp" />
-
-            </LinearLayout>
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
                 android:layout_width="300dp"
@@ -152,7 +116,6 @@
                     android:layout_height="wrap_content"
                     android:padding="5dp"
                     android:textSize="18dp"
-                    android:textStyle="bold"
                     android:textColor="@color/black"
                     android:text="@string/gender" />
 
@@ -179,301 +142,195 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:orientation="vertical">
+                app:boxBackgroundColor="@color/white"
+                android:id="@+id/reg_pass"
+                app:boxStrokeWidth="2dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="20dp"
+                app:hintEnabled="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="@string/password" />
-
-                <EditText
-                    android:id="@+id/register_password"
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/edit_text_selector_bg"
-                    android:drawableLeft="@drawable/pass_lock"
-                    android:drawableRight="@drawable/pass_eye"
-                    android:drawablePadding="10dp"
                     android:hint="@string/password"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp" />
-            </LinearLayout>
+                    android:id="@+id/register_password"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:orientation="vertical">
+                app:boxBackgroundColor="@color/white"
+                android:id="@+id/reg_conf_pass"
+                app:boxStrokeWidth="2dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="20dp"
+                app:hintEnabled="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="@string/confirm_password" />
-
-                <EditText
-                    android:id="@+id/register_confirm_password"
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/edit_text_selector_bg"
-                    android:drawablePadding="10dp"
-                    android:drawableLeft="@drawable/pass_lock"
-                    android:drawableRight="@drawable/pass_eye"
                     android:hint="@string/confirm_password"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp" />
-            </LinearLayout>
+                    android:id="@+id/register_confirm_password"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:orientation="vertical">
+                app:boxBackgroundColor="@color/white"
+                android:id="@+id/reg_fname"
+                app:boxStrokeWidth="2dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="20dp"
+                app:hintEnabled="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="@string/father_name" />
-
-                <EditText
-                    android:id="@+id/register_fathers_name"
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="10dp"
-                    android:drawableLeft="@drawable/user_icon_drawable"
-                    android:background="@drawable/edit_text_selector_bg"
-                    android:drawablePadding="10dp"
                     android:hint="@string/father_name"
-                    android:paddingLeft="10dp" />
+                    android:id="@+id/register_fathers_name"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:orientation="vertical">
+                app:boxBackgroundColor="@color/white"
+                android:id="@+id/reg_mname"
+                app:boxStrokeWidth="2dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="20dp"
+                app:hintEnabled="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="@string/mother_name" />
-
-                <EditText
-                    android:id="@+id/register_mothers_name"
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="10dp"
-                    android:drawableLeft="@drawable/user_icon_drawable"
-                    android:background="@drawable/edit_text_selector_bg"
-                    android:drawablePadding="10dp"
                     android:hint="@string/mother_name"
-                    android:paddingLeft="10dp" />
+                    android:id="@+id/register_mothers_name"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:orientation="vertical">
+                app:boxBackgroundColor="@color/white"
+                android:id="@+id/reg_occ"
+                app:boxStrokeWidth="2dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="20dp"
+                app:hintEnabled="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="@string/occupation" />
-
-                <EditText
-                    android:id="@+id/register_occupation"
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/edit_text_selector_bg"
-                    android:drawablePadding="10dp"
                     android:hint="@string/occupation"
-                    android:paddingLeft="10dp" />
+                    android:id="@+id/register_occupation"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:orientation="vertical">
+                app:boxBackgroundColor="@color/white"
+                android:id="@+id/reg_education"
+                app:boxStrokeWidth="2dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="20dp"
+                app:hintEnabled="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="@string/education" />
-
-                <EditText
-                    android:id="@+id/register_education"
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/edit_text_selector_bg"
-                    android:drawablePadding="10dp"
                     android:hint="@string/education"
-                    android:paddingLeft="10dp" />
+                    android:id="@+id/register_education"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:orientation="vertical">
+                app:boxBackgroundColor="@color/white"
+                android:id="@+id/reg_nop"
+                app:boxStrokeWidth="2dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="20dp"
+                app:hintEnabled="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="@string/nature_of_place" />
-
-                <EditText
-                    android:id="@+id/register_nop"
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/edit_text_selector_bg"
-                    android:drawablePadding="10dp"
                     android:hint="@string/nature_of_place"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp" />
-            </LinearLayout>
+                    android:id="@+id/register_nop"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:layout_gravity="center"
-                android:orientation="vertical">
+                app:boxBackgroundColor="@color/white"
+                android:id="@+id/reg_res"
+                app:boxStrokeWidth="2dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="20dp"
+                app:hintEnabled="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="@string/residence" />
-
-                <EditText
-                    android:id="@+id/register_residence"
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/edit_text_selector_bg"
-                    android:drawablePadding="10dp"
                     android:hint="@string/residence"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp" />
-            </LinearLayout>
+                    android:id="@+id/register_residence"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:padding="5dp"
-                android:orientation="vertical">
+                app:boxBackgroundColor="@color/white"
+                android:id="@+id/reg_caste"
+                app:boxStrokeWidth="2dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="20dp"
+                app:hintEnabled="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="@string/caste" />
-
-                <EditText
-                    android:id="@+id/register_caste"
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/edit_text_selector_bg"
-                    android:drawablePadding="10dp"
                     android:hint="@string/caste"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp" />
-            </LinearLayout>
+                    android:id="@+id/register_caste"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                android:layout_gravity="center"
-                android:orientation="vertical">
+                app:boxBackgroundColor="@color/white"
+                android:id="@+id/reg_religion"
+                app:boxStrokeWidth="2dp"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                android:layout_marginBottom="20dp"
+                app:hintEnabled="true">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="5dp"
-                    android:textSize="18dp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="@string/religion" />
-
-                <EditText
-                    android:id="@+id/register_religion"
-                    android:layout_width="300dp"
-                    android:layout_height="50dp"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="10dp"
-                    android:background="@drawable/edit_text_selector_bg"
-                    android:drawablePadding="10dp"
                     android:hint="@string/religion"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp" />
-            </LinearLayout>
+                    android:id="@+id/register_religion"
+                    android:inputType="text" />
+            </com.google.android.material.textfield.TextInputLayout>
 
 
 

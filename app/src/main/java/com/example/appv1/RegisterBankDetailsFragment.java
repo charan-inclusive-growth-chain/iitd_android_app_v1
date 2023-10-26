@@ -10,6 +10,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.example.appv1.R;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,7 +19,8 @@ import org.json.JSONObject;
 public class RegisterBankDetailsFragment extends Fragment
 {
     JSONObject registerAsFarmerJson;
-    EditText bank, branch, account, ifsc;
+    TextInputEditText bank, branch, account, ifsc;
+    TextInputLayout b, br, a, i;
     public RegisterBankDetailsFragment()
     {
         // Required empty public constructor
@@ -43,6 +46,11 @@ public class RegisterBankDetailsFragment extends Fragment
         branch = getView().findViewById(R.id.register_branch_name);
         account = getView().findViewById(R.id.register_bank_account_number);
         ifsc = getView().findViewById(R.id.register_bank_ifsc);
+
+        b = getView().findViewById(R.id.reg_bank_name);
+        br = getView().findViewById(R.id.reg_branch_name);
+        a = getView().findViewById(R.id.reg_account_no);
+        i = getView().findViewById(R.id.reg_ifsc);
         registerAsFarmerJson = RegisterActivity.getRegisterAsFarmerJson();
     }
 
@@ -53,43 +61,43 @@ public class RegisterBankDetailsFragment extends Fragment
         String ifscS = ifsc.getText().toString().trim();
 
         if (bankS.isEmpty()) {
-            bank.setError("Enter door number");
+            b.setError("Enter door number");
             return false;
         } else if(!bankS.matches("^[A-Za-z0-9 ]+$")) {
-            bank.setError("Incorrect format");
+            b.setError("Incorrect format");
             return false;
         }else {
-            bank.setError(null);
+            b.setError(null);
         }
 
         if (branchS.isEmpty()) {
-            branch.setError("Enter branch name");
+            br.setError("Enter branch name");
             return false;
         } else if(!branchS.matches("^[A-Za-z0-9 ]+$")) {
-            branch.setError("Incorrect format");
+            br.setError("Incorrect format");
             return false;
         }else {
-            branch.setError(null);
+            br.setError(null);
         }
 
         if (accountS.isEmpty()) {
-            account.setError("Enter account number");
+            a.setError("Enter account number");
             return false;
         } else if(!accountS.matches("^[0-9]+$")) {
-            account.setError("Only numbers allowed");
+            a.setError("Only numbers allowed");
             return false;
         }else {
-            account.setError(null);
+            a.setError(null);
         }
 
         if (ifscS.isEmpty()) {
-            ifsc.setError("Enter IFSC");
+            i.setError("Enter IFSC");
             return false;
         } else if(!ifscS.matches("^[A-Za-z0-9]+$")) {
-            ifsc.setError("Incorrect format");
+            i.setError("Incorrect format");
             return false;
         }else {
-            ifsc.setError(null);
+            i.setError(null);
         }
 
         try {
