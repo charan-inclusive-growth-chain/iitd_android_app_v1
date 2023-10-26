@@ -2,12 +2,28 @@ package com.example.appv1;
 
 import android.os.Bundle;
 import androidx.fragment.app.Fragment;
+
+import android.util.Log;
 import android.widget.AdapterView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 import com.example.appv1.databinding.FragmentSellToFPOTabBinding;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -63,27 +79,82 @@ public class SellToFPOTabFrag extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         binding = FragmentSellToFPOTabBinding.inflate(inflater,container,false);
-
         View view = binding.getRoot();
-        String[] flowerName = {"Rose", "Lotus", "Lily", "Jasmine",
-                "Tulip", "Orchid", "Levender", "RoseMarry", "Sunflower", "Carnation"};
-        int[] flowerImages = {
-                R.drawable.apples, R.drawable.brinjals, R.drawable.carrots, R.drawable.figs,
-                R.drawable.guavas, R.drawable.lemons, R.drawable.mangoes,
-                R.drawable.pineapples, R.drawable.strawberries, R.drawable.testimage
-        };
-        GridAdapter gridAdapter = new GridAdapter(requireActivity(), flowerName, flowerImages);
-        binding.gridView.setAdapter(gridAdapter);
+        loadTrainingData();
+        return view;
+    }
 
-        binding.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+    private void loadTrainingData() {
+        String url = getContext().getString(R.string.url) + "/farmer/fpo/lacproducts";
+        String token = LoginActivity.getToken(getContext()); // Use getContext() to get the context
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", "Bearer " + token)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(requireContext(), "You Clicked on " + flowerName[position], Toast.LENGTH_SHORT).show();
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String responseData = response.body().string();
+                    try {
+                        JSONObject responseObject = new JSONObject(responseData);
+                        JSONArray dataArray = responseObject.getJSONArray("data");
+                        Log.d("Sell Data", dataArray.toString());
+
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                populateTrainingUpdates(dataArray);
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
+    }
 
+    private void populateTrainingUpdates(JSONArray dataArray) {
+        List<String> itemNames = new ArrayList<>();
+        List<String> fpoPrices = new ArrayList<>();
+        List<String> marketPrices = new ArrayList<>();
+        List<String> images = new ArrayList<>();
 
-        return view;
+        for (int i = 0; i < dataArray.length(); i++) {
+            try {
+                JSONObject trainingObj = dataArray.getJSONObject(i);
 
+                String available = trainingObj.getString("isDeleted");
+                if (available.equals("true")) continue;
+
+                String productName = trainingObj.getString("productName");
+                String capitalizedProductName = productName.substring(0, 1).toUpperCase() + productName.substring(1);
+
+                String marketPrice = trainingObj.getString("marketPrice");
+                String fpoPrice = trainingObj.getString("fpoPrice");
+                String imageUrl = trainingObj.getString("imageUrl");
+
+                itemNames.add(capitalizedProductName);
+                fpoPrices.add(fpoPrice);
+                marketPrices.add(marketPrice);
+                images.add(imageUrl);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Create an adapter to populate the GridView
+        StoreAdapter gridAdapter = new StoreAdapter(requireActivity(), itemNames, images, fpoPrices, marketPrices);
+        binding.gridView.setAdapter(gridAdapter);
     }
 }
