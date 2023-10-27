@@ -368,4 +368,6 @@ public class LoginActivity extends AppCompatActivity
         String id = preferences.getString("farmerId", "");
         return id;
     }
+
+
 }

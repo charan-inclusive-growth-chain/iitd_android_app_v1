@@ -97,6 +97,10 @@
     <string name="last_updated_date">Last Updated at</string>
     <string name="read_more">Read More</string>
 
+    <!-- Loan Page -->
+    <string name="loan_app_details">Loan Application Details</string>
+    <string name="name">Name</string>
+
     <!-- Profile Page -->
     <string name="personal_information">Personal Information</string>
     <string name="profile_update">Profile Update</string>
@@ -126,6 +130,8 @@
     <string name="male">Male</string>
     <string name="female">Female</string>
     <string name="co_applicant_age">Co-Applicant Age</string>
+    <string name="co_applicant_gender">Co-Applicant Gender</string>
+    <string name="co_app_dob">Co-Applicant Date of Birth</string>
     <string name="relationship">Relationship with Applicant</string>
     <string name="land_holding">Land Holding</string>
     <string name="type_of_land_holding">Type of Land Holding</string>

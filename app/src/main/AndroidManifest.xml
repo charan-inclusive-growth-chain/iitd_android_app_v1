@@ -46,6 +46,14 @@
             android:name=".RegisterActivity"
             android:exported="true">
         </activity>
+        <activity
+            android:name=".LoanDetailApprovedActivity"
+            android:exported="true">
+        </activity>
+        <activity
+            android:name=".LoanApplicationDetailsActivity"
+            android:exported="true">
+        </activity>
     </application>
 
 </manifest>
