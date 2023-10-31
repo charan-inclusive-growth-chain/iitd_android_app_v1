@@ -51,6 +51,7 @@
         app:layout_marginBaseline="@dimen/cardview_compat_inset_shadow">
 
         <TableLayout
+            android:id="@+id/transaction_table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
@@ -88,64 +89,6 @@
                     android:text="Amount"
                     android:textAppearance="?android:attr/textAppearanceMedium" />
 
-
-            </TableRow>
-
-            <!-- Sample Data Row (You can add more rows dynamically) -->
-            <TableRow android:paddingTop="10dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Item A" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="5" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="10.00" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="50.00" />
-
-            </TableRow>
-
-            <!-- Sample Data Row (You can add more rows dynamically) -->
-            <TableRow android:paddingTop="10dp">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="Item B" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="7" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="90.00" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="64.00" />
 
             </TableRow>
         </TableLayout>

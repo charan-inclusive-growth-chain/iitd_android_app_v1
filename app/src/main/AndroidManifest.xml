@@ -54,6 +54,8 @@
             android:name=".LoanApplicationDetailsActivity"
             android:exported="true">
         </activity>
+        <activity android:name=".TransactionDetailsActivity"
+            android:exported="true"></activity>
     </application>
 
 </manifest>
