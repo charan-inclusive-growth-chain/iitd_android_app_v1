@@ -127,6 +127,9 @@ public class MainActivity extends AppCompatActivity {
                 else if(id == R.id.menu_profile) {
                     replaceFragment(new ProfileFrag());
                 }
+                else if(id == R.id.menu_myproduce) {
+                    replaceFragment(new MyProduceFrag());
+                }
 
                 return true;
             }
