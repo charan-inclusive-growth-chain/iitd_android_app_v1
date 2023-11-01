@@ -55,8 +55,8 @@
                 app:boxBackgroundColor="@color/white"
                 android:id="@+id/reg_aadhar_no"
                 app:boxStrokeWidth="2dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 
@@ -74,8 +74,8 @@
                 app:boxBackgroundColor="@color/white"
                 android:id="@+id/reg_pan_no"
                 app:boxStrokeWidth="2dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 

@@ -53,8 +53,8 @@
                 app:boxBackgroundColor="@color/white"
                 android:id="@+id/reg_door_no"
                 app:boxStrokeWidth="2dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 
@@ -72,8 +72,8 @@
                 app:boxBackgroundColor="@color/white"
                 app:boxStrokeWidth="2dp"
                 android:id="@+id/reg_street"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 
@@ -91,8 +91,8 @@
                 app:boxBackgroundColor="@color/white"
                 app:boxStrokeWidth="2dp"
                 android:id="@+id/reg_v"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 
@@ -111,8 +111,8 @@
                 app:boxBackgroundColor="@color/white"
                 app:boxStrokeWidth="2dp"
                 android:id="@+id/reg_t"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 
@@ -130,8 +130,8 @@
                 app:boxBackgroundColor="@color/white"
                 app:boxStrokeWidth="2dp"
                 android:id="@+id/reg_d"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 
@@ -150,8 +150,8 @@
                 app:boxBackgroundColor="@color/white"
                 app:boxStrokeWidth="2dp"
                 android:id="@+id/reg_st"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 
@@ -170,8 +170,8 @@
                 app:boxBackgroundColor="@color/white"
                 app:boxStrokeWidth="2dp"
                 android:id="@+id/reg_pin"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 

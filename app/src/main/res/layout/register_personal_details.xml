@@ -52,8 +52,8 @@
                 app:boxBackgroundColor="@color/white"
                 android:id="@+id/reg_name"
                 app:boxStrokeWidth="2dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 
@@ -71,8 +71,8 @@
                 app:boxBackgroundColor="@color/white"
                 android:id="@+id/reg_mobile"
                 app:boxStrokeWidth="2dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 
@@ -90,8 +90,8 @@
                 app:boxBackgroundColor="@color/white"
                 android:id="@+id/reg_dob"
                 app:boxStrokeWidth="2dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 
@@ -107,36 +107,38 @@
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:orientation="vertical"
                 android:padding="5dp"
-                android:paddingRight="20dp"
-                android:orientation="vertical">
+                android:paddingRight="20dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="5dp"
-                    android:textSize="18dp"
+                    android:text="@string/gender"
                     android:textColor="@color/black"
-                    android:text="@string/gender" />
+                    android:textSize="18dp" />
 
                 <RadioGroup
+                    android:id="@+id/gender_radio_group"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:id="@+id/gender_radio_group">
+                    android:orientation="horizontal">
+
                     <RadioButton
                         android:id="@+id/radio_pirates"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
                         android:text="@string/male" />
+
                     <RadioButton
                         android:id="@+id/radio_ninjas"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1"
                         android:layout_gravity="center_horizontal"
+                        android:layout_weight="1"
                         android:text="@string/female" />
                 </RadioGroup>
 
@@ -148,8 +150,8 @@
                 app:boxBackgroundColor="@color/white"
                 android:id="@+id/reg_pass"
                 app:boxStrokeWidth="2dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 
@@ -167,8 +169,8 @@
                 app:boxBackgroundColor="@color/white"
                 android:id="@+id/reg_conf_pass"
                 app:boxStrokeWidth="2dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 
@@ -186,8 +188,8 @@
                 app:boxBackgroundColor="@color/white"
                 android:id="@+id/reg_fname"
                 app:boxStrokeWidth="2dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 
@@ -205,8 +207,8 @@
                 app:boxBackgroundColor="@color/white"
                 android:id="@+id/reg_mname"
                 app:boxStrokeWidth="2dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 
@@ -224,8 +226,8 @@
                 app:boxBackgroundColor="@color/white"
                 android:id="@+id/reg_occ"
                 app:boxStrokeWidth="2dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 
@@ -243,8 +245,8 @@
                 app:boxBackgroundColor="@color/white"
                 android:id="@+id/reg_education"
                 app:boxStrokeWidth="2dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 
@@ -262,8 +264,8 @@
                 app:boxBackgroundColor="@color/white"
                 android:id="@+id/reg_nop"
                 app:boxStrokeWidth="2dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 
@@ -281,8 +283,8 @@
                 app:boxBackgroundColor="@color/white"
                 android:id="@+id/reg_res"
                 app:boxStrokeWidth="2dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 
@@ -300,8 +302,8 @@
                 app:boxBackgroundColor="@color/white"
                 android:id="@+id/reg_caste"
                 app:boxStrokeWidth="2dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 
@@ -319,8 +321,8 @@
                 app:boxBackgroundColor="@color/white"
                 android:id="@+id/reg_religion"
                 app:boxStrokeWidth="2dp"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="50dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
                 app:hintEnabled="true">
 

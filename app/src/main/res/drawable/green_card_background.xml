@@ -1,9 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/white" />
-            <corners android:radius="20dp" />
+            <solid android:color="@color/primary_green" />
+            <corners android:radius="10dp" />
         </shape>
     </item>
 
@@ -13,7 +12,19 @@
         android:right="0dp"
         android:top="0dp">
         <shape android:shape="rectangle">
-            <solid android:color="@color/light_green" />
+            <gradient
+                android:startColor="@color/primary_green"
+                android:centerColor="@color/darker_green"
+                android:endColor="@color/primary_green"
+                android:centerY="0.3"
+                android:angle="135" />
+            <corners android:radius="10dp" />
+        </shape>
+    </item>
+
+    <item android:right="4dp" android:left="4dp" android:bottom="4dp">
+        <shape android:shape="rectangle">
+            <solid android:color="#08000000" />
             <corners android:radius="10dp" />
         </shape>
     </item>
