@@ -262,7 +262,7 @@ public class LoginActivity extends AppCompatActivity
                     String responseData = response.body().string();
                     try {
                         JSONObject jsonResponse = new JSONObject(responseData);
-                        Log.d("Response", jsonResponse.toString());
+                        Log.d("User", jsonResponse.toString());
                         boolean loginSuccessful = !isNull(jsonResponse.toString());
                         if (loginSuccessful) {
 

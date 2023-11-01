@@ -1,5 +1,7 @@
 package com.example.appv1;
 
+import static androidx.core.content.ContentProviderCompat.requireContext;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
@@ -9,6 +11,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -84,12 +87,21 @@ public class MainActivity extends AppCompatActivity {
                     replaceFragment(new SellFrag());
                 } else if (id == R.id.menu_transaction) {
                     replaceFragment(new TransactionHistoryFrag());
+                }else if (id == R.id.menu_training) {
+                    replaceFragment(new TrainingUpdatesFrag());
                 } else if (id == R.id.menu_cropadvisory) {
+                    replaceFragment(new CropAdvisoryFrag());
                     Toast.makeText(MainActivity.this, "Crop Advisory is Clicked", Toast.LENGTH_SHORT).show();
                 } else if (id == R.id.menu_chatbot) {
                     Toast.makeText(MainActivity.this, "Chatbot is Clicked", Toast.LENGTH_SHORT).show();
                 } else if (id == R.id.menu_logout) {
-                    Toast.makeText(MainActivity.this, "Logout is Clicked", Toast.LENGTH_SHORT).show();
+                    SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+                    SharedPreferences.Editor editor = preferences.edit();
+                    editor.putBoolean("user_logged_in", false);
+                    editor.apply();
+                    Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(loginIntent);
+                    finish();
                 } else if (id == R.id.menu_settings) {
                     Toast.makeText(MainActivity.this, "Settings is Clicked", Toast.LENGTH_SHORT).show();
                 }

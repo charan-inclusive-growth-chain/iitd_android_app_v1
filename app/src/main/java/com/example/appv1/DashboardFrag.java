@@ -1,4 +1,5 @@
 package com.example.appv1;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -214,18 +215,27 @@ public class DashboardFrag extends Fragment {
             transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
             fragmentClass = LoanListFrag.class;
         } else if (item == R.id.menu_cropadvisory) {
-            flag = (currentFragment instanceof LoanDetailTempFrag) ? false : true;
+            flag = (currentFragment instanceof CropAdvisoryFrag) ? false : true;
             transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
-            fragmentClass = LoanDetailTempFrag.class;
+            fragmentClass = CropAdvisoryFrag.class;
         } else if (item == R.id.menu_training) {
-            flag = (currentFragment instanceof LoanListFrag) ? false : true;
+            flag = (currentFragment instanceof TrainingUpdatesFrag) ? false : true;
             transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
-            fragmentClass = LoanListFrag.class;
+            fragmentClass = TrainingUpdatesFrag.class;
         }
+
         else if(item == R.id.menu_profile) {
             flag = (currentFragment instanceof ProfileFrag) ? false : true;
             transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
             fragmentClass = ProfileFrag.class;
+        }
+        else if(item == R.id.menu_logout) {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(requireContext());
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.putBoolean("user_logged_in", false);
+            editor.apply();
+            Intent intent = new Intent(getContext(), LoginActivity.class);
+            startActivity(intent);
         }
 
 
