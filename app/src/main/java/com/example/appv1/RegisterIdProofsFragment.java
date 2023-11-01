@@ -3,8 +3,10 @@ package com.example.appv1;
 import android.Manifest;
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -18,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
+import org.bson.types.ObjectId;
 
 
 import androidx.annotation.Nullable;
@@ -33,6 +36,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -144,6 +148,8 @@ public class RegisterIdProofsFragment extends Fragment
         } else if(!aadharNoS.matches("^[0-9]+$")) {
             aadharno.setError("Only numbers allowed");
             return false;
+        } else if(aadharNoS.length() != 12) {
+            aadharno.setError("Aadhar card number must be 12 digits long");
         }else {
             aadharno.setError(null);
         }
@@ -174,7 +180,8 @@ public class RegisterIdProofsFragment extends Fragment
             registerAsFarmerJson.put("panCardImage", selectedPanCard.toString().trim());
             registerAsFarmerJson.put("aadharCardNumber", aadharNoS);
             registerAsFarmerJson.put("aadharCardImage", selectedAadharCard.toString().trim());
-            registerAsFarmerJson.put("fpoId", fpoS);
+            ObjectId objectId = new ObjectId(selectedFPOId);
+            registerAsFarmerJson.put("fpoId", objectId);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -226,31 +233,49 @@ public class RegisterIdProofsFragment extends Fragment
         startActivityForResult(chooserIntent, code);
     }
 
-
-
     // Method to get the absolute path of the selected image from its URI
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == PICK_PHOTO_CODE_AADHAR) {
-                selectedAadharCard = data.getData();
-            } else if (requestCode == PICK_PHOTO_CODE_PAN) {
-                selectedPanCard = data.getData();
-            }
-            if (selectedAadharCard != null) {
-                String imageMimeType = getMimeType(selectedAadharCard);
-                if (!isValidImageFormat(imageMimeType)) {
-                    aadharT.setError("Invalid image format");
+            if (requestCode == PICK_PHOTO_CODE_AADHAR || requestCode == PICK_PHOTO_CODE_PAN) {
+                Uri selectedImage = (data == null || requestCode == PICK_PHOTO_CODE_PAN) ? selectedPanCard : selectedAadharCard;
+
+                if (data != null && data.getData() != null) {
+                    selectedImage = data.getData();
+                } else if (data != null && data.getExtras() != null) {
+                    // Handle camera capture
+                    Bitmap photo = (Bitmap) data.getExtras().get("data");
+                    selectedImage = getImageUri(getContext(), photo);
                 }
-            } else if (selectedPanCard != null) {
-                String imageMimeType2 = getMimeType(selectedPanCard);
-                if (!isValidImageFormat(imageMimeType2)) {
-                    panT.setError("Invalid image format");
+
+                // Store the selected URI based on the request code
+                if (requestCode == PICK_PHOTO_CODE_AADHAR) {
+                    selectedAadharCard = selectedImage;
+                } else if (requestCode == PICK_PHOTO_CODE_PAN) {
+                    selectedPanCard = selectedImage;
+                }
+
+                // Handle and validate the selected image here
+                String imageMimeType = getMimeType(selectedImage);
+                if (!isValidImageFormat(imageMimeType)) {
+                    if (requestCode == PICK_PHOTO_CODE_AADHAR) {
+                        aadharT.setError("Invalid image format");
+                    } else if (requestCode == PICK_PHOTO_CODE_PAN) {
+                        panT.setError("Invalid image format");
+                    }
                 }
             }
         }
     }
+
+    private Uri getImageUri(Context context, Bitmap bitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "Title", null);
+        return Uri.parse(path);
+    }
+
 
     private boolean isValidImageFormat(String mimeType) {
         return mimeType != null && (mimeType.equals("image/png") || mimeType.equals("image/jpeg") ||

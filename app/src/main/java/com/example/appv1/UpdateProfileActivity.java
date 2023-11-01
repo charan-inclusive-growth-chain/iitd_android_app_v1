@@ -264,6 +264,7 @@ public class UpdateProfileActivity extends AppCompatActivity {
 				client.newCall(request).enqueue(new Callback() {
 					@Override
 					public void onFailure(Call call, IOException e) {
+						Log.d("Patch Error", e.toString());
 						e.printStackTrace();
 					}
 

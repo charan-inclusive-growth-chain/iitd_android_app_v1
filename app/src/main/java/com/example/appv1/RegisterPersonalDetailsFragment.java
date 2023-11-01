@@ -156,14 +156,19 @@ public class RegisterPersonalDetailsFragment extends Fragment
         if (dobS.isEmpty()) {
             dob.setError("Select DOB");
             return false;
-        } else {
+        } else if(age <= 15) {
+            dob.setError("Age must be greater than 15");
+        }else {
             dob.setError(null);
         }
 
         if (passwordS.isEmpty()) {
             pass.setError("Enter password");
             return false;
-        } else {
+        }
+        else if(passwordS.length() < 6) {
+            pass.setError("Password must be at least 6 characters long");
+        }else {
             pass.setError(null);
         }
 
@@ -261,14 +266,14 @@ public class RegisterPersonalDetailsFragment extends Fragment
             registerAsFarmerJson.put("mobile", mobileS);
             registerAsFarmerJson.put("password", passwordS);
             registerAsFarmerJson.put("confirmPassword", confirmS);
-            registerAsFarmerJson.put("dateOfBirth", dobS);
+            registerAsFarmerJson.put("DOB", dobS);
             registerAsFarmerJson.put("age", ageS);
             registerAsFarmerJson.put("gender", gender);
-            registerAsFarmerJson.put("fatherName", fatherS);
-            registerAsFarmerJson.put("motherName", motherS);
+            registerAsFarmerJson.put("fathersName", fatherS);
+            registerAsFarmerJson.put("mothersName", motherS);
             registerAsFarmerJson.put("occupation", occupationS);
             registerAsFarmerJson.put("education", educationS);
-            registerAsFarmerJson.put("natureOfPlace", nopS);
+            registerAsFarmerJson.put("natureOfplace", nopS);
             registerAsFarmerJson.put("residence", residenceS);
             registerAsFarmerJson.put("caste", casteS);
             registerAsFarmerJson.put("religion", religionS);
