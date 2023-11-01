@@ -232,6 +232,11 @@ public class DashboardFrag extends Fragment {
             transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
             fragmentClass = VoiceBotFrag.class;
         }
+        else if(item == R.id.menu_myproduce) {
+            flag = (currentFragment instanceof MyProduceFrag) ? false : true;
+            transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+            fragmentClass = MyProduceFrag.class;
+        }
 
 
         try

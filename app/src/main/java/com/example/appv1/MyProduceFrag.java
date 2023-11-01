@@ -1,26 +1,31 @@
 package com.example.appv1;
 
 import android.os.Bundle;
-
 import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
+import android.widget.Toast;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link MyProduceFrag#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class MyProduceFrag extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    GridView gridView;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -28,15 +33,6 @@ public class MyProduceFrag extends Fragment {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment MyProduceFrag.
-     */
-    // TODO: Rename and change types and number of parameters
     public static MyProduceFrag newInstance(String param1, String param2) {
         MyProduceFrag fragment = new MyProduceFrag();
         Bundle args = new Bundle();
@@ -58,7 +54,82 @@ public class MyProduceFrag extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_my_produce, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_my_produce, container, false);
+        gridView = rootView.findViewById(R.id.gridView);
+        loadTrainingData();
+        return rootView;
+    }
+
+    public void loadTrainingData() {
+        String url = getContext().getString(R.string.url) + "/farmer/produce";
+        String token = LoginActivity.getToken(getContext());
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", "Bearer " + token)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String responseData = response.body().string();
+                    try {
+                        JSONObject responseObject = new JSONObject(responseData);
+                        JSONArray dataArray = responseObject.getJSONArray("data");
+                        Log.d("Produce Data", dataArray.toString());
+
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                populateProduceItems(dataArray);
+                            }
+                        });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+    private void populateProduceItems(JSONArray dataArray) {
+        List<String> lacStrainTypeList = new ArrayList<>();
+        List<String> originList = new ArrayList<>();
+        List<String> sourceList = new ArrayList<>();
+        List<String> quantityList = new ArrayList<>();
+        List<String> remarksList = new ArrayList<>();
+        List<String> imageUrlList = new ArrayList();
+
+        for (int i = 0; i < dataArray.length(); i++) {
+            try {
+                JSONObject produceObj = dataArray.getJSONObject(i);
+
+                String lacStrainValue = produceObj.getString("lacStrainType");
+                String originValue = produceObj.getString("origin");
+                String sourceValue = produceObj.getString("treeSource");
+                String quantityValue = produceObj.getString("quantity");
+                String imageUrl = produceObj.getString("imageUrl");
+                String remarksValue = produceObj.getString("remarks");
+
+                lacStrainTypeList.add(lacStrainValue);
+                originList.add(originValue);
+                sourceList.add(sourceValue);
+                imageUrlList.add(imageUrl);
+                quantityList.add(quantityValue);
+                remarksList.add(remarksValue);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        MyProduceAdapter produceAdapter = new MyProduceAdapter(requireActivity(), lacStrainTypeList, originList, sourceList, quantityList, remarksList, imageUrlList);
+        gridView.setAdapter(produceAdapter);
+        // Now, you can use produceAdapter with your GridView to display the data.
     }
 }
