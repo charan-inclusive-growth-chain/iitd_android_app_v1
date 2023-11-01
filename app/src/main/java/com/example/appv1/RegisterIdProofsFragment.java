@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -181,23 +182,19 @@ public class RegisterIdProofsFragment extends Fragment
         return true;
     }
 
-    private void addOnClickListenerForAadharCardButton()
-    {
-        aadharCardButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override public void onClick(View v)
-            {
+    private void addOnClickListenerForAadharCardButton() {
+        aadharCardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 pick(PICK_PHOTO_CODE_AADHAR);
             }
         });
     }
 
-    private void addOnClickListenerForPanCardButton()
-    {
-        panCardButton.setOnClickListener(new View.OnClickListener()
-        {
-            @Override public void onClick(View v)
-            {
+    private void addOnClickListenerForPanCardButton() {
+        panCardButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 pick(PICK_PHOTO_CODE_PAN);
             }
         });
@@ -205,61 +202,59 @@ public class RegisterIdProofsFragment extends Fragment
 
     public void pick(int code) {
         String[] mimeTypes = {"image/png", "image/jpeg", "image/jpg", "image/jfif", "image/img"};
-        Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+
+        // Create the gallery intent
+        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
         galleryIntent.setType("image/*");
         galleryIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
 
+        // Create the camera intent
         Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        // Check for camera permission
         if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
                 != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions((Activity) requireContext(),
-                    new String[]{Manifest.permission.CAMERA},
-                    CAMERA_PERMISSION_REQUEST_CODE);
-        } else {
-            startActivityForResult(cameraIntent, code);
+            // Request camera permission
+            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
+            return; // Return early if permission is not granted
         }
 
-        Intent chooserIntent = Intent.createChooser(galleryIntent, "Open Gallery");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] { cameraIntent });
+        // Create an intent chooser that allows the user to select either camera or gallery
+        Intent chooserIntent = Intent.createChooser(galleryIntent, "Choose an image source");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{cameraIntent});
 
         startActivityForResult(chooserIntent, code);
     }
 
 
+
     // Method to get the absolute path of the selected image from its URI
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == getActivity().RESULT_OK)
-        {
-            switch(requestCode)
-            {
-                case PICK_PHOTO_CODE_AADHAR:
-                    selectedAadharCard = data.getData();
-                    String imageMimeType = getMimeType(selectedAadharCard);
-                    if (!imageMimeType.equals("image/png") &&
-                            !imageMimeType.equals("image/jpeg") &&
-                            !imageMimeType.equals("image/jpg") &&
-                            !imageMimeType.equals("image/jfif") &&
-                            !imageMimeType.equals("image/img")) {
-                        aadharT.setError("Invalid image format");
-                    }
-                    break;
-                case PICK_PHOTO_CODE_PAN:
-                    selectedPanCard = data.getData();
-                    String imageMimeType2 = getMimeType(selectedPanCard);
-                    if (!imageMimeType2.equals("image/png") &&
-                            !imageMimeType2.equals("image/jpeg") &&
-                            !imageMimeType2.equals("image/jpg") &&
-                            !imageMimeType2.equals("image/jfif") &&
-                            !imageMimeType2.equals("image/img")) {
-                        aadharT.setError("Invalid image format");
-                    }
-                    break;
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == PICK_PHOTO_CODE_AADHAR) {
+                selectedAadharCard = data.getData();
+            } else if (requestCode == PICK_PHOTO_CODE_PAN) {
+                selectedPanCard = data.getData();
             }
-
+            if (selectedAadharCard != null) {
+                String imageMimeType = getMimeType(selectedAadharCard);
+                if (!isValidImageFormat(imageMimeType)) {
+                    aadharT.setError("Invalid image format");
+                }
+            } else if (selectedPanCard != null) {
+                String imageMimeType2 = getMimeType(selectedPanCard);
+                if (!isValidImageFormat(imageMimeType2)) {
+                    panT.setError("Invalid image format");
+                }
+            }
         }
+    }
+
+    private boolean isValidImageFormat(String mimeType) {
+        return mimeType != null && (mimeType.equals("image/png") || mimeType.equals("image/jpeg") ||
+                mimeType.equals("image/jpg") || mimeType.equals("image/jfif") || mimeType.equals("image/img"));
     }
 
     private String getMimeType(Uri uri) {
@@ -271,8 +266,9 @@ public class RegisterIdProofsFragment extends Fragment
         return mimeType;
     }
 
+
     private void fetchFPOOptions() {
-        String url = getContext().getString(R.string.url) + "/signup/fpo";
+        String url = getContext().getString(R.string.url) + "/list/fpo";
 
         OkHttpClient client = new OkHttpClient();
 
@@ -295,6 +291,7 @@ public class RegisterIdProofsFragment extends Fragment
                         // Parse the JSON response and extract the FPO options
                         JSONObject responseObject = new JSONObject(responseData);
                         JSONArray fpoArray = responseObject.getJSONArray("data");
+                        Log.d("FPO Options", fpoArray.toString());
                         fpoOptions = extractFPOOptions(fpoArray);
 
                         // Update the UI on the main thread
