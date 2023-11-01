@@ -227,6 +227,11 @@ public class DashboardFrag extends Fragment {
             transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
             fragmentClass = ProfileFrag.class;
         }
+        else if(item == R.id.menu_chatbot) {
+            flag = (currentFragment instanceof VoiceBotFrag) ? false : true;
+            transaction.setCustomAnimations(R.anim.enter_from_left, R.anim.exit_to_right, R.anim.enter_from_right, R.anim.exit_to_left);
+            fragmentClass = VoiceBotFrag.class;
+        }
 
 
         try

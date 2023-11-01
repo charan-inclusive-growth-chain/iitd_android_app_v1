@@ -91,6 +91,7 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="25dp"
                 android:layout_marginBottom="20dp"
+
                 app:hintEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -98,6 +99,8 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/username"
                     android:id="@+id/username"
+                    android:drawableLeft="@drawable/user_icon_drawable"
+                    android:drawablePadding="10dp"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -106,6 +109,7 @@
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/white"
                 app:boxStrokeWidth="2dp"
+
                 android:layout_marginRight="25dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginBottom="20dp"
@@ -115,7 +119,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
+
                     android:id="@+id/password"
+                    android:drawableLeft="@drawable/pass_lock"
+                    android:drawableRight="@drawable/pass_eye"
+                    android:drawablePadding="10dp"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>

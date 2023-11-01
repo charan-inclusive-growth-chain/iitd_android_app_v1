@@ -43,8 +43,12 @@
 
         <item
             android:id="@+id/menu_chatbot"
-            android:icon="@drawable/ic_baseline_message_24"
+            android:icon="@drawable/baseline_mic_24"
             android:title="ChatBot" />
+        <item
+            android:id="@+id/menu_myproduce"
+            android:icon="@drawable/baseline_warehouse_24"
+            android:title="My Produce" />
 
 
 

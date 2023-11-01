@@ -135,7 +135,7 @@ public class LoginActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                Toast.makeText(getApplicationContext(), "login button", Toast.LENGTH_SHORT).show();
+                // Toast.makeText(getApplicationContext(), "login button", Toast.LENGTH_SHORT).show();
                 String userName = String.valueOf(userNameNode.getText());
                 String password = String.valueOf(passwordNode.getText());
 

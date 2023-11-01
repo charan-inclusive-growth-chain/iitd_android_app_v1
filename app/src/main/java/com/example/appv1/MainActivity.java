@@ -2,21 +2,27 @@ package com.example.appv1;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -38,14 +44,23 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int REQUEST_AUDIO_PERMISSION_CODE = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Window window = getWindow();
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.light_green));
         MaterialToolbar toolbar = findViewById(R.id.topAppBar);
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.navigation_view);
+//
+        if(!CheckPermissions()) {
+            RequestPermissions();
+        }
+
         replaceFragment(new DashboardFrag());
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,6 +80,10 @@ public class MainActivity extends AppCompatActivity {
                 replaceFragment(new ProfileFrag());
             }
         });
+
+
+
+
 
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -87,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 } else if (id == R.id.menu_cropadvisory) {
                     Toast.makeText(MainActivity.this, "Crop Advisory is Clicked", Toast.LENGTH_SHORT).show();
                 } else if (id == R.id.menu_chatbot) {
-                    Toast.makeText(MainActivity.this, "Chatbot is Clicked", Toast.LENGTH_SHORT).show();
+                    replaceFragment(new VoiceBotFrag());
                 } else if (id == R.id.menu_logout) {
                     Toast.makeText(MainActivity.this, "Logout is Clicked", Toast.LENGTH_SHORT).show();
                 } else if (id == R.id.menu_settings) {
@@ -102,6 +121,60 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public boolean CheckPermissions() {
+        int result = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.RECORD_AUDIO);
+        int result1;
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            result1 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_MEDIA_AUDIO);
+        }
+        else {
+            result1 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
+//        int result1 = ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        boolean LogResult = result ==  PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED;
+        Log.d("Debug", "The Result of the checkpermission function is " + LogResult);
+        return result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED;
+    }
+
+    private void RequestPermissions() {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            Toast.makeText(getApplicationContext(), "Android Version 13+", Toast.LENGTH_SHORT).show();
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.READ_MEDIA_AUDIO}, REQUEST_AUDIO_PERMISSION_CODE);
+
+        }
+        else {
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_AUDIO_PERMISSION_CODE);
+        }
+        // ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.RECORD_AUDIO, Manifest.permission.WRITE_EXTERNAL_STORAGE}, REQUEST_AUDIO_PERMISSION_CODE);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_AUDIO_PERMISSION_CODE) {
+            if (grantResults.length > 0) {
+                boolean permissionToRecord = grantResults[0] == PackageManager.PERMISSION_GRANTED;
+                boolean permissionToStore = grantResults[1] == PackageManager.PERMISSION_GRANTED;
+
+                if (permissionToRecord && permissionToStore) {
+                    Toast.makeText(getApplicationContext(), "Permissions Granted", Toast.LENGTH_LONG).show();
+                } else {
+                    StringBuilder deniedPermissions = new StringBuilder("Denied Permissions: ");
+
+                    if (!permissionToRecord) {
+                        deniedPermissions.append("Record Audio ");
+                    }
+
+                    if (!permissionToStore) {
+                        deniedPermissions.append("Write to Storage ");
+                    }
+
+                    Toast.makeText(getApplicationContext(), deniedPermissions.toString(), Toast.LENGTH_LONG).show();
+                }
+            }
+        }
     }
 
     private void replaceFragment(Fragment fragment){
