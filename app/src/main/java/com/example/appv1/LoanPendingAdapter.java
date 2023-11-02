@@ -42,10 +42,10 @@ public class LoanPendingAdapter extends ArrayAdapter<JSONObject> {
             String pendingStatus = loanObject.getString("fpoApprovalStatus");
 
             if(pendingStatus.equals("in-process")) {
-                pendingStatus = "Waiting for FPO Approval."
+                pendingStatus = "Waiting for FPO Approval.";
             }
             else {
-                pendingStatus = "Waiting for Samunnati Approval."
+                pendingStatus = "Waiting for Samunnati Approval.";
             }
 
 
