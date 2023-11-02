@@ -4,9 +4,25 @@ import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -19,6 +35,7 @@ public class LoanPendingTabFrag extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private LoanApprovedAdapter loanAdapter;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -59,6 +76,61 @@ public class LoanPendingTabFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_loan_pending_tab, container, false);
+        View view = inflater.inflate(R.layout.fragment_loan_pending_tab, container, false);
+        loadData();
+        return view;
+    }
+
+    private void loadData() {
+        String url = getContext().getString(R.string.url) + "/loanwindow/loan?type=farmer";
+
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url)
+                .header("Authorization", "Bearer " + LoginActivity.getToken(getContext()))
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    String responseBody = response.body().string();
+                    try {
+                        JSONObject jsonResponse = new JSONObject(responseBody);
+                        JSONArray jsonArray = jsonResponse.getJSONArray("data");
+                        Log.d("Loans Data", jsonArray.toString());
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                try {
+                                    List<JSONObject> pendingLoans = new ArrayList<>();
+                                    for (int i = 0; i < jsonArray.length(); i++) {
+                                        JSONObject object = jsonArray.getJSONObject(i);
+                                        String status = object.getString("status");
+                                        if (status.equals("pending")) {
+                                            pendingLoans.add(object);
+                                        }
+                                    }
+
+                                    loanAdapter = new LoanApprovedAdapter(getContext(), pendingLoans);
+                                    ListView listView = getView().findViewById(R.id.listview);
+                                    listView.setAdapter(loanAdapter);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        });
+
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
     }
 }

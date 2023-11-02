@@ -110,12 +110,14 @@
             android:layout_weight="1"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/loan_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="12/09/2022"
                 android:textColor="@color/black"
                 android:textSize="18dp" />
             <TextView
+                android:id="@+id/loan_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="h3ffddf"
@@ -124,6 +126,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:id="@+id/window_id"
                 android:text="4fd0917"
                 android:textColor="@color/black"
                 android:textSize="18dp" />
@@ -173,6 +176,7 @@
                 android:textSize="18dp" />
 
             <TextView
+                android:id="@+id/status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pending At Samunnati"

@@ -377,5 +377,9 @@ public class LoginActivity extends AppCompatActivity
         return id;
     }
 
-
+    public static String getFpoID(Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String id = preferences.getString("fpoId", "");
+        return id;
+    }
 }

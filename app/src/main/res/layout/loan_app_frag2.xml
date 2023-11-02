@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:orientation="vertical">
+
+	<ScrollView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:fillViewport="true"
+		android:layout_gravity="center"
+		android:scrollbarStyle="outsideInset"
+		android:scrollbars="vertical">
+
+		<LinearLayout
+			android:id="@+id/loan_app_form2"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:orientation="vertical">
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:padding="5dp"
+				android:orientation="vertical">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:padding="5dp"
+					android:textStyle="bold"
+					android:textSize="18dp"
+					android:textColor="@color/black"
+					android:text="@string/dob" />
+
+				<EditText
+					android:id="@+id/loan_dob"
+					android:editable="false"
+					android:layout_width="300dp"
+					android:layout_height="50dp"
+					android:layout_gravity="center_horizontal"
+					android:layout_marginBottom="10dp"
+					android:background="@drawable/grey_card_background"
+					android:drawablePadding="10dp"
+					android:text="10/10/2021"
+					android:paddingLeft="10dp" />
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:padding="5dp"
+				android:orientation="vertical">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:padding="5dp"
+					android:textStyle="bold"
+					android:textSize="18dp"
+					android:textColor="@color/black"
+					android:text="@string/age" />
+
+				<EditText
+					android:id="@+id/loan_age"
+					android:editable="false"
+					android:layout_width="300dp"
+					android:layout_height="50dp"
+					android:layout_gravity="center_horizontal"
+					android:layout_marginBottom="10dp"
+					android:background="@drawable/grey_card_background"
+					android:drawablePadding="10dp"
+					android:text="30"
+					android:paddingLeft="10dp" />
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:padding="5dp"
+				android:orientation="vertical">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:padding="5dp"
+					android:textStyle="bold"
+					android:textSize="18dp"
+					android:textColor="@color/black"
+					android:text="@string/aadhar_card_number" />
+
+				<EditText
+					android:id="@+id/loan_aadhar_number"
+					android:editable="false"
+					android:layout_width="300dp"
+					android:layout_height="50dp"
+					android:layout_gravity="center_horizontal"
+					android:layout_marginBottom="10dp"
+					android:background="@drawable/grey_card_background"
+					android:drawablePadding="10dp"
+					android:text="Aadhar"
+					android:paddingLeft="10dp" />
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_width="310dp"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="20dp"
+				android:layout_gravity="left"
+				android:padding="5dp"
+				android:orientation="vertical">
+
+				<TextView
+					android:layout_width="300dp"
+					android:layout_weight="0.5"
+					android:layout_height="wrap_content"
+					android:padding="5dp"
+					android:textStyle="bold"
+					android:textSize="18dp"
+					android:textColor="@color/black"
+					android:text="@string/aadhar_card" />
+
+				<Button
+					android:id="@+id/loan_aadhar"
+					android:layout_width="300dp"
+					android:layout_weight="0.5"
+					android:layout_height="wrap_content"
+					android:textColor="@color/white"
+					android:text="view"/>
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:padding="5dp"
+				android:orientation="vertical">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:padding="5dp"
+					android:textStyle="bold"
+					android:textSize="18dp"
+					android:textColor="@color/black"
+					android:text="@string/pan_card_number" />
+
+				<EditText
+					android:id="@+id/loan_pan_card_number"
+					android:editable="false"
+					android:layout_width="300dp"
+					android:layout_height="50dp"
+					android:layout_gravity="center_horizontal"
+					android:layout_marginBottom="10dp"
+					android:background="@drawable/grey_card_background"
+					android:drawablePadding="10dp"
+					android:text="Pan"
+					android:paddingLeft="10dp" />
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_width="310dp"
+				android:layout_height="wrap_content"
+				android:layout_marginLeft="20dp"
+				android:layout_gravity="left"
+				android:padding="5dp"
+				android:orientation="vertical">
+
+				<TextView
+					android:layout_width="300dp"
+					android:layout_weight="0.5"
+					android:layout_height="wrap_content"
+					android:padding="5dp"
+					android:textStyle="bold"
+					android:textSize="18dp"
+					android:textColor="@color/black"
+					android:text="@string/pan_card" />
+
+				<Button
+					android:id="@+id/loan_pan"
+					android:layout_width="300dp"
+					android:layout_weight="0.5"
+					android:layout_height="wrap_content"
+					android:textColor="@color/white"
+					android:text="view"/>
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:padding="5dp"
+				android:orientation="vertical">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:padding="5dp"
+					android:textSize="18dp"
+					android:textStyle="bold"
+					android:textColor="@color/black"
+					android:text="@string/father_name" />
+
+				<EditText
+					android:id="@+id/loan_father_name"
+					android:editable="false"
+					android:layout_width="300dp"
+					android:layout_height="50dp"
+					android:layout_gravity="center_horizontal"
+					android:layout_marginBottom="10dp"
+					android:background="@drawable/grey_card_background"
+					android:drawablePadding="10dp"
+					android:text="Farmer Father"
+					android:paddingLeft="10dp" />
+
+			</LinearLayout>
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:padding="5dp"
+				android:orientation="vertical">
+
+				<TextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:padding="5dp"
+					android:textSize="18dp"
+					android:textStyle="bold"
+					android:textColor="@color/black"
+					android:text="@string/mother_name" />
+
+				<EditText
+					android:id="@+id/loan_mother_name"
+					android:editable="false"
+					android:layout_width="300dp"
+					android:layout_height="50dp"
+					android:layout_gravity="center_horizontal"
+					android:layout_marginBottom="10dp"
+					android:background="@drawable/grey_card_background"
+					android:drawablePadding="10dp"
+					android:text="Farmer Mother"
+					android:paddingLeft="10dp" />
+
+			</LinearLayout>
+
+
+
+
+		</LinearLayout>
+
+	</ScrollView>
+
+</LinearLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
