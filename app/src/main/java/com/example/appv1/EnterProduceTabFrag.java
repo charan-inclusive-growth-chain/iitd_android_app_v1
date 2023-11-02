@@ -27,7 +27,11 @@ import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -191,6 +195,7 @@ public class EnterProduceTabFrag extends Fragment {
     }
 
     private void addOnclickListenerForSubmit() {
+        Log.d("Submit", "On Click Listening Event Submit BUtton");
         submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -221,9 +226,10 @@ public class EnterProduceTabFrag extends Fragment {
                         uploadImgText.setError("Upload image failed");
                     }
                 } else {
+                    Log.d("Submit", " Else Block of Submit");
                     MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder()
                             .setType(MultipartBody.FORM)
-                            .addFormDataPart("productImg", "filename.png", RequestBody.create(MediaType.parse("image/png"), String.valueOf(selectedImage)))
+                            .addFormDataPart("productImg", "filename.png", RequestBody.create(MediaType.parse(getMimeType(selectedImage)), getImageFileFromUri(selectedImage)))
                             .addFormDataPart("farmerId", LoginActivity.getFarmerID(getContext()))
                             .addFormDataPart("lacStrainType", lacStrainType)
                             .addFormDataPart("treeSource", sourceOfTreeT)
@@ -258,10 +264,34 @@ public class EnterProduceTabFrag extends Fragment {
                                 transaction.commit();
 
                             } else {
+                                Log.d("Failed", "Request Failed");
                             }
                         }
                     });
                 }
+            }
+            // Utility function to get the file path from a Uri
+            private File getImageFileFromUri(Uri uri) {
+                String fileName = "image.png"; // Set your desired file name and extension
+                File imageFile = new File(requireContext().getCacheDir(), fileName);
+
+                try {
+                    InputStream inputStream = requireContext().getContentResolver().openInputStream(uri);
+                    if (inputStream != null) {
+                        OutputStream outputStream = new FileOutputStream(imageFile);
+                        byte[] buffer = new byte[1024];
+                        int length;
+                        while ((length = inputStream.read(buffer)) > 0) {
+                            outputStream.write(buffer, 0, length);
+                        }
+                        outputStream.close();
+                        inputStream.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                return imageFile;
             }
         });
     }
