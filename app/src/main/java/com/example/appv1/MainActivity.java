@@ -130,6 +130,9 @@ public class MainActivity extends AppCompatActivity {
                 else if(id == R.id.menu_myproduce) {
                     replaceFragment(new MyProduceFrag());
                 }
+                else if(id == R.id.menu_requirements) {
+                    replaceFragment(new PlaceRequirementFrag());
+                }
 
                 return true;
             }
