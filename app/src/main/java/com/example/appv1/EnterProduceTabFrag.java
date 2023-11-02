@@ -257,9 +257,9 @@ public class EnterProduceTabFrag extends Fragment {
                         public void onResponse(Call call, Response response) throws IOException {
                             if (response.isSuccessful()) {
                                 Log.d("Form submitted", response.toString());
-                                SellToFPOTabFrag sellToFPOTabFragment = new SellToFPOTabFrag();
+                                MyProduceFrag MyProduceFragment = new MyProduceFrag();
                                 FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-                                transaction.replace(R.id.frameLayout, sellToFPOTabFragment);
+                                transaction.replace(R.id.frameLayout, MyProduceFragment);
                                 transaction.addToBackStack(null);
                                 transaction.commit();
 
