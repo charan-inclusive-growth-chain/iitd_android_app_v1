@@ -43,10 +43,10 @@ public class TransactionHistoryAdapter extends ArrayAdapter<JSONObject> {
                 String IdFull = item.getString("uniqueId");
                 int length = IdFull.length();
                 int startIndex = length / 2;
-                String Id = IdFull.substring(startIndex+1);
+                String Id = IdFull.substring(startIndex+6);
                 String Amount = item.getString("totalAmount");
 
-                sno.setText(String.valueOf(position + 1));
+                sno.setText(String.valueOf(position + 1)+ ". ");
                 id.setText(Id);
                 amount.setText("₹" + Amount);
                 details.setOnClickListener(new View.OnClickListener() {

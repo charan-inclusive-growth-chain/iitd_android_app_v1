@@ -20,14 +20,25 @@ import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.chip.Chip;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Locale;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class VoiceBotFrag extends Fragment implements TextToSpeech.OnInitListener {
     private ImageView micImageView;
@@ -117,14 +128,17 @@ public class VoiceBotFrag extends Fragment implements TextToSpeech.OnInitListene
                                     else if(questionsAsked == 1) {
 
                                         brandValue.setText(recognizedText);
+                                        responses.set(questionsAsked, recognizedText);
                                     }
                                     else if(questionsAsked == 2) {
                                         quantityValue.setText(recognizedText);
+                                        responses.set(questionsAsked, recognizedText);
                                     }
                                     else if(questionsAsked == 3 ) {
                                         monthValue.setText(recognizedText);
+                                        responses.set(questionsAsked, recognizedText);
                                     }
-                                    responses.set(questionsAsked, recognizedText);
+
                                     questionsAsked++;
 
 
@@ -198,6 +212,7 @@ public class VoiceBotFrag extends Fragment implements TextToSpeech.OnInitListene
 
 
         Log.d("Debug",String.valueOf(closestMatchIndex));
+        responses.set(questionsAsked, AcceptedInputs[closestMatchIndex]);
 
         if(selectedChip != null) {
             selectedChip.setChipBackgroundColorResource(R.color.green);
@@ -265,8 +280,70 @@ public class VoiceBotFrag extends Fragment implements TextToSpeech.OnInitListene
             questionDisplay.setText("दर्ज हो गए");
             micImageView.setVisibility(View.GONE);
 
-            speakQuestion("धन्यवाद! आपके उत्तर दर्ज हो गए");
-            Log.d("Result", responses.toString());
+            String selectedMonth = responses.get(3);
+            String inputType = responses.get(0);
+            String brandName = responses.get(1);
+            String quantity = responses.get(2);
+
+            // Build the JSON request body
+            MediaType mediaType = MediaType.parse("application/json");
+            String requestBodyJson = String.format(
+                    "{\n" +
+                            "    \"type\":\"%s\",\n" +
+                            "    \"quantity\":%s,\n" +
+                            "    \"month\":\"%s\",\n" +
+                            "    \"Brand\":\"%s\"\n" +
+                            "}",
+                    inputType, quantity,selectedMonth, brandName
+            );
+            // Create an OkHttpClient instance
+            OkHttpClient client = new OkHttpClient();
+
+            // Create the request with the JSON body
+            RequestBody body = RequestBody.create(mediaType, requestBodyJson);
+            Request request = new Request.Builder()
+                    .url(getString(R.string.url) + "/farmer/requirements")
+                    .post(body)
+                    .addHeader("Content-Type", "application/json")
+                    .addHeader("Authorization", "Bearer " + LoginActivity.getToken(getContext()))
+                    .build();
+
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    if(response.isSuccessful()) {
+                        Log.d("Form Submitted", response.toString());
+
+                        requireActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(requireContext(), "Requirement Submitted Successfully", Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+                        speakQuestion("धन्यवाद! आपके उत्तर दर्ज हो गए");
+                        Log.d("Result", responses.toString());
+
+                        DashboardFrag dashboardFrag = new DashboardFrag();
+                        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                        transaction.replace(R.id.frameLayout, dashboardFrag);
+                        transaction.addToBackStack(null);
+                        transaction.commit();
+
+                    }
+                    else {
+                        Log.d("Failed", "Request Failed");
+                    }
+
+                }
+
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    e.printStackTrace();
+
+                }
+            });
+
 
         }
 
