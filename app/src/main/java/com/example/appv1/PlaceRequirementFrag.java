@@ -5,7 +5,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,6 +40,8 @@ public class PlaceRequirementFrag extends Fragment {
 
     String[] months = {"January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"};
     String[] inputs = {"Brood Lac", "Nylon Bag", "Insecticide"};
+
+
 
     public PlaceRequirementFrag() {
         // Required empty public constructor
@@ -83,6 +85,19 @@ public class PlaceRequirementFrag extends Fragment {
         Button submitButton = view.findViewById(R.id.submit);
         EditText originField = view.findViewById(R.id.origin);
         EditText quantityField = view.findViewById(R.id.quantity);
+
+        FloatingActionButton fab = view.findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Fragment voiceFragment = new VoiceBotFrag();
+                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(R.id.frameLayout, voiceFragment);
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
 
 
         submitButton.setOnClickListener(new View.OnClickListener() {
