@@ -66,6 +66,8 @@
             android:exported="true"/>
         <activity android:name=".UpdateProfileActivity"
             android:exported="true"/>
+        <activity android:name=".LoanApplication"
+            android:exported="true"/>
     </application>
 
 </manifest>

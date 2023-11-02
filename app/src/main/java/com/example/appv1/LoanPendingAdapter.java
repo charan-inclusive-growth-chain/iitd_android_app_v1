@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import com.example.appv1.R;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,10 +52,10 @@ public class LoanPendingAdapter extends ArrayAdapter<JSONObject> {
 
 
             // Populate the TextViews in your loan_approved_item layout
-            TextView loanDateTextView = convertView.findViewById(R.id.loan_app_date);
+            TextView loanDateTextView = convertView.findViewById(R.id.loan_date);
             TextView loanIdTextView = convertView.findViewById(R.id.loan_id);
             TextView loanWindowIdTextView = convertView.findViewById(R.id.loan_window_id);
-            TextView pendingStatusTextView = convertView.findViewById(R.id.pending_status);
+            TextView pendingStatusTextView = convertView.findViewById(R.id.status);
             ImageButton info = convertView.findViewById(R.id.infoButton);
             info.setOnClickListener(new View.OnClickListener() {
                 @Override
