@@ -11,7 +11,8 @@
     android:layout_marginLeft="10dp"
     android:layout_marginRight="10dp"
     android:layout_marginBottom="30dp"
-    android:background="@drawable/green_card_background"
+    android:background="@color/very_light_green"
+
 
     android:orientation="vertical"
 
@@ -110,18 +111,21 @@
             android:layout_weight="1"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/loan_app_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="12/09/2022"
                 android:textColor="@color/black"
                 android:textSize="18dp" />
             <TextView
+                android:id="@+id/loan_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="h3ffddf"
                 android:textColor="@color/black"
                 android:textSize="18dp" />
             <TextView
+                android:id="@+id/loan_window_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="4fd0917"
@@ -159,7 +163,8 @@
 
         <!-- Inner LinearLayout with text views (70%) -->
         <LinearLayout
-            android:layout_width="0dp"
+
+            android:layout_width="250dp"
             android:layout_height="wrap_content"
             android:layout_weight="7"
             android:orientation="vertical">
@@ -173,6 +178,7 @@
                 android:textSize="18dp" />
 
             <TextView
+                android:id="@+id/pending_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Pending At Samunnati"
@@ -183,8 +189,9 @@
         <!-- ImageButton (30%) -->
         <ImageButton
             android:id="@+id/infoButton"
-            android:layout_width="0dp"
+            android:layout_width="45dp"
             android:layout_height="45dp"
+            android:layout_marginLeft="20dp"
             android:layout_weight="3"
             android:src="@drawable/baseline_info_24"
             android:backgroundTint="@color/very_light_green"
