@@ -709,7 +709,7 @@
 					android:layout_marginLeft="40dp"
 					android:layout_marginRight="40dp"
 					android:hint="@string/branch_name"
-					android:id="@+id/edit_branch"
+					android:id="@+id/edit_branch_name"
 					android:inputType="text" />
 			</LinearLayout>
 

@@ -84,19 +84,19 @@ public class UpdateProfileActivity extends AppCompatActivity {
 		editBankName = findViewById(R.id.edit_bank_name);
 		editAccountNo = findViewById(R.id.edit_account_no);
 		editIfsc = findViewById(R.id.edit_ifsc);
-		editBranchName = findViewById(R.id.edit_branch);
-		editPanNo = findViewById(R.id.edit_pan_no);
 		editAadharNo = findViewById(R.id.edit_aadhar_no);
+		editBranchName = findViewById(R.id.edit_branch_name);
+		editPanNo = findViewById(R.id.edit_pan_no);
 		uploadAadhar = findViewById(R.id.upload_aadhar);
 		uploadPan = findViewById(R.id.upload_pan);
 
 		save = findViewById(R.id.save_changes);
-		addOnClickListenerForAadharCardButton();
-		addOnClickListenerForPanCardButton();
 		addOnClickListenerForSave();
+		addOnClickListenerForPanCardButton();
+		addOnClickListenerForAadharCardButton();
 
 
-		String url = getString(R.string.url) + "/userDetails";
+		String url = getString(R.string.url) + "/profile/farmer";
 		String token = LoginActivity.getToken(getApplicationContext());
 
 		OkHttpClient client = new OkHttpClient();
@@ -136,105 +136,105 @@ public class UpdateProfileActivity extends AppCompatActivity {
 				Log.d("Click", "tk");
 
 				JSONObject jsonObject = new JSONObject();
+				userName = editUsername.getText().toString().trim();
+				mobile = editMobile.getText().toString().trim();
+				dateOfBirth = editDob.getText().toString().trim();
+				gender = editGender.getText().toString().trim();
+				fatherName = editFatherName.getText().toString().trim();
+				motherName = editMotherName.getText().toString().trim();
+				doorNumber = editDoorNo.getText().toString().trim();
+				street = editStreet.getText().toString().trim();
+				village = editVillage.getText().toString().trim();
+				taluk = editTaluk.getText().toString().trim();
+				district = editDistrict.getText().toString().trim();
+				state = editState.getText().toString().trim();
+				pinCode = editPincode.getText().toString().trim();
+				occupation = editOccupation.getText().toString().trim();
+				education = editEducation.getText().toString().trim();
+				natureOfPlace = editNop.getText().toString().trim();
+				residence = editResidence.getText().toString().trim();
+				caste = editCaste.getText().toString().trim();
+				religion = editReligion.getText().toString().trim();
+				bankName = editBankName.getText().toString().trim();
+				accountNumber = editAccountNo.getText().toString().trim();
+				ifscCode = editIfsc.getText().toString().trim();
+				branchName = editBranchName.getText().toString().trim();
+				panCardNumber = editPanNo.getText().toString().trim();
+				aadharCardNumber = editAadharNo.getText().toString().trim();
 				try {
-					if (editUsername != null) {
-						userName = editUsername.getText().toString().trim();
+					if (!userName.isEmpty()) {
 						jsonObject.put("userName", userName);
 					}
-					if (editMobile != null) {
-						mobile = editMobile.getText().toString().trim();
+					if (!mobile.isEmpty()) {
 						jsonObject.put("contactNumber", mobile);
 					}
-					if (editDob != null) {
-						dateOfBirth = editDob.getText().toString().trim();
+					if (!dateOfBirth.isEmpty()) {
 						jsonObject.put("DOB", dateOfBirth);
 					}
-					if (editGender != null) {
-						gender = editGender.getText().toString().trim();
+					if (!gender.isEmpty()) {
 						jsonObject.put("gender", gender);
 					}
-					if (editFatherName != null) {
-						fatherName = editFatherName.getText().toString().trim();
+					if (!fatherName.isEmpty()) {
 						jsonObject.put("fathersName", fatherName);
 					}
-					if (editMotherName != null) {
-						motherName = editMotherName.getText().toString().trim();
+					if (!motherName.isEmpty()) {
 						jsonObject.put("mothersName", motherName);
 					}
-					if (editDoorNo != null) {
-						doorNumber = editDoorNo.getText().toString().trim();
+					if (!doorNumber.isEmpty()) {
 						jsonObject.put("doorNumber", doorNumber);
 					}
-					if (editStreet != null) {
-						street = editStreet.getText().toString().trim();
+					if (!street.isEmpty()) {
 						jsonObject.put("streetName", street);
 					}
-					if (editVillage != null) {
-						village = editVillage.getText().toString().trim();
+					if (!village.isEmpty()) {
 						jsonObject.put("village", village);
 					}
-					if (editTaluk != null) {
-						taluk = editTaluk.getText().toString().trim();
+					if (!taluk.isEmpty()) {
 						jsonObject.put("taluk", taluk);
 					}
-					if (editDistrict != null) {
-						district = editDistrict.getText().toString().trim();
+					if (!district.isEmpty()) {
 						jsonObject.put("district", district);
 					}
-					if (editState != null) {
-						state = editState.getText().toString().trim();
+					if (!state.isEmpty()) {
 						jsonObject.put("state", state);
 					}
-					if (editPincode != null) {
-						pinCode = editPincode.getText().toString().trim();
+					if (!pinCode.isEmpty()) {
 						jsonObject.put("pinCode", pinCode);
 					}
-					if(editOccupation != null) {
-						occupation = editOccupation.getText().toString().trim();
+					if(!occupation.isEmpty()) {
 						jsonObject.put("occupation", occupation);
 					}
-					if (editEducation != null) {
-						education = editEducation.getText().toString().trim();
+					if (!education.isEmpty()) {
 						jsonObject.put("education", education);
 					}
-					if (editNop != null) {
-						natureOfPlace = editNop.getText().toString().trim();
+					if (!natureOfPlace.isEmpty()) {
 						jsonObject.put("natureOfplace", natureOfPlace);
 					}
-					if (editResidence != null) {
-						residence = editResidence.getText().toString().trim();
+					if (!residence.isEmpty()) {
 						jsonObject.put("residence", residence);
 					}
-					if (editCaste != null) {
-						caste = editCaste.getText().toString().trim();
+					if (!caste.isEmpty()) {
 						jsonObject.put("caste", caste);
 					}
-					if (editReligion != null) {
-						religion = editReligion.getText().toString().trim();
+					if (!religion.isEmpty()) {
 						jsonObject.put("religion", religion);
 					}
-					if(editBankName != null) {
-						bankName = editBankName.getText().toString().trim();
+					if(!bankName.isEmpty()) {
 						jsonObject.put("bankName", bankName);
 					}
-					if (editAccountNo != null) {
-						accountNumber = editAccountNo.getText().toString().trim();
+					if (!accountNumber.isEmpty()) {
 						jsonObject.put("accountNumber", accountNumber);
 					}
-					if (editIfsc != null) {
-						ifscCode = editIfsc.getText().toString().trim();
+					if (!ifscCode.isEmpty()) {
 						jsonObject.put("ifscCode", ifscCode);
 					}
-					if (editBranchName != null) {
-						branchName = editBranchName.getText().toString().trim();
+					if (!branchName.isEmpty()) {
 						jsonObject.put("branchName", branchName);
 					}
-					if (panCardNumber != null) {
-						panCardNumber = editPanNo.getText().toString().trim();
+					if (!panCardNumber.isEmpty()) {
 						jsonObject.put("panCardNumber", panCardNumber);
 					}
-					if (editAadharNo != null) {
-						aadharCardNumber = editAadharNo.getText().toString().trim();
+					if (!aadharCardNumber.isEmpty()) {
 						jsonObject.put("aadharCardNumber", aadharCardNumber);
 					}
 					if (selectedAadharCard != null) {
