@@ -23,6 +23,7 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -39,6 +40,7 @@ public class PurchaseHistoryTabFrag extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    CircularProgressIndicator circularProgressIndicator;
     private ListView container;
     private TransactionHistoryAdapter adapter;
 
@@ -78,6 +80,11 @@ public class PurchaseHistoryTabFrag extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_purchase_history_tab, container, false);
+
+        ListView listView = view.findViewById(R.id.listview);
+        circularProgressIndicator = view.findViewById(R.id.progressBar);
+        listView.setVisibility(View.GONE);
+        circularProgressIndicator.setVisibility(View.VISIBLE);
         loadData();
         return view;
 
@@ -116,6 +123,8 @@ public class PurchaseHistoryTabFrag extends Fragment {
                                     }
                                     adapter = new TransactionHistoryAdapter(getContext(), purchaseHistory);
                                     ListView listView = getView().findViewById(R.id.listview);
+                                    circularProgressIndicator.setVisibility(View.GONE);
+                                    listView.setVisibility(View.VISIBLE);
                                     listView.setAdapter(adapter);
                                 } catch (JSONException e) {
                                     e.printStackTrace();

@@ -30,6 +30,7 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 
 /**
@@ -39,6 +40,7 @@ import okhttp3.Response;
  */
 public class StoreFrag extends Fragment {
     GridView gridView;
+    CircularProgressIndicator circularProgressIndicator;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,8 +86,11 @@ public class StoreFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_store, container, false);
-
+        circularProgressIndicator = rootView.findViewById(R.id.progressBar);
         gridView = rootView.findViewById(R.id.gridView);
+
+        gridView.setVisibility(View.GONE);
+        circularProgressIndicator.setVisibility(View.VISIBLE);
 
         // Load and populate the data
         loadTrainingData();
@@ -162,8 +167,11 @@ public class StoreFrag extends Fragment {
             }
         }
 
+
         // Create an adapter to populate the GridView
         StoreAdapter storeAdapter = new StoreAdapter(requireActivity(), itemNames, images, fpoPrices, marketPrices);
+        circularProgressIndicator.setVisibility(View.GONE);
+        gridView.setVisibility(View.VISIBLE);
         gridView.setAdapter(storeAdapter);
     }
 }

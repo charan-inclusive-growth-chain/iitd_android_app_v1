@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.Toast;
 import org.json.JSONArray;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.IOException;
@@ -23,6 +24,7 @@ import okhttp3.Response;
 public class MyProduceFrag extends Fragment {
 
     GridView gridView;
+    CircularProgressIndicator circularProgressIndicator;
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
@@ -55,7 +57,10 @@ public class MyProduceFrag extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_my_produce, container, false);
+        circularProgressIndicator = rootView.findViewById(R.id.progressBar);
         gridView = rootView.findViewById(R.id.gridView);
+        circularProgressIndicator.setVisibility(View.VISIBLE);
+        gridView.setVisibility(View.GONE);
         loadTrainingData();
         return rootView;
     }
@@ -82,6 +87,7 @@ public class MyProduceFrag extends Fragment {
                         JSONObject responseObject = new JSONObject(responseData);
                         JSONArray dataArray = responseObject.getJSONArray("data");
                         Log.d("Produce Data", dataArray.toString());
+
 
                         requireActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -129,6 +135,8 @@ public class MyProduceFrag extends Fragment {
         }
 
         MyProduceAdapter produceAdapter = new MyProduceAdapter(requireActivity(), lacStrainTypeList, originList, sourceList, quantityList, remarksList, imageUrlList);
+        circularProgressIndicator.setVisibility(View.GONE);
+        gridView.setVisibility(View.VISIBLE);
         gridView.setAdapter(produceAdapter);
         // Now, you can use produceAdapter with your GridView to display the data.
     }

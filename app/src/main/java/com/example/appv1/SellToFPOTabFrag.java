@@ -8,8 +8,11 @@ import android.widget.AdapterView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.Toast;
 import com.example.appv1.databinding.FragmentSellToFPOTabBinding;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,6 +27,7 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -80,6 +84,8 @@ public class SellToFPOTabFrag extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentSellToFPOTabBinding.inflate(inflater,container,false);
         View view = binding.getRoot();
+        binding.progressBar.setVisibility(View.VISIBLE);
+        binding.gridView.setVisibility(View.GONE);
         loadTrainingData();
         return view;
     }
@@ -108,6 +114,8 @@ public class SellToFPOTabFrag extends Fragment {
                         JSONObject responseObject = new JSONObject(responseData);
                         JSONArray dataArray = responseObject.getJSONArray("data");
                         Log.d("Sell Data", dataArray.toString());
+
+
 
                         requireActivity().runOnUiThread(new Runnable() {
                             @Override
@@ -155,6 +163,8 @@ public class SellToFPOTabFrag extends Fragment {
 
         // Create an adapter to populate the GridView
         StoreAdapter gridAdapter = new StoreAdapter(requireActivity(), itemNames, images, fpoPrices, marketPrices);
+        binding.progressBar.setVisibility(View.GONE);
+        binding.gridView.setVisibility(View.VISIBLE);
         binding.gridView.setAdapter(gridAdapter);
     }
 }

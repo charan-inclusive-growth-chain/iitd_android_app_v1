@@ -42,7 +42,7 @@ public class LoanPendingTabFrag extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private LoanApprovedAdapter loanAdapter;
+
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -88,58 +88,7 @@ public class LoanPendingTabFrag extends Fragment {
         return view;
     }
 
-    private void loadData() {
-        String url = getContext().getString(R.string.url) + "/loanwindow/loan?type=farmer";
 
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url(url)
-                .header("Authorization", "Bearer " + LoginActivity.getToken(getContext()))
-                .build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
-                e.printStackTrace();
-            }
-
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                if (response.isSuccessful()) {
-                    String responseBody = response.body().string();
-                    try {
-                        JSONObject jsonResponse = new JSONObject(responseBody);
-                        JSONArray jsonArray = jsonResponse.getJSONArray("data");
-                        Log.d("Loans Data", jsonArray.toString());
-                        requireActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                try {
-                                    List<JSONObject> pendingLoans = new ArrayList<>();
-                                    for (int i = 0; i < jsonArray.length(); i++) {
-                                        JSONObject object = jsonArray.getJSONObject(i);
-                                        String status = object.getString("status");
-                                        if (status.equals("pending")) {
-                                            pendingLoans.add(object);
-                                        }
-                                    }
-
-                                    loanAdapter = new LoanApprovedAdapter(getContext(), pendingLoans);
-                                    ListView listView = getView().findViewById(R.id.listview);
-                                    listView.setAdapter(loanAdapter);
-                                } catch (JSONException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        });
-
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        });
-    }
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         loadData();

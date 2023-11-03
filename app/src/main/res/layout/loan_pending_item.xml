@@ -128,7 +128,7 @@
                 android:id="@+id/loan_window_id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/window_id"
+
                 android:text="4fd0917"
                 android:textColor="@color/black"
                 android:textSize="18dp" />
