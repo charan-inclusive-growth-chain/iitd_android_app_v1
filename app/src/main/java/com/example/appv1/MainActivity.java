@@ -121,8 +121,6 @@ public class MainActivity extends AppCompatActivity {
                     Intent loginIntent = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(loginIntent);
                     finish();
-                } else if (id == R.id.menu_settings) {
-                    Toast.makeText(MainActivity.this, "Settings is Clicked", Toast.LENGTH_SHORT).show();
                 }
                 else if(id == R.id.menu_profile) {
                     replaceFragment(new ProfileFrag());
@@ -133,6 +131,13 @@ public class MainActivity extends AppCompatActivity {
                 else if(id == R.id.menu_requirements) {
                     replaceFragment(new PlaceRequirementFrag());
                 }
+                else if (id == R.id.menu_settings) {
+                    Intent intent = new Intent(MainActivity.this, UpdateProfileActivity.class); // Replace UpdateProfileActivity with the actual activity name you want to start
+                    startActivity(intent);
+                }
+
+
+
 
                 return true;
             }

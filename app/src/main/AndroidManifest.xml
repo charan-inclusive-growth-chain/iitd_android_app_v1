@@ -68,6 +68,10 @@
             android:exported="true"/>
         <activity android:name=".LoanApplication"
             android:exported="true"/>
+        <activity android:name=".LoanDetailsPendingActivity"
+            android:exported="true"/>
+        <activity android:name=".LoanDetailRejectedActivity"
+            android:exported="true"/>
     </application>
 
 </manifest>

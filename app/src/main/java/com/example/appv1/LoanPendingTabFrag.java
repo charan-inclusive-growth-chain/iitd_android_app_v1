@@ -29,6 +29,7 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import com.google.android.material.progressindicator.CircularProgressIndicator;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +38,7 @@ import okhttp3.Response;
  */
 public class LoanPendingTabFrag extends Fragment {
     private LoanPendingAdapter loanAdapter;
+    CircularProgressIndicator circularProgressIndicator;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,7 +86,12 @@ public class LoanPendingTabFrag extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_loan_pending_tab, container, false);
-        loadData();
+        ListView listView = view.findViewById(R.id.listview);
+        circularProgressIndicator = view.findViewById(R.id.progressBar);
+        circularProgressIndicator.setVisibility(View.VISIBLE);
+        listView.setVisibility(View.GONE);
+
+
         return view;
     }
 
@@ -133,6 +140,8 @@ public class LoanPendingTabFrag extends Fragment {
 
                                     loanAdapter = new LoanPendingAdapter(getContext(), pendingLoans);
                                     ListView listView = getView().findViewById(R.id.listview);
+                                    circularProgressIndicator.setVisibility(View.GONE);
+                                    listView.setVisibility(View.VISIBLE);
                                     listView.setAdapter(loanAdapter);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
