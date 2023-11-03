@@ -1,6 +1,7 @@
 package com.example.appv1;
 
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -9,13 +10,17 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -189,8 +194,8 @@ public class ProfileFrag extends Fragment {
                                 branchName.setText(jsonResponse.getString("branchName"));
                                 aadharCardNo.setText(jsonResponse.getString("aadharCardNumber"));
                                 panCardNo.setText(jsonResponse.getString("panCardNumber"));
-                                aadharUrl = "http://3.7.253.48:3000/img/" + jsonResponse.getString("aadharCardImage");
-                                panUrl = "http://3.7.253.48:3000/img/" + jsonResponse.getString("panCardImage");
+                                aadharUrl = jsonResponse.getString("aadharCardImage");
+                                panUrl = jsonResponse.getString("panCardImage");
                             } catch (JSONException e) {
                                 throw new RuntimeException(e);
                             } catch (IOException e) {
@@ -237,23 +242,31 @@ public class ProfileFrag extends Fragment {
     }
 
     private void openImageAlert(String imageUrl) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setTitle("View Image");
+        final Dialog dialog = new Dialog(requireActivity());
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.popup_image);
+        ImageView imageView = dialog.findViewById(R.id.popupImageView);
+        Log.d("ImageURL", imageUrl + " Received");
 
-        View view = getLayoutInflater().inflate(R.layout.image_alert_layout, null);
+        // Load and display the image using Picasso
+        Picasso.get()
+                .load(imageUrl)
+                .into(imageView, new com.squareup.picasso.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d("Image", "Loaded Succesfully");
+                        // Image loaded successfully
+                    }
 
-        ImageView imageView = view.findViewById(R.id.alert_image_view);
-        imageView.setImageDrawable(null);
+                    @Override
+                    public void onError(Exception e) {
+                        // Handle error (e.g., log the error)
+                        e.printStackTrace();
+                    }
+                });
 
-        new DisplayImage(imageView).execute(imageUrl);
 
-        builder.setView(view);
-        builder.setPositiveButton("OK", (dialog, which) -> {
-            dialog.dismiss();
-        });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+        dialog.show();
     }
 
 
