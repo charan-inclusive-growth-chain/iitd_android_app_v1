@@ -62,6 +62,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/door_number"
+
                     android:id="@+id/register_door_number"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>

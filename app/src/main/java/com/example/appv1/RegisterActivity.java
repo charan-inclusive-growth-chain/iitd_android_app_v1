@@ -106,6 +106,8 @@ public class RegisterActivity extends AppCompatActivity
                                     MediaType JSON = MediaType.parse("application/json; charset=utf-8");
                                     RequestBody requestBody = RequestBody.create(JSON, jsonPayload);
 
+                                    Log.d("RequestBody", requestBody.toString());
+
                                     Request request = new Request.Builder()
                                             .url(url)
                                             .post(requestBody)

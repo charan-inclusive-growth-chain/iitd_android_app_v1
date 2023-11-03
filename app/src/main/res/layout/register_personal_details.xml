@@ -99,8 +99,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/dob"
+                    android:focusable="false"
                     android:id="@+id/register_dob"
-                    android:inputType="text" />
+                    
+                    android:clickable="true"
+                    android:focusableInTouchMode="false"
+                    android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <LinearLayout
