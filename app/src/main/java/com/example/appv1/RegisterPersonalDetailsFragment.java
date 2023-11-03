@@ -290,7 +290,7 @@ public class RegisterPersonalDetailsFragment extends Fragment
             registerAsFarmerJson.put("mothersName", motherS);
             registerAsFarmerJson.put("occupation", occupationS);
             registerAsFarmerJson.put("education", educationS);
-            registerAsFarmerJson.put("natureOfPlace", nopS);
+            registerAsFarmerJson.put("natureOfplace", nopS);
             registerAsFarmerJson.put("residence", residenceS);
             registerAsFarmerJson.put("caste", casteS);
             registerAsFarmerJson.put("religion", religionS);
