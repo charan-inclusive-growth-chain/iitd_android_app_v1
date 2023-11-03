@@ -2,6 +2,7 @@ package com.example.appv1;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,8 +17,10 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import com.example.appv1.R;
@@ -63,7 +66,15 @@ public class RegisterPersonalDetailsFragment extends Fragment
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {
         dateOfBirth = getView().findViewById(R.id.register_dob);
-        addOnClickListenerForDOBButton();
+        // Set an OnClickListener for the dateOfBirth view
+        dateOfBirth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePicker(v);
+            }
+        });
+
+
         name = getView().findViewById(R.id.register_name);
         mobile = getView().findViewById(R.id.register_mobile);
         male = getView().findViewById(R.id.radio_pirates);
@@ -163,9 +174,13 @@ public class RegisterPersonalDetailsFragment extends Fragment
         if (passwordS.isEmpty()) {
             pass.setError("Enter password");
             return false;
+        } else if (passwordS.length() < 6) {
+            pass.setError("Password must be at least 6 characters");
+            return false;
         } else {
             pass.setError(null);
         }
+
 
         if (confirmS.isEmpty()) {
             confpass.setError("Enter confirm password");
@@ -254,74 +269,82 @@ public class RegisterPersonalDetailsFragment extends Fragment
             rel.setError(null);
         }
 
+        if(dobS.isEmpty()){
+            dob.setError("Select DOB");
+        }
+        else {
+            dob.setError(null);
+        }
+
         try {
             registerAsFarmerJson.put("userName", nameS);
             registerAsFarmerJson.put("mspId", "Org1MSP");
             registerAsFarmerJson.put("type", "farmer");
-            registerAsFarmerJson.put("mobile", mobileS);
+            registerAsFarmerJson.put("contactNumber", mobileS);
             registerAsFarmerJson.put("password", passwordS);
-            registerAsFarmerJson.put("confirmPassword", confirmS);
-            registerAsFarmerJson.put("dateOfBirth", dobS);
+            //registerAsFarmerJson.put("confirmPassword", confirmS);
+            registerAsFarmerJson.put("DOB", dobS);
             registerAsFarmerJson.put("age", ageS);
             registerAsFarmerJson.put("gender", gender);
-            registerAsFarmerJson.put("fatherName", fatherS);
-            registerAsFarmerJson.put("motherName", motherS);
+            registerAsFarmerJson.put("fathersName", fatherS);
+            registerAsFarmerJson.put("mothersName", motherS);
             registerAsFarmerJson.put("occupation", occupationS);
             registerAsFarmerJson.put("education", educationS);
-            registerAsFarmerJson.put("natureOfPlace", nopS);
+            registerAsFarmerJson.put("natureOfplace", nopS);
             registerAsFarmerJson.put("residence", residenceS);
             registerAsFarmerJson.put("caste", casteS);
             registerAsFarmerJson.put("religion", religionS);
+
+            Log.d("Personal Details", registerAsFarmerJson.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }
         return true;
     }
 
-    private void addOnClickListenerForDOBButton()
-    {
-        dateOfBirth.setOnClickListener(new View.OnClickListener()
-        {
-            @Override public void onClick(View v)
-            {
-                new DatePickerDialog(getContext(), date, myCalendar.get(Calendar.YEAR), myCalendar.get(Calendar.MONTH), myCalendar.get(Calendar.DAY_OF_MONTH)).show();
 
-            }
-        });
-    }
 
-    DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener()
-    {
-        @Override
-        public void onDateSet(DatePicker view, int year, int month, int day)
-        {
-            myCalendar.set(Calendar.YEAR, year);
-            myCalendar.set(Calendar.MONTH, month);
-            myCalendar.set(Calendar.DAY_OF_MONTH, day);
-            updateLabel(dateOfBirth);
+    public void showDatePicker(View view) {
+        if (view.getId() == R.id.register_dob) {
+            Calendar calendar = Calendar.getInstance(); // Get the current date
+            int year = calendar.get(Calendar.YEAR);
+            int month = calendar.get(Calendar.MONTH);
+            int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-        }
-    };
+            DatePickerDialog datePickerDialog = new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                @Override
+                public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                    String selectedDate = String.format(Locale.getDefault(), "%04d-%02d-%02d", year, monthOfYear + 1, dayOfMonth);
 
-    private void updateLabel(EditText text)
-    {
-        String myFormat = "MM/dd/yy";
-        SimpleDateFormat dateFormat = new SimpleDateFormat(myFormat, Locale.US);
-        text.setText(dateFormat.format(myCalendar.getTime()));
+                    dateOfBirth.setText(selectedDate); // Set the selected date in the TextInputEditText
 
-        Calendar currentDate = Calendar.getInstance();
-        int currentYear = currentDate.get(Calendar.YEAR);
-        int currentMonth = currentDate.get(Calendar.MONTH);
-        int currentDay = currentDate.get(Calendar.DAY_OF_MONTH);
+                    // Calculate age based on the date of birth
+                    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+                    try {
+                        Date date = sdf.parse(selectedDate);
+                        Calendar dob = Calendar.getInstance();
+                        dob.setTime(date);
 
-        int selectedYear = myCalendar.get(Calendar.YEAR);
-        int selectedMonth = myCalendar.get(Calendar.MONTH);
-        int selectedDay = myCalendar.get(Calendar.DAY_OF_MONTH);
+                        Calendar today = Calendar.getInstance();
+                        age = today.get(Calendar.YEAR) - dob.get(Calendar.YEAR);
 
-        age = currentYear - selectedYear;
-        if (currentMonth < selectedMonth || (currentMonth == selectedMonth && currentDay < selectedDay)) {
-            age--;
+                        // If the birthdate has not occurred this year yet, subtract one year
+                        if (today.get(Calendar.DAY_OF_YEAR) < dob.get(Calendar.DAY_OF_YEAR)) {
+                            age--;
+                        }
+
+
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, year, month, day); // Initialize with the current date
+            datePickerDialog.show();
         }
     }
+
+
+
+
 
 }

@@ -58,6 +58,7 @@ public class RegisterIdProofsFragment extends Fragment
     TextInputLayout aadharno, panno;
     TextView aadharT, panT, fpoT;
     JSONObject registerAsFarmerJson;
+    List<String> FpoIdList = new ArrayList<>();
 
     public final static int PICK_PHOTO_CODE_AADHAR = 1046;
     public final static int PICK_PHOTO_CODE_PAN = 1047;
@@ -139,14 +140,18 @@ public class RegisterIdProofsFragment extends Fragment
         }
 
         if (aadharNoS.isEmpty()) {
-            aadharno.setError("Enter aadhar number");
+            aadharno.setError("Enter Aadhar number");
             return false;
-        } else if(!aadharNoS.matches("^[0-9]+$")) {
+        } else if (!aadharNoS.matches("^[0-9]+$")) {
             aadharno.setError("Only numbers allowed");
             return false;
-        }else {
+        } else if (aadharNoS.length() != 12) {
+            aadharno.setError("Aadhar number should be 12 digits long");
+            return false;
+        } else {
             aadharno.setError(null);
         }
+
 
         if (panNoS.isEmpty()) {
             panno.setError("Enter PAN number");
@@ -175,6 +180,8 @@ public class RegisterIdProofsFragment extends Fragment
             registerAsFarmerJson.put("aadharCardNumber", aadharNoS);
             registerAsFarmerJson.put("aadharCardImage", selectedAadharCard.toString().trim());
             registerAsFarmerJson.put("fpoId", fpoS);
+
+            Log.d("register2", registerAsFarmerJson.toString());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -315,10 +322,12 @@ public class RegisterIdProofsFragment extends Fragment
 
     private List<String> extractFPOOptions(JSONArray dataArray) throws JSONException {
         List<String> options = new ArrayList<>();
+
         for (int i = 0; i < dataArray.length(); i++) {
             JSONObject object = dataArray.getJSONObject(i);
             String fpoId = object.getString("_id");
             String userName = object.getString("userName");
+            FpoIdList.add(fpoId);
             options.add(userName);
         }
         return options;
@@ -326,11 +335,13 @@ public class RegisterIdProofsFragment extends Fragment
 
     private String getSelectedFPOId(int position) {
         // Extract the FPO ID from the selected option
-        String selectedOption = fpoOptions.get(position);
-        String[] parts = selectedOption.split(" - ");
-        if (parts.length > 0) {
-            return parts[0];
-        }
-        return null;
+//        String selectedOption = fpoOptions.get(position);
+//        String[] parts = selectedOption.split(" - ");
+//        if (parts.length > 0) {
+//            return parts[0];
+//        }
+        Log.d("FPOID", FpoIdList.get(position));
+
+        return FpoIdList.get(position);
     }
 }

@@ -34,7 +34,7 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="549dp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:fillViewport="true"
         android:scrollbarStyle="outsideInset"
@@ -44,83 +44,83 @@
             android:id="@+id/register_address_details"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="10dp"
             android:gravity="center_vertical"
             android:orientation="vertical">
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/reg_bank_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxBackgroundColor="@color/white"
-                android:id="@+id/reg_bank_name"
-                app:boxStrokeWidth="2dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeWidth="2dp"
                 app:hintEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/register_bank_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/bank_name"
-                    android:id="@+id/register_bank_name"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/reg_branch_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxBackgroundColor="@color/white"
-                android:id="@+id/reg_branch_name"
-                app:boxStrokeWidth="2dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeWidth="2dp"
                 app:hintEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/register_branch_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/branch_name"
-                    android:id="@+id/register_branch_name"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/reg_account_no"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxBackgroundColor="@color/white"
-                android:id="@+id/reg_account_no"
-                app:boxStrokeWidth="2dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeWidth="2dp"
                 app:hintEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/register_bank_account_number"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/account_number"
-                    android:id="@+id/register_bank_account_number"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/reg_ifsc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:boxBackgroundColor="@color/white"
-                android:id="@+id/reg_ifsc"
-                app:boxStrokeWidth="2dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
+                app:boxBackgroundColor="@color/white"
+                app:boxStrokeWidth="2dp"
                 app:hintEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/register_bank_ifsc"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/ifsc_code"
-                    android:id="@+id/register_bank_ifsc"
                     android:inputType="text" />
             </com.google.android.material.textfield.TextInputLayout>
 

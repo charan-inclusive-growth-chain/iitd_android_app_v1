@@ -181,7 +181,7 @@ public class RegisterAddressDetailsFragment extends Fragment
 
         try {
             registerAsFarmerJson.put("doorNumber", doorS);
-            registerAsFarmerJson.put("street", streetS);
+            registerAsFarmerJson.put("streetName", streetS);
             registerAsFarmerJson.put("village", villageS);
             registerAsFarmerJson.put("taluk", talukS);
             registerAsFarmerJson.put("district", districtS);

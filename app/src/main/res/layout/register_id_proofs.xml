@@ -125,6 +125,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
                         android:text="@string/choose_file"
+                        android:backgroundTint="@color/primary_green"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -171,6 +172,7 @@
 
                     <Button
                         android:id="@+id/register_id_pan_card_button"
+                        android:backgroundTint="@color/primary_green"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
