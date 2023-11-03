@@ -356,7 +356,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:text="@string/choose_file"
+                        android:text="@string/view_file"
+                        android:backgroundTint="@color/primary_green"
                         android:textColor="@color/white" />
 
                     <TextView
@@ -432,7 +433,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="right"
-                        android:text="@string/choose_file"
+                        android:text="@string/view_file"
+                        android:backgroundTint="@color/primary_green"
                         android:textColor="@color/white" />
                 </LinearLayout>
             </LinearLayout>

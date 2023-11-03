@@ -192,4 +192,5 @@
     <string name="requirement_month">Month</string>
     <string name="select_month_label">Select Month</string>
     <string name="select_input_type">Select Input Type</string>
+    <string name="view_file">view file</string>
 </resources>

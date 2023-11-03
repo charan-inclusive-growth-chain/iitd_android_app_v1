@@ -6,13 +6,16 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.app.Dialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputEditText;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -147,24 +150,29 @@ public class LoanApplicationDetailsActivity extends AppCompatActivity {
     PopupWindow imagePopup;
 
     private void showImagePopup(String imageUrl) {
-        View popupView = getLayoutInflater().inflate(R.layout.image_alert_layout, null);
+        final Dialog dialog = new Dialog(LoanApplicationDetailsActivity.this);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.popup_image);
+        ImageView imageView = dialog.findViewById(R.id.popupImageView);
 
-        ImageView imageView = popupView.findViewById(R.id.alert_image_view);
-        DisplayImage displayImage = new DisplayImage(imageView);
+        /// Load and display the image using Picasso
+        Picasso.get()
+                .load(imageUrl)
+                .into(imageView, new com.squareup.picasso.Callback() {
+                    @Override
+                    public void onSuccess() {
+                        Log.d("Image", "Loaded Succesfully");
+                        // Image loaded successfully
+                    }
 
-        // Load the image using DisplayImage class
-        displayImage.execute(imageUrl);
+                    @Override
+                    public void onError(Exception e) {
+                        // Handle error (e.g., log the error)
+                        e.printStackTrace();
+                    }
+                });
 
-        // Create and configure the PopupWindow
-        imagePopup = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        imagePopup.showAtLocation(popupView, Gravity.CENTER, 0, 0);
 
-        // Close the popup when clicking outside
-        popupView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imagePopup.dismiss();
-            }
-        });
+        dialog.show();
     }
 }
