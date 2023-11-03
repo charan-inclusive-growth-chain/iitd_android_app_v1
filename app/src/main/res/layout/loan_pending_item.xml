@@ -26,7 +26,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="PENDING"
+            android:text="@string/pending_tab"
             android:textSize="18dp"
             android:gravity="left"
             android:textColor="@color/dark_grey"
@@ -58,21 +58,21 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Loan Applied Date"
+                android:text="@string/loan_app_date"
                 android:textColor="@color/black"
                 android:textStyle="italic"
                 android:textSize="18dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Loan ID"
+                android:text="@string/loan_id"
                 android:textColor="@color/black"
                 android:textStyle="italic"
                 android:textSize="18dp" />
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Window ID"
+                android:text="@string/window_id"
                 android:textColor="@color/black"
                 android:textStyle="italic"
                 android:textSize="18dp" />
@@ -174,7 +174,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="Status"
+                android:text="@string/status"
                 android:textStyle="italic"
                 android:textSize="18dp" />
 

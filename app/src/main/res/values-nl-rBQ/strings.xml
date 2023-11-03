@@ -1,7 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">IIT Dhanbad</string>
-    <string name="url" translatable="false">http://52.66.41.156:3000/api</string>
-    <!-- Login page -->
     <string name="login">Login</string>
     <string name="hello_farmer">Hello Farmer!</string>
     <string name="are_you_a_farmer">Are you a farmer?</string>
@@ -37,11 +36,7 @@
     <string name="aadhar_card_number">Aadhar Card Number</string>
     <string name="upload_aadhar">Upload Aadhar</string>
     <string name="select_fpo">Select FPO</string>
-
-    <!-- Store Page -->
     <string name="market">Market Price</string>
-
-    <!-- Dashboard Page -->
     <string name="farmer_dashboard">Farmer Dashboard</string>
     <string name="training_programs">Training Programs</string>
     <string name="current_weather">Current Weather</string>
@@ -60,14 +55,10 @@
     <string name="chatbot">Chatbot</string>
     <string name="settings">Settings</string>
     <string name="support">Support</string>
-
-    <!-- Selling Price Page -->
     <string name="sell_to_fpo">Sell to FPO</string>
     <string name="enter_your_produce">Enter Produce</string>
     <string name="market_price">Market Price</string>
     <string name="fpo_price">FPO Price</string>
-
-    <!-- Enter Details -->
     <string name="lac_strain_type">Lac Strain Type</string>
     <string name="source_of_tree">Source of Tree</string>
     <string name="origin">Origin</string>
@@ -76,8 +67,6 @@
     <string name="submit">Submit</string>
     <string name="prev">prev</string>
     <string name="next">next</string>
-
-    <!-- Transaction History Page -->
     <string name="purchase_history">Purchase History</string>
     <string name="sale_history">Sale History</string>
     <string name="purchase_id">Purchase ID</string>
@@ -86,8 +75,6 @@
     <string name="item_details">Item Details</string>
     <string name="sale_id">Sale ID</string>
     <string name="date_of_sale">Date of Sale</string>
-
-    <!-- Training Updates Page -->
     <string name="course_name">Course Name</string>
     <string name="course_start_date">Course Start Date</string>
     <string name="duration">Duration</string>
@@ -95,13 +82,9 @@
     <string name="application_end_date">Application End Date</string>
     <string name="fee">Fee</string>
     <string name="remarks">Remarks</string>
-
-    <!-- Crop Advisory Page -->
     <string name="created_date">Created at</string>
     <string name="last_updated_date">Last Updated at</string>
     <string name="read_more">Read More</string>
-
-    <!-- Loan Page -->
     <string name="loan_app_details">Loan Application Details</string>
     <string name="name">Name</string>
     <string name="loan_details">Loan Details</string>
@@ -131,8 +114,6 @@
     <string name="id">ID</string>
     <string name="item">Item</string>
     <string name="rate">Rate</string>
-
-    <!-- Profile Page -->
     <string name="personal_information">Personal Information</string>
     <string name="profile_update">Profile Update</string>
     <string name="address">Address</string>
@@ -145,7 +126,7 @@
     <string name="choose_file">Choose File</string>
     <string name="fpo">FPO</string>
     <string name="personal_details">Personal Details</string>
-    <string name="transaction">Transaction</string>
+    <string name="transaction">Personal Details</string>
     <string name="history">History</string>
     <string name="crop">Crop</string>
     <string name="advisory">Advisory</string>
@@ -215,7 +196,6 @@
     <string name="enter_old_pass">Enter Old Password</string>
     <string name="enter_new_pass">Enter New Password</string>
     <string name="content_description_media">Content Description</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="requirement_input_type">Input Type</string>
     <string name="requirement_brand_name">Brand Name</string>

@@ -21,21 +21,21 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="APPROVED"
+            android:text="@string/approved_tab"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="62dp" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PENDING"
+            android:text="@string/pending_tab"
             tools:layout_editor_absoluteX="158dp"
             tools:layout_editor_absoluteY="113dp" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="REJECTED"
+            android:text="@string/rejected_tab"
             tools:layout_editor_absoluteX="158dp"
             tools:layout_editor_absoluteY="113dp" />
 

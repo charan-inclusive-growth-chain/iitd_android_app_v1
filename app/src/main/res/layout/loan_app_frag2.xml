@@ -131,8 +131,9 @@
 					android:layout_width="300dp"
 					android:layout_weight="0.5"
 					android:layout_height="wrap_content"
+					android:backgroundTint="@color/primary_green"
 					android:textColor="@color/white"
-					android:text="view"/>
+					android:text="@string/view"/>
 
 			</LinearLayout>
 
@@ -190,7 +191,8 @@
 					android:layout_weight="0.5"
 					android:layout_height="wrap_content"
 					android:textColor="@color/white"
-					android:text="view"/>
+					android:backgroundTint="@color/primary_green"
+					android:text="@string/view"/>
 
 			</LinearLayout>
 

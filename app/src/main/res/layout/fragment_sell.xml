@@ -20,14 +20,14 @@
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SELL TO FPO"
+            android:text="@string/sell_to_fpo_tab"
             tools:layout_editor_absoluteX="0dp"
             tools:layout_editor_absoluteY="62dp" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="ENTER PRODUCE"
+            android:text="@string/enter_produce_tab"
             tools:layout_editor_absoluteX="158dp"
             tools:layout_editor_absoluteY="113dp" />
 

@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:text="Quick Links"
+            android:text="@string/quick_links"
             android:textColor="@color/primary_green"
             android:textSize="20dp"
             android:textStyle="bold" />
@@ -77,7 +77,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
-                    android:text="Training" />
+                    android:text="@string/training" />
 
             </LinearLayout>
 
@@ -101,7 +101,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
-                    android:text="Loan Details" />
+                    android:text="@string/loan_details" />
 
             </LinearLayout>
 
@@ -133,7 +133,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
-                    android:text="Store" />
+                    android:text="@string/store" />
 
             </LinearLayout>
 
@@ -157,7 +157,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginLeft="10dp"
-                    android:text="Crop Advisory" />
+                    android:text="@string/crop_advisory" />
 
             </LinearLayout>
 
@@ -184,7 +184,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginBottom="10dp"
-            android:text="Current Weather"
+            android:text="@string/current_weather"
             android:textColor="@color/light_green"
             android:textSize="18dp"
             android:textStyle="bold" />
@@ -347,7 +347,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="28dp"
         android:layout_marginBottom="0dp"
-        android:text="Hello Farmer!"
+        android:text="@string/hello_farmer"
         android:textSize="40dp"
         app:layout_constraintBottom_toTopOf="@+id/image_slider"
         app:layout_constraintStart_toStartOf="parent" />

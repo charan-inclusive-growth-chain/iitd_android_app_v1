@@ -12,7 +12,7 @@
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="My Produce"
+        android:text="@string/my_produce"
         android:padding="10dp"
         android:textColor="@color/primary_green"
         android:textSize="30sp"

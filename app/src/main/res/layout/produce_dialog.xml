@@ -27,7 +27,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="32dp"
-                android:text="LacStrainType"
+                android:text="@string/lac_strain_type"
                 android:textSize="20sp"
 
                 app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +38,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Origin"
+                android:text="@string/origin"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/lacStrainType"
                 app:layout_constraintTop_toBottomOf="@+id/lacStrainType" />
@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Source Of Tree"
+                android:text="@string/source_of_tree"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/originType"
                 app:layout_constraintTop_toBottomOf="@+id/originType" />
@@ -58,7 +58,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Quantity"
+                android:text="@string/quantity"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/textView28"
                 app:layout_constraintTop_toBottomOf="@+id/textView28" />
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
-                android:text="Remarks"
+                android:text="@string/remarks"
                 android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="@+id/quantity"
                 app:layout_constraintTop_toBottomOf="@+id/quantity" />

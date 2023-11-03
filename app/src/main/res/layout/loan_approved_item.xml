@@ -66,21 +66,21 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Loan Amount"
+                    android:text="@string/loan_amount"
                     android:textColor="@color/black"
                     android:textStyle="italic"
                     android:textSize="18dp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Paid Amount"
+                    android:text="@string/paid_amount"
                     android:textColor="@color/black"
                     android:textStyle="italic"
                     android:textSize="18dp" />
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Balance Amount"
+                    android:text="@string/balance_amount"
                     android:textColor="@color/black"
                     android:textStyle="italic"
                     android:textSize="18dp" />
@@ -180,7 +180,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/black"
-                android:text="Next Payable Amount"
+                android:text="@string/next_payable_amount"
                 android:textStyle="italic"
                 android:textSize="18dp" />
 

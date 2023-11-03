@@ -24,6 +24,7 @@ public class InitialSplashScreenActivity extends AppCompatActivity
 {
     private boolean languageSelected = false;
     String selectedLanguage;
+    SharedPreferences preferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -32,12 +33,15 @@ public class InitialSplashScreenActivity extends AppCompatActivity
         setContentView(R.layout.initial_splash_activity);
 
 
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        preferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean userLoggedIn = preferences.getBoolean("user_logged_in", false);
         Log.d("Logged in", String.valueOf(userLoggedIn));
         String savedLanguage = preferences.getString("selected_language", "");
 
         if(userLoggedIn) {
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(InitialSplashScreenActivity.this);
+            String app_locale = preferences.getString("selected_language", "en");
+            setAppLocale(app_locale);
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             finish();

@@ -527,7 +527,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:text="view"
+                        android:text="@string/view"
                         android:textColor="@color/white"
                         android:backgroundTint="@color/primary_green"/>
                 </LinearLayout>
@@ -577,7 +577,7 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="0.5"
-                        android:text="view"
+                        android:text="@string/view"
                         android:backgroundTint="@color/primary_green"
                         android:textColor="@color/white" />
                 </LinearLayout>
