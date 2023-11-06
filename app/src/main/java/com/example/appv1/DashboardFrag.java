@@ -1,4 +1,5 @@
 package com.example.appv1;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
@@ -100,6 +101,8 @@ public class DashboardFrag extends Fragment {
         perc = rootView.findViewById(R.id.weather_percentage);
         rain = rootView.findViewById(R.id.weather_mm);
 
+
+
         sliderView = rootView.findViewById(R.id.image_slider);
 
         SliderAdapter sliderAdapter = new SliderAdapter(images);
@@ -111,6 +114,8 @@ public class DashboardFrag extends Fragment {
 
 
     }
+
+
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
     {

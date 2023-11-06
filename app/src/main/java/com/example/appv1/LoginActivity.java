@@ -270,6 +270,8 @@ public class LoginActivity extends AppCompatActivity
                             JSONObject dataObject = jsonResponse.getJSONObject("data");
                             String FarmerID = dataObject.getString("_id");
                             String FarmerName = dataObject.getString("userName");
+                            String FirstName = dataObject.getString("firstName");
+                            String LastName = dataObject.getString("lastName");
                             String FpoID = dataObject.getString("fpoId");
                             String PinCode = dataObject.getString("pinCode");
 
@@ -281,6 +283,8 @@ public class LoginActivity extends AppCompatActivity
                             editor.putString("farmerName", FarmerName);
                             editor.putString("fpoId", FpoID);
                             editor.putString("pincode", PinCode);
+                            editor.putString("firstName", FirstName);
+                            editor.putString("lastName",LastName);
                             editor.apply();
 
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -368,6 +372,7 @@ public class LoginActivity extends AppCompatActivity
     public static String getToken(Context context) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String token = preferences.getString("token", "");
+
         return token;
     }
 
@@ -381,5 +386,14 @@ public class LoginActivity extends AppCompatActivity
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         String id = preferences.getString("fpoId", "");
         return id;
+    }
+
+
+    public void updateNavigationHeaderName(View rootView, Context context) {
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+        String firstName = preferences.getString("farmerId", "Farmer");
+        TextView navNameTextView = findViewById(R.id.nav_name);
+        navNameTextView.setText(firstName);
+
     }
 }
