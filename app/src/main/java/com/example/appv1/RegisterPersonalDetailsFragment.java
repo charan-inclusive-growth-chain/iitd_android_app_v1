@@ -76,8 +76,8 @@ public class RegisterPersonalDetailsFragment extends Fragment
 
 
         name = getView().findViewById(R.id.register_name);
-        firstName = getView().findViewById(R.id.reg_first_name);
-        lastName = getView().findViewById(R.id.reg_last_name);
+        firstName = getView().findViewById(R.id.register_first_name);
+        lastName = getView().findViewById(R.id.register_last_name);
         mobile = getView().findViewById(R.id.register_mobile);
         male = getView().findViewById(R.id.radio_pirates);
         female = getView().findViewById(R.id.radio_ninjas);
