@@ -224,4 +224,6 @@
     <string name="select_input_type">Select Input Type</string>
     <string name="view_file">view file</string>
     <string name="quick_links">Quick Links</string>
+    <string name="lastname">Lastname</string>
+    <string name="firstname">Firstname</string>
 </resources>

@@ -33,7 +33,7 @@ import org.json.JSONObject;
 public class RegisterPersonalDetailsFragment extends Fragment
 {
     final Calendar myCalendar = Calendar.getInstance();
-    TextInputEditText dateOfBirth, name, mobile, password, confirmPassword, fatherName, motherName, occupation;
+    TextInputEditText dateOfBirth, name, mobile, password, confirmPassword, fatherName, motherName, occupation, firstName, lastName;
     TextInputEditText education, nop, residence, caste, religion;
 
     TextInputLayout dob, n, m, pass, confpass, fname, mname, occ, edu, nat, res, cas, rel;
@@ -76,6 +76,8 @@ public class RegisterPersonalDetailsFragment extends Fragment
 
 
         name = getView().findViewById(R.id.register_name);
+        firstName = getView().findViewById(R.id.reg_first_name);
+        lastName = getView().findViewById(R.id.reg_last_name);
         mobile = getView().findViewById(R.id.register_mobile);
         male = getView().findViewById(R.id.radio_pirates);
         female = getView().findViewById(R.id.radio_ninjas);
@@ -120,6 +122,8 @@ public class RegisterPersonalDetailsFragment extends Fragment
     }
     public boolean checkFields() {
         String nameS = name.getText().toString().trim();
+        String firstnameS = firstName.getText().toString().trim();
+        String lastnameS = lastName.getText().toString().trim();
         String mobileS = mobile.getText().toString().trim();
         String dobS = dateOfBirth.getText().toString().trim();
         String passwordS = password.getText().toString().trim();
@@ -137,7 +141,9 @@ public class RegisterPersonalDetailsFragment extends Fragment
         if (nameS.isEmpty()) {
             n.setError("Enter name");
             return false;
-        } else if (nameS.contains(" ")) {
+        }
+
+        else if (nameS.contains(" ")) {
             n.setError("Name should not contain spaces");
             return false;
         } else if (!nameS.equals(nameS.toLowerCase())) {
@@ -278,6 +284,8 @@ public class RegisterPersonalDetailsFragment extends Fragment
 
         try {
             registerAsFarmerJson.put("userName", nameS);
+            registerAsFarmerJson.put("firstName", firstnameS);
+            registerAsFarmerJson.put("lastName",lastnameS);
             registerAsFarmerJson.put("mspId", "Org1MSP");
             registerAsFarmerJson.put("type", "farmer");
             registerAsFarmerJson.put("contactNumber", mobileS);
