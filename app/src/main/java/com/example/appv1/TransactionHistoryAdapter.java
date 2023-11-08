@@ -2,6 +2,7 @@ package com.example.appv1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,8 +48,9 @@ public class TransactionHistoryAdapter extends ArrayAdapter<JSONObject> {
                 String Amount = item.getString("totalAmount");
 
                 sno.setText(String.valueOf(position + 1)+ ". ");
-                id.setText(R.string.id + ": " + Id);
+                id.setText(Id);
                 amount.setText("₹" + Amount);
+
                 details.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {

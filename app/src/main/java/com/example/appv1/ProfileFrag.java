@@ -26,6 +26,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -49,6 +52,8 @@ public class ProfileFrag extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    String formattedDate;
     TextView name, mobile, dob, gender, fatherName, motherName, address, occupation;
     TextView education, nop, residence, caste, religion, bankName, accountNumber;
     TextView ifsc, branchName, aadharCardNo, panCardNo;
@@ -160,7 +165,17 @@ public class ProfileFrag extends Fragment {
                                 JSONObject jsonResponse = new JSONObject(responseBody);
                                 name.setText(jsonResponse.getString("userName"));
                                 mobile.setText(jsonResponse.getString("contactNumber"));
-                                dob.setText(jsonResponse.getString("DOB"));
+                                String dobString = jsonResponse.getString("DOB");
+                                try {
+                                    SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+                                    Date date = inputFormat.parse(dobString);
+                                    SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
+                                    formattedDate = outputFormat.format(date);
+                                }catch (ParseException e) {
+                                    e.printStackTrace();
+                                    // Handle any date parsing errors
+                                }
+                                dob.setText(formattedDate);
                                 gender.setText(jsonResponse.getString("gender"));
                                 fatherName.setText(jsonResponse.getString("fathersName"));
                                 motherName.setText(jsonResponse.getString("mothersName"));

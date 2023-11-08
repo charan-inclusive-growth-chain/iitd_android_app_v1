@@ -1,5 +1,6 @@
 package com.example.appv1;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -30,6 +31,8 @@ public class TransactionDetailsActivity extends AppCompatActivity {
 
             // Get the "transactions" array from the JSON object
             JSONArray transactionsArray = transactionItem.getJSONArray("transactions");
+
+            String totalAmount = transactionItem.getString("totalAmount");
             int total = 0;
 
             // Iterate through the transactions and create rows for each
@@ -68,8 +71,18 @@ public class TransactionDetailsActivity extends AppCompatActivity {
             int startIndex = length / 2;
             String Id = fullId.substring(startIndex+1);
             id.setText("ID: " + Id);
-            date.setText(transactionItem.getString("dateOfPurchase"));
+            if (transactionItem.has("dateOfPurchase")) {
+                date.setText(transactionItem.getString("dateOfPurchase"));
+            } else if (transactionItem.has("dateOfSale")) {
+                date.setText(transactionItem.getString("dateOfSale"));
+            } else {
+                // Handle the case when neither "dateOfPurchase" nor "dateOfSale" is available.
+                date.setText("No date available");
+            }
+
             amount.setText(String.valueOf(total));
+            Log.d("Transaction Details", totalAmount);
+            amount.setText(totalAmount);
 
         } catch (JSONException e) {
             e.printStackTrace();

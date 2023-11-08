@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.UUID;
 
@@ -70,6 +71,9 @@ public class LoanAppForm4 extends Fragment
 	RadioButton male, female;
 	RadioGroup genderRadioGroup;
 	String gender;
+	static JSONObject loanApplicationJson;
+
+
 
 	public LoanAppForm4()
 	{
@@ -122,6 +126,7 @@ public class LoanAppForm4 extends Fragment
 		purposeT = getView().findViewById(R.id.loan_purpose_text);
 		tenureT = getView().findViewById(R.id.loan_tenure_text);
 
+
 		addOnClickListenerForDOBButton();
 		genderRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 			@Override
@@ -140,13 +145,17 @@ public class LoanAppForm4 extends Fragment
 	}
 
 	public static void submit(Button submitBtn) {
+		loanApplicationJson = LoanApplication.getLoanApplicationJson();
+		JSONObject requestData = new JSONObject();
 		submitBtn.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+
 				boolean empty = false;
 
 				if(applicantName != null) {
 					String nameS = applicantName.getText().toString().trim();
+
 				} else {
 					nameT.setError("Enter co-applicant name");
 					empty = true;
@@ -209,7 +218,39 @@ public class LoanAppForm4 extends Fragment
 				}
 
 				if(empty == false) {
-					applyForLoan(context.getApplicationContext());
+					try {
+						// Spread the fields from profileData
+						String profileData = loanApplicationJson.optString("profileData", "");
+						if (!profileData.isEmpty()) {
+							JSONObject profileJson = new JSONObject(profileData);
+
+							// Iterate through the fields in profileData and add them to finalObject
+							Iterator<String> keys = profileJson.keys();
+							while (keys.hasNext()) {
+								String key = keys.next();
+								requestData.put(key, profileJson.get(key));
+							}
+						}
+						// Add the newly added fields to the final object
+						requestData.put("applicantName", applicantName.getText().toString());
+						requestData.put("age", age.getText().toString());
+						requestData.put("relationship", relationship.getText().toString());
+						requestData.put("landHolding", landHolding.getText().toString());
+						requestData.put("typeOfLandHolding", typeOfLandHolding.getText().toString());
+						requestData.put("monthlyHHIncome", monthlyHHIncome.getText().toString());
+						requestData.put("monthlyHHExpenses", monthlyHHExpenses.getText().toString());
+						requestData.put("requestedAmount", requestedAmount.getText().toString());
+
+
+
+					}
+					catch (JSONException e) {
+						Log.d("Loan Application Error", "can't Apply Loan");
+						e.printStackTrace();
+					}
+					Log.d("Request Data", requestData.toString());
+
+					// applyForLoan(context.getApplicationContext());
 				}
 			}
 		});

@@ -5,6 +5,8 @@ import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -33,19 +35,34 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
+import android.content.ContentResolver;
 
 public class RegisterIdProofsFragment extends Fragment
 {
-    private static final int CAMERA_PERMISSION_REQUEST_CODE = 123;
+    // Constants for permissions and request codes
+    private static final int REQUEST_CAMERA_PERMISSION = 101;
+    private static final int PICK_PHOTO_FROM_GALLERY = 102;
+    private static final int CAPTURE_PHOTO = 103;
+
+    public final static int PICK_PHOTO_CODE = 1048;
+
     Spinner fpoDropdown;
     List<String> fpoOptions;
     String selectedFPOId;
@@ -54,11 +71,17 @@ public class RegisterIdProofsFragment extends Fragment
 
     Uri selectedAadharCard;
     Uri selectedPanCard;
+    Uri selectedImage;
     TextInputEditText aadharNo, panNo;
     TextInputLayout aadharno, panno;
     TextView aadharT, panT, fpoT;
     JSONObject registerAsFarmerJson;
     List<String> FpoIdList = new ArrayList<>();
+
+    String aadharCardUrl = "";
+
+    String panCardUrl = "";
+    private int currentRequestCode;
 
     public final static int PICK_PHOTO_CODE_AADHAR = 1046;
     public final static int PICK_PHOTO_CODE_PAN = 1047;
@@ -130,11 +153,11 @@ public class RegisterIdProofsFragment extends Fragment
         String panNoS = panNo.getText().toString().trim();
         String fpoS = selectedFPOId.toString().trim();
 
-        if(selectedAadharCard == null) {
+        if(aadharCardUrl.equals("")) {
             aadharCardButton.setError("Upload aadhar");
             return false;
         }
-        if(selectedPanCard == null) {
+        if(panCardUrl.equals("")) {
             panCardButton.setError("Upload PAN");
             return false;
         }
@@ -176,12 +199,13 @@ public class RegisterIdProofsFragment extends Fragment
 
         try {
             registerAsFarmerJson.put("panCardNumber", panNoS);
-            registerAsFarmerJson.put("panCardImage", selectedPanCard.toString().trim());
+            registerAsFarmerJson.put("panCardImage", panCardUrl);
             registerAsFarmerJson.put("aadharCardNumber", aadharNoS);
-            registerAsFarmerJson.put("aadharCardImage", selectedAadharCard.toString().trim());
+            registerAsFarmerJson.put("aadharCardImage", aadharCardUrl);
+
             registerAsFarmerJson.put("fpoId", fpoS);
 
-            Log.d("register2", registerAsFarmerJson.toString());
+            Log.d("IDProofDetails", registerAsFarmerJson.toString());
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -193,7 +217,14 @@ public class RegisterIdProofsFragment extends Fragment
         aadharCardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pick(PICK_PHOTO_CODE_AADHAR);
+                // Check for camera permission
+                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+                } else {
+                    currentRequestCode = PICK_PHOTO_CODE_AADHAR; // Set the current request code
+                    pick(PICK_PHOTO_CODE);
+                }
             }
         });
     }
@@ -202,61 +233,172 @@ public class RegisterIdProofsFragment extends Fragment
         panCardButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pick(PICK_PHOTO_CODE_PAN);
+                // Check for camera permission
+                if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
+                        != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, REQUEST_CAMERA_PERMISSION);
+                } else {
+                    currentRequestCode = PICK_PHOTO_CODE_PAN; // Set the current request code
+                    pick(PICK_PHOTO_CODE);
+                }
             }
         });
+    }
+
+    // Open image picker (either gallery or camera)
+    private void openImagePicker(int requestCode) {
+        String[] mimeTypes = {"image/png", "image/jpeg", "image/jpg", "image/jfif", "image/img"};
+
+        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        galleryIntent.setType("image/*");
+        galleryIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        Intent chooserIntent = Intent.createChooser(galleryIntent, "Choose an image source");
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{cameraIntent});
+
+        startActivityForResult(chooserIntent, requestCode);
     }
 
     public void pick(int code) {
         String[] mimeTypes = {"image/png", "image/jpeg", "image/jpg", "image/jfif", "image/img"};
 
-        // Create the gallery intent
-        Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        galleryIntent.setType("image/*");
-        galleryIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
+        if (code == PICK_PHOTO_CODE) {
+            Intent galleryIntent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+            galleryIntent.setType("image/*");
+            galleryIntent.putExtra(Intent.EXTRA_MIME_TYPES, mimeTypes);
 
-        // Create the camera intent
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-
-        // Check for camera permission
-        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.CAMERA)
-                != PackageManager.PERMISSION_GRANTED) {
-            // Request camera permission
-            ActivityCompat.requestPermissions(requireActivity(), new String[]{Manifest.permission.CAMERA}, CAMERA_PERMISSION_REQUEST_CODE);
-            return; // Return early if permission is not granted
+            Intent chooserIntent = Intent.createChooser(galleryIntent, "Open Gallery");
+            startActivityForResult(chooserIntent, code);
+        } else if (code == REQUEST_CAMERA_PERMISSION) {
+            Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (ContextCompat.checkSelfPermission(requireContext(), android.Manifest.permission.CAMERA)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions((Activity) requireContext(),
+                        new String[]{Manifest.permission.CAMERA},
+                        REQUEST_CAMERA_PERMISSION);
+            } else {
+                startActivityForResult(cameraIntent, code);
+            }
         }
-
-        // Create an intent chooser that allows the user to select either camera or gallery
-        Intent chooserIntent = Intent.createChooser(galleryIntent, "Choose an image source");
-        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[]{cameraIntent});
-
-        startActivityForResult(chooserIntent, code);
     }
 
 
 
+
+
+    // Method to get the absolute path of the selected image from its URI
     // Method to get the absolute path of the selected image from its URI
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == PICK_PHOTO_CODE_AADHAR) {
-                selectedAadharCard = data.getData();
-            } else if (requestCode == PICK_PHOTO_CODE_PAN) {
-                selectedPanCard = data.getData();
-            }
-            if (selectedAadharCard != null) {
-                String imageMimeType = getMimeType(selectedAadharCard);
-                if (!isValidImageFormat(imageMimeType)) {
-                    aadharT.setError("Invalid image format");
-                }
-            } else if (selectedPanCard != null) {
-                String imageMimeType2 = getMimeType(selectedPanCard);
-                if (!isValidImageFormat(imageMimeType2)) {
-                    panT.setError("Invalid image format");
+            if (requestCode == PICK_PHOTO_CODE) {
+                selectedImage = data.getData();
+                String imageMimeType = getMimeType(selectedImage);
+                if (imageMimeType != null) {
+                    if (!imageMimeType.equals("image/png") &&
+                            !imageMimeType.equals("image/jpeg") &&
+                            !imageMimeType.equals("image/jpg") &&
+                            !imageMimeType.equals("image/jfif") &&
+                            !imageMimeType.equals("image/img")) {
+                        //uploadImgText.setError("Invalid image format");
+                    }
+                    else {
+                        uploadImageToServer(selectedImage);
+                    }
                 }
             }
         }
+    }
+
+    // Method to upload the image to the Node.js API
+
+    private void uploadImageToServer(Uri imageUri) {
+        try {
+
+
+            MultipartBody.Builder requestBodyBuilder = new MultipartBody.Builder()
+                    .setType(MultipartBody.FORM)
+                    .addFormDataPart("doc", "file.jpg", RequestBody.create(MediaType.parse(getMimeType(selectedImage)), getImageFileFromUri(selectedImage)));
+            RequestBody requestBody = requestBodyBuilder.build();
+            Log.d("FormData Image", requestBody.toString());
+
+
+            OkHttpClient client = new OkHttpClient();
+
+            Request request = new Request.Builder()
+                    .url(getContext().getString(R.string.url) + "/document")
+                    .post(requestBody)
+                    .build();
+
+            client.newCall(request).enqueue(new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d("Failure", "Failed image Upload following error:");
+                    e.printStackTrace();
+                    // Handle failure, e.g., show an error message to the user
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        String responseData = response.body().string();
+                        try {
+                            JSONObject responseObject = new JSONObject(responseData);
+                            final String imageUrl = responseObject.getJSONObject("data").getString("docId");
+
+                            Log.d("Image Upload", imageUrl);
+
+                            // Set the URL based on the currentRequestCode
+                            if (currentRequestCode == PICK_PHOTO_CODE_AADHAR) {
+                                aadharCardUrl = imageUrl;
+                            } else if (currentRequestCode == PICK_PHOTO_CODE_PAN) {
+                                panCardUrl = imageUrl;
+                            }
+                            // Now you have the image URL, you can use it as needed
+                            getActivity().runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    // Update UI or store the image URL in a variable
+                                    // imageUrl is the URL of the uploaded image on AWS
+
+                                }
+                            });
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Utility function to get the file path from a Uri
+    private File getImageFileFromUri(Uri uri) {
+        String fileName = "image.png"; // Set your desired file name and extension
+        File imageFile = new File(requireContext().getCacheDir(), fileName);
+
+        try {
+            InputStream inputStream = requireContext().getContentResolver().openInputStream(uri);
+            if (inputStream != null) {
+                OutputStream outputStream = new FileOutputStream(imageFile);
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = inputStream.read(buffer)) > 0) {
+                    outputStream.write(buffer, 0, length);
+                }
+                outputStream.close();
+                inputStream.close();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return imageFile;
     }
 
     private boolean isValidImageFormat(String mimeType) {

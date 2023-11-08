@@ -2,6 +2,7 @@ package com.example.appv1;
 
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -187,6 +188,8 @@ public class RegisterAddressDetailsFragment extends Fragment
             registerAsFarmerJson.put("district", districtS);
             registerAsFarmerJson.put("state", stateS);
             registerAsFarmerJson.put("pinCode", pinS);
+
+            Log.d("AddressDetails", registerAsFarmerJson.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

@@ -1,6 +1,7 @@
 package com.example.appv1;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -105,6 +106,7 @@ public class RegisterBankDetailsFragment extends Fragment
             registerAsFarmerJson.put("accountNumber", accountS);
             registerAsFarmerJson.put("ifscCode", ifscS);
             registerAsFarmerJson.put("branchName", branchS);
+            Log.d("BankDetails", registerAsFarmerJson.toString());
         } catch (JSONException e) {
             e.printStackTrace();
         }

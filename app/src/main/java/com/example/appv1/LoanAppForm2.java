@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,10 @@ public class LoanAppForm2 extends Fragment
 	Button aadhar, pan;
 	String age, aadharUrl, panUrl;
 
+	String formattedDate;
+
+	JSONObject loanApplicationJson;
+
 	public LoanAppForm2()
 	{
 		// Required empty public constructor
@@ -59,66 +64,116 @@ public class LoanAppForm2 extends Fragment
 	public void onViewCreated(View view, @Nullable Bundle savedInstanceState)
 	{
 		dobT = view.findViewById(R.id.loan_dob);
+		ageT = view.findViewById(R.id.loan_age);
+
 		aadharNumberT = view.findViewById(R.id.loan_aadhar_number);
 		panNumberT = view.findViewById(R.id.loan_pan_card_number);
 		fatherNameT = view.findViewById(R.id.loan_father_name);
 		motherNameT = view.findViewById(R.id.loan_mother_name);
 		aadhar = view.findViewById(R.id.loan_aadhar);
 		pan = view.findViewById(R.id.loan_pan);
-		loadData();
+		loanApplicationJson = LoanApplication.getLoanApplicationJson();
+		Log.d("Loan Form 2", loanApplicationJson.toString());
+		// loadData();
+		loadDataFromFarmerProfileJson();
 		addOnClickListenerForAadhar();
 		addOnclickListenerForPan();
 	}
 
-	private void loadData() {
-		String url = getContext().getString(R.string.url) + "/userDetails";
-		String token = LoginActivity.getToken(getContext());
+//	private void loadData() {
+//		String url = getContext().getString(R.string.url) + "/profile";
+//		String token = LoginActivity.getToken(getContext());
+//
+//		OkHttpClient client = new OkHttpClient();
+//		Request request = new Request.Builder()
+//				.url(url)
+//				.header("Authorization", "Bearer " + token)
+//				.build();
+//
+//		client.newCall(request).enqueue(new Callback() {
+//			@Override
+//			public void onFailure(Call call, IOException e) {
+//				e.printStackTrace();
+//			}
+//
+//			@Override
+//			public void onResponse(Call call, Response response) throws IOException {
+//				if (response.isSuccessful()) {
+//					Handler handler = new Handler(Looper.getMainLooper());
+//					handler.post(new Runnable() {
+//						@Override
+//						public void run() {
+//							try {
+//								String responseBody = response.body().string();
+//								JSONObject jsonResponse = new JSONObject(responseBody);
+//								String dobString = jsonResponse.getString("DOB");
+//								try {
+//									SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+//									Date date = inputFormat.parse(dobString);
+//									SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
+//									formattedDate = outputFormat.format(date);
+//								}catch (ParseException e) {
+//									e.printStackTrace();
+//									// Handle any date parsing errors
+//								}
+//								dobT.setText(formattedDate);
+//								setAge(String.valueOf(dobT.getText()));
+//								fatherNameT.setText(jsonResponse.getString("fathersName"));
+//								motherNameT.setText(jsonResponse.getString("mothersName"));
+//								aadharNumberT.setText(jsonResponse.getString("aadharCardNumber"));
+//								panNumberT.setText(jsonResponse.getString("panCardNumber"));
+//								aadharUrl = jsonResponse.getString("aadharCardImage");
+//								panUrl = jsonResponse.getString("panCardImage");
+//							} catch (JSONException e) {
+//								throw new RuntimeException(e);
+//							} catch (IOException e) {
+//								throw new RuntimeException(e);
+//							}
+//						}
+//					});
+//				}
+//			}
+//
+//		});
+//	}
+private void loadDataFromFarmerProfileJson() {
+	// Check if the FarmerProfileJson object is available
+	if (loanApplicationJson != null) {
+		try {
+			// Access the "profileData" from FarmerProfileJson
+			String profileData = loanApplicationJson.optString("profileData", "");
 
-		OkHttpClient client = new OkHttpClient();
-		Request request = new Request.Builder()
-				.url(url)
-				.header("Authorization", "Bearer " + token)
-				.build();
+			if (!profileData.isEmpty()) {
+				JSONObject jsonResponse = new JSONObject(profileData);
 
-		client.newCall(request).enqueue(new Callback() {
-			@Override
-			public void onFailure(Call call, IOException e) {
-				e.printStackTrace();
-			}
-
-			@Override
-			public void onResponse(Call call, Response response) throws IOException {
-				if (response.isSuccessful()) {
-					Handler handler = new Handler(Looper.getMainLooper());
-					handler.post(new Runnable() {
-						@Override
-						public void run() {
-							try {
-								String responseBody = response.body().string();
-								JSONObject jsonResponse = new JSONObject(responseBody);
-								dobT.setText(jsonResponse.getString("dateOfBirth"));
-								setAge(String.valueOf(dobT.getText()));
-								fatherNameT.setText(jsonResponse.getString("fatherName"));
-								motherNameT.setText(jsonResponse.getString("motherName"));
-								aadharNumberT.setText(jsonResponse.getString("aadharCardNumber"));
-								panNumberT.setText(jsonResponse.getString("panCardNumber"));
-								aadharUrl = "http://3.7.253.48:3000/img/" + jsonResponse.getString("aadharCardImage");
-								panUrl = "http://3.7.253.48:3000/img/" + jsonResponse.getString("panCardImage");
-							} catch (JSONException e) {
-								throw new RuntimeException(e);
-							} catch (IOException e) {
-								throw new RuntimeException(e);
-							}
-						}
-					});
+				// Extract and set the details as before
+				String dobString = jsonResponse.getString("DOB");
+				try {
+					SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+					Date date = inputFormat.parse(dobString);
+					SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
+					formattedDate = outputFormat.format(date);
+				} catch (ParseException e) {
+					e.printStackTrace();
+					// Handle any date parsing errors
 				}
+				dobT.setText(formattedDate);
+				setAge(String.valueOf(dobT.getText()));
+				fatherNameT.setText(jsonResponse.getString("fathersName"));
+				motherNameT.setText(jsonResponse.getString("mothersName"));
+				aadharNumberT.setText(jsonResponse.getString("aadharCardNumber"));
+				panNumberT.setText(jsonResponse.getString("panCardNumber"));
+				aadharUrl = jsonResponse.getString("aadharCardImage");
+				panUrl = jsonResponse.getString("panCardImage");
 			}
-
-		});
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
 	}
+}
 
 	private String setAge(String dob) {
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
+		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.US);
 
 		try {
 			Date birthDate = dateFormat.parse(dob);
@@ -131,6 +186,8 @@ public class LoanAppForm2 extends Fragment
 			if (today.get(Calendar.DAY_OF_YEAR) < birthCalendar.get(Calendar.DAY_OF_YEAR)) {
 				age--;
 			}
+
+			ageT.setText(String.valueOf(age));
 
 			return String.valueOf(age);
 		} catch (ParseException e) {

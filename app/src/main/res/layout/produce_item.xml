@@ -35,7 +35,7 @@
                 android:layout_height="200dp"
                 android:contentDescription="@string/content_description_media"
                 android:scaleType="centerCrop"
-                app:srcCompat="@drawable/apples"
+                app:srcCompat="@drawable/loadingapple"
                 android:id="@+id/grid_image"/>
 
 

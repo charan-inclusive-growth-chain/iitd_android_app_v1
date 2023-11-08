@@ -29,6 +29,8 @@ public class LoanApplication extends AppCompatActivity
 
 	public static JSONObject loanObject = new JSONObject();
 
+	public static JSONObject loanApplicationJson = new JSONObject();
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
@@ -41,6 +43,9 @@ public class LoanApplication extends AppCompatActivity
 		resetButtons();
 		handleNextFragments(fragmentOrder.get(currentFragmentNumber));
 
+	}
+	public static JSONObject getLoanApplicationJson() {
+		return loanApplicationJson;
 	}
 
 	private void addOnClickListenerForSubmitButton()

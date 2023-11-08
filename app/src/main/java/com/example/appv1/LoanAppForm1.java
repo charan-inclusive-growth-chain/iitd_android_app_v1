@@ -35,6 +35,8 @@ public class LoanAppForm1 extends Fragment
 	EditText fpoT, bankT, accountNumberT, ifscT;
 	EditText branchNameT, nameT, genderT, mobileT;
 
+	JSONObject loanApplicationJson;
+
 	public LoanAppForm1()
 	{
 		// Required empty public constructor
@@ -65,12 +67,14 @@ public class LoanAppForm1 extends Fragment
 		fpoT = getView().findViewById(R.id.loan_fpo);
 		nameT = getView().findViewById(R.id.loan_name);
 		genderT = getView().findViewById(R.id.loan_gender);
+
+		loanApplicationJson = LoanApplication.getLoanApplicationJson();
 		loadData();
 		fetchFPOOptions();
 	}
 
 	private void loadData() {
-		String url = getContext().getString(R.string.url) + "/userDetails";
+		String url = getContext().getString(R.string.url) + "/profile";
 		String token = LoginActivity.getToken(getContext());
 
 		OkHttpClient client = new OkHttpClient();
@@ -95,14 +99,18 @@ public class LoanAppForm1 extends Fragment
 							try {
 								String responseBody = response.body().string();
 								JSONObject jsonResponse = new JSONObject(responseBody);
+
+								loanApplicationJson.put("profileData", responseBody);
 								nameT.setText(jsonResponse.getString("userName"));
-								mobileT.setText(jsonResponse.getString("mobile"));
+								mobileT.setText(jsonResponse.getString("contactNumber"));
 								genderT.setText(jsonResponse.getString("gender"));
 								bankT.setText(jsonResponse.getString("bankName"));
 								accountNumberT.setText(jsonResponse.getString("accountNumber"));
 								ifscT.setText(jsonResponse.getString("ifscCode"));
 								branchNameT.setText(jsonResponse.getString("branchName"));
 								fpo = jsonResponse.getString("fpoId");
+
+
 
 							} catch (JSONException e) {
 								throw new RuntimeException(e);
@@ -118,7 +126,7 @@ public class LoanAppForm1 extends Fragment
 	}
 
 	private void fetchFPOOptions() {
-		String url = getContext().getString(R.string.url) + "/signup/fpo";
+		String url = getContext().getString(R.string.url) + "/list/fpo";
 
 		OkHttpClient client = new OkHttpClient();
 

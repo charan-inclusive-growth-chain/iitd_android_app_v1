@@ -286,7 +286,7 @@ public class RegisterPersonalDetailsFragment extends Fragment
             registerAsFarmerJson.put("userName", nameS);
             registerAsFarmerJson.put("firstName", firstnameS);
             registerAsFarmerJson.put("lastName",lastnameS);
-            registerAsFarmerJson.put("mspId", "Org1MSP");
+
             registerAsFarmerJson.put("type", "farmer");
             registerAsFarmerJson.put("contactNumber", mobileS);
             registerAsFarmerJson.put("password", passwordS);

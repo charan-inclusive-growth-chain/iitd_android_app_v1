@@ -135,7 +135,7 @@ public class LoanListFrag extends Fragment {
     }
 
     private void checkIfCanApplyForLoan() {
-        String url = getContext().getString(R.string.url) + "/api/loanwindow/loan?type=farmer";
+        String url = getContext().getString(R.string.url) + "/api/activeLoanWindow/farmer";
         String token = LoginActivity.getToken(getContext());
 
         OkHttpClient client = new OkHttpClient();

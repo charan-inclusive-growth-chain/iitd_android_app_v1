@@ -15,6 +15,7 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="8dp"
         app:cardElevation="4dp"
+        android:backgroundTint="@color/very_light_green"
         app:cardBackgroundColor="?android:attr/colorBackground"
         android:layout_margin="8dp">
 
@@ -63,6 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/details"
+                android:textColor="@color/primary_green"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/total_amount"

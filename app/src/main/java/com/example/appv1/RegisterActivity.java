@@ -103,6 +103,13 @@ public class RegisterActivity extends AppCompatActivity
                                     String jsonPayload = registerAsFarmerJson.toString();
                                     OkHttpClient client = new OkHttpClient();
 
+                                    Log.d("RequestBodyJSON", jsonPayload);
+                                    // Check if the request body converts fields to lowercase
+                                    if (jsonPayload.toLowerCase().equals(jsonPayload)) {
+                                        Log.d("Bug", "Request body converts fields to lowercase");
+                                    }
+
+
                                     MediaType JSON = MediaType.parse("application/json; charset=utf-8");
                                     RequestBody requestBody = RequestBody.create(JSON, jsonPayload);
 

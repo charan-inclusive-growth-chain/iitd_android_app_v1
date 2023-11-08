@@ -270,8 +270,8 @@ public class LoginActivity extends AppCompatActivity
                             JSONObject dataObject = jsonResponse.getJSONObject("data");
                             String FarmerID = dataObject.getString("_id");
                             String FarmerName = dataObject.getString("userName");
-                            String FirstName = dataObject.getString("firstName");
-                            String LastName = dataObject.getString("lastName");
+//                            String FirstName = dataObject.getString("firstName");
+//                            String LastName = dataObject.getString("lastName");
                             String FpoID = dataObject.getString("fpoId");
                             String PinCode = dataObject.getString("pinCode");
 
@@ -283,8 +283,8 @@ public class LoginActivity extends AppCompatActivity
                             editor.putString("farmerName", FarmerName);
                             editor.putString("fpoId", FpoID);
                             editor.putString("pincode", PinCode);
-                            editor.putString("firstName", FirstName);
-                            editor.putString("lastName",LastName);
+//                            editor.putString("firstName", FirstName);
+//                            editor.putString("lastName",LastName);
                             editor.apply();
 
                             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
@@ -389,11 +389,11 @@ public class LoginActivity extends AppCompatActivity
     }
 
 
-    public void updateNavigationHeaderName(View rootView, Context context) {
-        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
-        String firstName = preferences.getString("farmerId", "Farmer");
-        TextView navNameTextView = findViewById(R.id.nav_name);
-        navNameTextView.setText(firstName);
-
-    }
+//    public void updateNavigationHeaderName(View rootView, Context context) {
+//        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
+//        String firstName = preferences.getString("farmerId", "Farmer");
+//        TextView navNameTextView = findViewById(R.id.nav_name);
+//        navNameTextView.setText(firstName);
+//
+//    }
 }
