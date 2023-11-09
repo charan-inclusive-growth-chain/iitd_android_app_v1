@@ -137,7 +137,7 @@ public class LoanAppForm3 extends Fragment
 					state.setText(jsonResponse.getString("state"));
 					pinCode.setText(jsonResponse.getString("pinCode"));
 					occupation.setText(jsonResponse.getString("occupation"));
-					nop.setText(jsonResponse.getString("natureOfPlace"));
+					nop.setText(jsonResponse.getString("natureOfplace"));
 					residence.setText(jsonResponse.getString("residence"));
 					caste.setText(jsonResponse.getString("caste"));
 					religion.setText(jsonResponse.getString("religion"));

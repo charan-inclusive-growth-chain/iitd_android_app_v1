@@ -33,8 +33,10 @@ import java.util.UUID;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class LoanAppForm4 extends Fragment
@@ -55,7 +57,7 @@ public class LoanAppForm4 extends Fragment
 	EditText tenure;
 	EditText interest;
 	EditText loanID;
-	TextView dobT;
+	static TextView dobT;
 	static TextView nameT;
 	static TextView ageT;
 	static TextView relationshipT;
@@ -64,13 +66,21 @@ public class LoanAppForm4 extends Fragment
 	static TextView incomeT;
 	static TextView expensesT;
 	static TextView amountT;
-	TextView purposeT;
-	TextView tenureT;
-	TextView interestT;
-	TextView idText;
+	static TextView purposeT;
+	static TextView tenureT;
+	static String interestS;
+
+	static String fpoNameS;
+
+	static String idS;
+	static String fpoIdS;
+
+	static String loanIdS;
+
+	static String windowIdS;
 	RadioButton male, female;
 	RadioGroup genderRadioGroup;
-	String gender;
+	static String gender;
 	static JSONObject loanApplicationJson;
 
 
@@ -147,123 +157,135 @@ public class LoanAppForm4 extends Fragment
 	public static void submit(Button submitBtn) {
 		loanApplicationJson = LoanApplication.getLoanApplicationJson();
 		JSONObject requestData = new JSONObject();
-		submitBtn.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
+		Log.d("Submit BUtton Clicked", "Submisdsion started");
+		// Retrieve values from EditText fields
+		String nameS = applicantName.getText().toString().trim();
+		String dobS = dateOfBirth.getText().toString().trim();
+		String ageS = age.getText().toString().trim();
+		String relationshipS = relationship.getText().toString().trim();
+		String landHoldingS = landHolding.getText().toString().trim();
+		String landTypeS = typeOfLandHolding.getText().toString().trim();
+		String incomeS = monthlyHHIncome.getText().toString().trim();
+		String expensesS = monthlyHHExpenses.getText().toString().trim();
+		String amountS = requestedAmount.getText().toString().trim();
+		String purposeS = purposeT.getText().toString().trim();
+		String tenureS = purposeT.getText().toString().trim();
 
-				boolean empty = false;
 
-				if(applicantName != null) {
-					String nameS = applicantName.getText().toString().trim();
 
-				} else {
-					nameT.setError("Enter co-applicant name");
-					empty = true;
-				}
+		boolean empty = false;
 
-				if(dateOfBirth != null) {
-					String dobS = dateOfBirth.getText().toString().trim();
-				} else {
-					ageT.setError("Enter age");
-					empty = true;
-				}
+		if(nameS.isEmpty()) {
+			nameT.setError("Enter co-applicant name");
+			empty = true;
 
-				if(age != null) {
-					String dobS = dateOfBirth.getText().toString().trim();
-				} else {
-					ageT.setError("Enter age");
-					empty = true;
-				}
+		}
+		if(dobS.isEmpty()) {
+			dobT.setError("Enter age");
+			empty = true;
+		}
 
-				if(relationship != null) {
-					String relationshipS = relationship.getText().toString().trim();
-				} else {
-					relationshipT.setError("Enter relationship");
-					empty = true;
-				}
+		if(ageS.isEmpty()) {
+			ageT.setError("Enter age");
+			empty = true;
+		}
 
-				if(landHolding != null) {
-					String landHoldingS = landHolding.getText().toString().trim();
-				} else {
-					landHoldingT.setError("Enter land holding");
-					empty = true;
-				}
+		if(relationshipS.isEmpty()) {
+			relationshipT.setError("Enter relationship");
+			empty = true;
+		}
 
-				if(typeOfLandHolding != null) {
-					String landTypeS = typeOfLandHolding.getText().toString().trim();
-				} else {
-					typeoflandHoldingT.setError("Enter land holding type");
-					empty = true;
-				}
+		if(landHoldingS.isEmpty()) {
+			landHoldingT.setError("Enter land holding");
+			empty = true;
+		}
+		if(landTypeS.isEmpty()) {
+			typeoflandHoldingT.setError("Enter land holding type");
+			empty = true;
+		}
+		if(incomeS.isEmpty()) {
+			incomeT.setError("Enter monthly hh income");
+			empty = true;
+		}
 
-				if(monthlyHHIncome != null) {
-					String incomeS = monthlyHHIncome.getText().toString().trim();
-				} else {
-					incomeT.setError("Enter monthly hh income");
-					empty = true;
-				}
+		if(expensesS.isEmpty()) {
+			expensesT.setError("Enter monthly hh expenses");
+			empty = true;
+		}
 
-				if(monthlyHHIncome != null) {
-					String expensesS = monthlyHHExpenses.getText().toString().trim();
-				} else {
-					expensesT.setError("Enter monthly hh expenses");
-					empty = true;
-				}
+		if(amountS.isEmpty()) {
+			amountT.setError("Enter requested amount");
+			empty = true;
+		}
+		if(purposeS.isEmpty()) {
+			purposeT.setError("Purpose is Requried");
+			empty = true;
+		}
+		if(tenureS.isEmpty()){
+			tenureT.setError("Loan Tenure is Required");
+			empty = true;
+		}
 
-				if(requestedAmount != null) {
-					String amountS = requestedAmount.getText().toString().trim();
-				} else {
-					amountT.setError("Enter requested amount");
-					empty = true;
-				}
+		if(!empty) {
+			try {
+				Log.d("Emptyness", "Not Empty");
+				// Spread the fields from profileData
+				String profileData = loanApplicationJson.optString("profileData", "");
+				if (!profileData.isEmpty()) {
+					JSONObject profileJson = new JSONObject(profileData);
 
-				if(empty == false) {
-					try {
-						// Spread the fields from profileData
-						String profileData = loanApplicationJson.optString("profileData", "");
-						if (!profileData.isEmpty()) {
-							JSONObject profileJson = new JSONObject(profileData);
-
-							// Iterate through the fields in profileData and add them to finalObject
-							Iterator<String> keys = profileJson.keys();
-							while (keys.hasNext()) {
-								String key = keys.next();
-								requestData.put(key, profileJson.get(key));
-							}
+					// Iterate through the fields in profileData and add them to finalObject
+					Iterator<String> keys = profileJson.keys();
+					while (keys.hasNext()) {
+						String key = keys.next();
+						// Check if the key is not "__v" or "_id" before adding it to requestData
+						if (!key.equals("__v") && !key.equals("_id")) {
+							requestData.put(key, profileJson.get(key));
 						}
-						// Add the newly added fields to the final object
-						requestData.put("applicantName", applicantName.getText().toString());
-						requestData.put("age", age.getText().toString());
-						requestData.put("relationship", relationship.getText().toString());
-						requestData.put("landHolding", landHolding.getText().toString());
-						requestData.put("typeOfLandHolding", typeOfLandHolding.getText().toString());
-						requestData.put("monthlyHHIncome", monthlyHHIncome.getText().toString());
-						requestData.put("monthlyHHExpenses", monthlyHHExpenses.getText().toString());
-						requestData.put("requestedAmount", requestedAmount.getText().toString());
-
-
-
 					}
-					catch (JSONException e) {
-						Log.d("Loan Application Error", "can't Apply Loan");
-						e.printStackTrace();
-					}
-					Log.d("Request Data", requestData.toString());
-
-					// applyForLoan(context.getApplicationContext());
 				}
+				// Add the newly added fields to the final object
+				requestData.put("coApplicantName", nameS);
+				requestData.put("coApplicantGender", gender);
+				requestData.put("coApplicantDob",dobS);
+				requestData.put("coApplicantAge", ageS);
+				requestData.put("relationship", relationshipS);
+				requestData.put("landHolding", landHoldingS);
+				requestData.put("LandHoldingType", landTypeS);
+				requestData.put("monthlyHHIncome", incomeS);
+				requestData.put("monthlyHHExpenses", expensesS);
+				requestData.put("requestedAmount", amountS);
+				requestData.put("purpose", purposeS);
+				requestData.put("loanTenure", tenureS);
+				requestData.put("fpoName",fpoNameS);
+				requestData.put("id",idS);
+				requestData.put("loanWindowId",windowIdS);
+				requestData.put("fpoId", fpoIdS);
+				requestData.put("loanId", loanIdS);
+				requestData.put("intrest",interestS);
+
+
 			}
-		});
+			catch (JSONException e) {
+				Log.d("Loan Application Error", "can't Apply Loan");
+				e.printStackTrace();
+			}
+			Log.d("Request Data", requestData.toString());
+
+			// applyForLoan(context.getApplicationContext());
+			loanApply(requestData);
+		}
 	}
 
 	private static void applyForLoan(Context context) {
-		String url = context.getString(R.string.url) + "/loanwindow/activeLoanWindow/farmer?fpoId=" + LoginActivity.getFpoID(context);
+		String url = context.getString(R.string.url) + "/loanwindow/+" + idS + "/loan";
 		String token = LoginActivity.getToken(context);
 
 		OkHttpClient client = new OkHttpClient();
 		Request request = new Request.Builder()
 				.url(url)
 				.header("Authorization", "Bearer " + token)
+
 				.build();
 
 		client.newCall(request).enqueue(new Callback() {
@@ -295,6 +317,34 @@ public class LoanAppForm4 extends Fragment
 				}
 			}
 
+		});
+	}
+
+	private static void loanApply(JSONObject requestData) {
+		String url = context.getString(R.string.url) + "/loanwindow/" + idS + "/loan";
+		Log.d("API URL", url);
+		String token = LoginActivity.getToken(context);
+
+		OkHttpClient client = new OkHttpClient();
+		RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), requestData.toString());
+		Request request = new Request.Builder()
+				.url(url)
+				.header("Authorization", "Bearer " + token)
+				.post(requestBody)
+				.build();
+
+		client.newCall(request).enqueue(new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+				e.printStackTrace();
+			}
+
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+				if (response.isSuccessful()) {
+					// Handle the response here if needed
+				}
+			}
 		});
 	}
 
@@ -333,11 +383,14 @@ public class LoanAppForm4 extends Fragment
 		UUID uuid = UUID.randomUUID();
 		String id = uuid.toString().replaceAll("-", "").substring(0, 10);
 		loanID.setText(id);
+		loanIdS = id;
 	}
 
 	private void getInterestRate() {
-		String url = getContext().getString(R.string.url) +  "/loanwindow/activeLoanWindow/farmer?fpoId=" + LoginActivity.getFpoID(getContext());
+		// ?fpoId=" + LoginActivity.getFpoID(getContext());
+		String url = getContext().getString(R.string.url) +  "/loanwindow/activeLoanWindow/farmer";
 		String token = LoginActivity.getToken(getContext());
+		fpoIdS = LoginActivity.getFpoID(getContext());
 
 		OkHttpClient client = new OkHttpClient();
 		Request request = new Request.Builder()
@@ -363,6 +416,17 @@ public class LoanAppForm4 extends Fragment
 								Log.d("Interest", responseBody);
 								JSONObject jsonResponse = new JSONObject(responseBody);
 								interest.setText(String.valueOf(jsonResponse.getInt("fpoInterestRate")));
+								interestS = String.valueOf(jsonResponse.getInt("fpoInterestRate"));
+								JSONArray data = jsonResponse.getJSONArray("data");
+								if(data.length() > 0) {
+									JSONObject firstItem = data.getJSONObject(0);
+									idS = firstItem.getString("id");
+									windowIdS = firstItem.getString("windowId");
+									fpoNameS = firstItem.getString("fpoName");
+
+								}
+
+
 							} catch (JSONException e) {
 								throw new RuntimeException(e);
 							} catch (IOException e) {
