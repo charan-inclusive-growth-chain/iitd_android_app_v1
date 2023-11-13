@@ -187,6 +187,7 @@
 							android:textStyle="bold"
 							android:textSize="18dp"
 								android:textColor="@color/black"
+							android:inputType="number"
 								android:text="@string/relationship" />
 
 						  <EditText

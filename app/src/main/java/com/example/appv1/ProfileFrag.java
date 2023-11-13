@@ -140,6 +140,7 @@ public class ProfileFrag extends Fragment {
     private void loadData() {
         String url = getContext().getString(R.string.url) + "/profile";
         String token = LoginActivity.getToken(getContext());
+        Log.d("FragmentToken", token);
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -161,6 +162,8 @@ public class ProfileFrag extends Fragment {
                         @Override
                         public void run() {
                             try {
+                                Log.d("Response toString ProfileFrag", response.body().toString());
+                                Log.d("Response String ProfileFrag", response.body().toString());
                                 String responseBody = response.body().string();
                                 JSONObject jsonResponse = new JSONObject(responseBody);
                                 name.setText(jsonResponse.getString("userName"));

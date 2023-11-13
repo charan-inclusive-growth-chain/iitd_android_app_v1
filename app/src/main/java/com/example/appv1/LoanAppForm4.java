@@ -133,8 +133,8 @@ public class LoanAppForm4 extends Fragment
 		incomeT = getView().findViewById(R.id.loan_income_text);
 		expensesT = getView().findViewById(R.id.loan_expense_text);
 		amountT = getView().findViewById(R.id.loan_amount_text);
-		purposeT = getView().findViewById(R.id.loan_purpose_text);
-		tenureT = getView().findViewById(R.id.loan_tenure_text);
+		purposeT = getView().findViewById(R.id.loan_app_loan_purpose);
+		tenureT = getView().findViewById(R.id.loan_app_tenure_month);
 
 
 		addOnClickListenerForDOBButton();
@@ -169,9 +169,11 @@ public class LoanAppForm4 extends Fragment
 		String expensesS = monthlyHHExpenses.getText().toString().trim();
 		String amountS = requestedAmount.getText().toString().trim();
 		String purposeS = purposeT.getText().toString().trim();
-		String tenureS = purposeT.getText().toString().trim();
+		String tenureS = tenureT.getText().toString().trim();
 
-
+		Log.d("Values Tenure", tenureS);
+		Log.d("Values purpsoe", purposeS);
+		Log.d("Values amountS", amountS);
 
 		boolean empty = false;
 
@@ -251,7 +253,7 @@ public class LoanAppForm4 extends Fragment
 				requestData.put("coApplicantAge", ageS);
 				requestData.put("relationship", relationshipS);
 				requestData.put("landHolding", landHoldingS);
-				requestData.put("LandHoldingType", landTypeS);
+				requestData.put("landHoldingType", landTypeS);
 				requestData.put("monthlyHHIncome", incomeS);
 				requestData.put("monthlyHHExpenses", expensesS);
 				requestData.put("requestedAmount", amountS);

@@ -73,6 +73,7 @@ public class LoanApplicationDetailsActivity extends AppCompatActivity {
         interest = findViewById(R.id.interest);
         id = findViewById(R.id.loan_id);
 
+
         Intent intent = getIntent();
         if (intent.hasExtra("loanObject")) {
             try {
@@ -84,30 +85,74 @@ public class LoanApplicationDetailsActivity extends AppCompatActivity {
                 account.setText(loanObject.getString("accountNumber"));
                 ifsc.setText(loanObject.getString("ifscCode"));
                 branch.setText(loanObject.getString("branchName"));
-                username.setText(loanObject.getString("name"));
+
+                if(loanObject.has("name")) {
+                    username.setText(loanObject.getString("name"));
+                }else if(loanObject.has("userName")) {
+                    username.setText(loanObject.getString("userName"));
+                }
                 gender.setText(loanObject.getString("gender"));
-                mobile.setText(loanObject.getString("mobile"));
-                dob.setText(loanObject.getString("dob").substring(0, 10));
+                if (loanObject.has("mobile")) {
+                    Log.d("Mobile Field",loanObject.getString("mobile") );
+                    mobile.setText(loanObject.getString("mobile"));
+
+                }else if(loanObject.has("contactNumber")) {
+                    mobile.setText(loanObject.getString("contactNumber"));
+                }
+                if(loanObject.has("dob")) {
+                    dob.setText(loanObject.getString("dob"));
+                }else if(loanObject.has("DOB")) {
+                    dob.setText(loanObject.getString("DOB"));
+                }
+                if(loanObject.has("fathersName")) {
+                    fName.setText(loanObject.getString("fathersName"));
+                }else if(loanObject.has("fatherName")) {
+                    fName.setText(loanObject.getString("fatherName"));
+                }
+                if(loanObject.has("mothersName")) {
+                    fName.setText(loanObject.getString("mothersName"));
+                }else if(loanObject.has("motherName")) {
+                    fName.setText(loanObject.getString("motherName"));
+                }
+                if(loanObject.has("street")) {
+                    fName.setText(loanObject.getString("street"));
+                }else if(loanObject.has("streetName")) {
+                    fName.setText(loanObject.getString("streetName"));
+                }
+                if(loanObject.has("natureOfPlace")) {
+                    fName.setText(loanObject.getString("natureOfPlace"));
+                }else if(loanObject.has("natureOfplace")) {
+                    fName.setText(loanObject.getString("natureOfplace"));
+                }
+                if(loanObject.has("gender")) {
+                    coGender.setText(loanObject.getString("gender"));
+                }else if(loanObject.has("coApplicantGender")) {
+                    coGender.setText(loanObject.getString("coApplicantGender"));
+                }
+
+
+
+//                dob.setText(loanObject.getString("DOB").substring(0, 10));
                 age.setText(String.valueOf(loanObject.getInt("age")));
                 aadharNo.setText(loanObject.getString("aadharCardNumber"));
                 panNo.setText(loanObject.getString("panCardNumber"));
-                fName.setText(loanObject.getString("fatherName"));
-                mName.setText(loanObject.getString("motherName"));
+//                fName.setText(loanObject.getString("fathersName"));
+//                mName.setText(loanObject.getString("mothersName"));
                 doorNo.setText(loanObject.getString("doorNumber"));
-                street.setText(loanObject.getString("street"));
-                village.setText(loanObject.getString("village"));
+//                street.setText(loanObject.getString("streetName"));
+//                village.setText(loanObject.getString("village"));
                 taluk.setText(loanObject.getString("taluk"));
                 district.setText(loanObject.getString("district"));
                 state.setText(loanObject.getString("state"));
                 pin.setText(loanObject.getString("pinCode"));
                 occupation.setText(loanObject.getString("occupation"));
-                nop.setText(loanObject.getString("natureOfPlace"));
+//                nop.setText(loanObject.getString("natureOfplace"));
                 residence.setText(loanObject.getString("residence"));
                 caste.setText(loanObject.getString("caste"));
                 religion.setText(loanObject.getString("religion"));
                 coName.setText(loanObject.getString("coApplicantName"));
-                coGender.setText(loanObject.getString("coApplicantGender"));
-                coDob.setText(loanObject.getString("coApplicantDob").substring(0, 10));
+
+                coDob.setText(loanObject.getString("coApplicantDob"));
                 coAge.setText(String.valueOf(loanObject.getInt("coApplicantAge")));
                 relationship.setText(loanObject.getString("relationship"));
                 landHolding.setText(loanObject.getString("landHolding"));
@@ -119,6 +164,8 @@ public class LoanApplicationDetailsActivity extends AppCompatActivity {
                 tenure.setText(String.valueOf(loanObject.getInt("loanTenure")));
                 interest.setText(loanObject.isNull("intrest") ? "" : loanObject.getString("intrest") + "%");
                 id.setText(loanObject.getString("loanId"));
+
+
 
                 aadhar.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -146,6 +193,8 @@ public class LoanApplicationDetailsActivity extends AppCompatActivity {
             }
         }
     }
+
+    // Helper function to check and get the value for a field
 
     PopupWindow imagePopup;
 

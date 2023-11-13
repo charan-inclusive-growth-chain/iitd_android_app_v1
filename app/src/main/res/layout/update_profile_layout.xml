@@ -46,34 +46,7 @@
 			android:layout_height="match_parent"
 			android:orientation="vertical">
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:padding="5dp"
-				android:orientation="vertical">
 
-				<TextView
-					android:id="@+id/text_username"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:padding="5dp"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:textSize="18dp"
-					android:textStyle="bold"
-					android:textColor="@color/black"
-					android:text="@string/username" />
-
-				<com.google.android.material.textfield.TextInputEditText
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:hint="@string/username"
-					android:id="@+id/edit_username"
-					android:inputType="text" />
-			</LinearLayout>
 
 			<LinearLayout
 				android:layout_width="match_parent"
@@ -104,121 +77,7 @@
 					android:inputType="text" />
 			</LinearLayout>
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:padding="5dp"
-				android:orientation="vertical">
 
-				<TextView
-					android:id="@+id/text_dob"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:padding="5dp"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:textSize="18dp"
-					android:textStyle="bold"
-					android:textColor="@color/black"
-					android:text="@string/dob" />
-
-				<com.google.android.material.textfield.TextInputEditText
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:hint="YYYY MM DD"
-					android:id="@+id/edit_dob"
-					android:inputType="text" />
-			</LinearLayout>
-
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:padding="5dp"
-				android:orientation="vertical">
-
-				<TextView
-					android:id="@+id/text_gender"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:padding="5dp"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:textSize="18dp"
-					android:textStyle="bold"
-					android:textColor="@color/black"
-					android:text="@string/gender" />
-
-				<com.google.android.material.textfield.TextInputEditText
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:hint="@string/gender"
-					android:id="@+id/edit_gender"
-					android:inputType="text" />
-			</LinearLayout>
-
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:padding="5dp"
-				android:orientation="vertical">
-
-				<TextView
-					android:id="@+id/text_father_name"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:padding="5dp"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:textSize="18dp"
-					android:textStyle="bold"
-					android:textColor="@color/black"
-					android:text="@string/father_name" />
-
-				<com.google.android.material.textfield.TextInputEditText
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:hint="@string/father_name"
-					android:id="@+id/edit_father_name"
-					android:inputType="text" />
-			</LinearLayout>
-
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:padding="5dp"
-				android:orientation="vertical">
-
-				<TextView
-					android:id="@+id/text_mother_name"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:padding="5dp"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:textSize="18dp"
-					android:textStyle="bold"
-					android:textColor="@color/black"
-					android:text="@string/mother_name" />
-
-				<com.google.android.material.textfield.TextInputEditText
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:hint="@string/mother_name"
-					android:id="@+id/edit_mother_name"
-					android:inputType="text" />
-			</LinearLayout>
 
 			<LinearLayout
 				android:layout_width="match_parent"
@@ -539,63 +398,8 @@
 					android:inputType="text" />
 			</LinearLayout>
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:padding="5dp"
-				android:orientation="vertical">
 
-				<TextView
-					android:id="@+id/text_caste"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:padding="5dp"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:textSize="18dp"
-					android:textStyle="bold"
-					android:textColor="@color/black"
-					android:text="@string/caste" />
 
-				<com.google.android.material.textfield.TextInputEditText
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:hint="@string/caste"
-					android:id="@+id/edit_caste"
-					android:inputType="text" />
-			</LinearLayout>
-
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:padding="5dp"
-				android:orientation="vertical">
-
-				<TextView
-					android:id="@+id/text_religion"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:padding="5dp"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:textSize="18dp"
-					android:textStyle="bold"
-					android:textColor="@color/black"
-					android:text="@string/religion" />
-
-				<com.google.android.material.textfield.TextInputEditText
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:hint="@string/religion"
-					android:id="@+id/edit_religion"
-					android:inputType="text" />
-			</LinearLayout>
 
 			<LinearLayout
 				android:layout_width="match_parent"
@@ -713,125 +517,11 @@
 					android:inputType="text" />
 			</LinearLayout>
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:padding="5dp"
-				android:orientation="vertical">
 
-				<TextView
-					android:id="@+id/text_aadhar_no"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:padding="5dp"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:textSize="18dp"
-					android:textStyle="bold"
-					android:textColor="@color/black"
-					android:text="@string/aadhar_card_number" />
 
-				<com.google.android.material.textfield.TextInputEditText
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:hint="@string/aadhar_card_number"
-					android:id="@+id/edit_aadhar_no"
-					android:inputType="text" />
-			</LinearLayout>
 
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:padding="5dp"
-				android:orientation="vertical">
 
-				<TextView
-					android:id="@+id/text_aadhar"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:padding="5dp"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:textSize="18dp"
-					android:textStyle="bold"
-					android:textColor="@color/black"
-					android:text="@string/aadhar_card" />
 
-				<androidx.appcompat.widget.AppCompatButton
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:backgroundTint="@color/primary_green"
-					android:textColor="@color/white"
-					android:text="@string/upload_image"
-					android:id="@+id/upload_aadhar"
-					android:inputType="text" />
-			</LinearLayout>
-
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:padding="5dp"
-				android:orientation="vertical">
-
-				<TextView
-					android:id="@+id/text_pan_no"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:padding="5dp"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:textSize="18dp"
-					android:textStyle="bold"
-					android:textColor="@color/black"
-					android:text="@string/pan_card_number" />
-
-				<com.google.android.material.textfield.TextInputEditText
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:hint="@string/pan_card_number"
-					android:id="@+id/edit_pan_no"
-					android:inputType="text" />
-			</LinearLayout>
-
-			<LinearLayout
-				android:layout_width="match_parent"
-				android:layout_height="wrap_content"
-				android:layout_gravity="center"
-				android:padding="5dp"
-				android:orientation="vertical">
-
-				<TextView
-					android:id="@+id/text_pan"
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:padding="5dp"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:textSize="18dp"
-					android:textStyle="bold"
-					android:textColor="@color/black"
-					android:text="@string/aadhar_card" />
-
-				<androidx.appcompat.widget.AppCompatButton
-					android:layout_width="match_parent"
-					android:layout_height="wrap_content"
-					android:layout_marginLeft="40dp"
-					android:layout_marginRight="40dp"
-					android:backgroundTint="@color/primary_green"
-					android:textColor="@color/white"
-					android:text="@string/upload_image"
-					android:id="@+id/upload_pan"
-					android:inputType="text" />
-			</LinearLayout>
 
 		</LinearLayout>
 

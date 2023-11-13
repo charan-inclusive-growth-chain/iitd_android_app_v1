@@ -1,5 +1,6 @@
 package com.example.appv1;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -56,12 +57,14 @@ public class UpdatePassActivity extends AppCompatActivity {
                 }
                 else {
                     String url = getString(R.string.url) + "/updatepassword";
+                    Log.d("URL ACtivity", url);
                     String token = LoginActivity.getToken(getApplicationContext());
+                    Log.d("ActivityToken", token);
 
                     JSONObject jsonObject = new JSONObject();
                     try {
-                        jsonObject.put("oldPassword", oldPass);
-                        jsonObject.put("newPassword", newPass);
+                        jsonObject.put("oldPassword", oldPass.getText().toString().trim());
+                        jsonObject.put("newPassword", newPass.getText().toString().trim());
                     } catch (JSONException e) {
                         throw new RuntimeException(e);
                     }
@@ -88,8 +91,11 @@ public class UpdatePassActivity extends AppCompatActivity {
                                 try {
                                     jsonResponse = new JSONObject(responseBody);
                                     Log.d("Update Password", jsonResponse.toString());
-                                    Toast.makeText(UpdatePassActivity.this, "Password is updated!", Toast.LENGTH_SHORT).show();
+                                    // Toast.makeText(UpdatePassActivity.this, "Password is updated!", Toast.LENGTH_SHORT).show();
                                     response.close();
+
+                                    Intent nextIntent = new Intent(UpdatePassActivity.this, MainActivity.class);
+                                    UpdatePassActivity.this.startActivity(nextIntent);
 
                                 } catch (JSONException e) {
                                     throw new RuntimeException(e);
