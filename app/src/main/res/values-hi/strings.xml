@@ -16,6 +16,7 @@
     <string name="mother_name">माता का नाम</string>
     <string name="door_number">दरवाज़ा संख्या</string>
     <string name="street_name">सड़क का नाम/ पता</string>
+    <string name="rupee_symbol" translatable="false"> ₹</string>
     <string name="village">गाँव</string>
     <string name="taluk">तालुका</string>
     <string name="district">ज़िला</string>

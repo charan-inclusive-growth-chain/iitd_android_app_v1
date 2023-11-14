@@ -181,7 +181,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/pincode"
                     android:id="@+id/register_pincode"
-                    android:inputType="text" />
+                    android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>

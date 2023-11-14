@@ -56,8 +56,14 @@ public class StoreAdapter extends BaseAdapter {
         TextView marketPriceTextView = convertView.findViewById(R.id.store_market);
         new DisplayImage(imageView).execute(images.get(position));
         itemTextView.setText(itemNames.get(position));
-        fpoPriceTextView.setText(R.string.fpo + ": ₹" + fpoPrices.get(position));
-        marketPriceTextView.setText(R.string.market + ": ₹" + marketPrices.get(position));
+//        fpoPriceTextView.setText("FPO Price " + "     : ₹" + fpoPrices.get(position));
+//        marketPriceTextView.setText("Market Price " + ": ₹" + marketPrices.get(position));
+        String fpoLabel = context.getString(R.string.fpo);
+        String marketLabel = context.getString(R.string.market);
+        String rupeeSymbol = context.getString(R.string.rupee_symbol);
+        // Set text using string resources
+        fpoPriceTextView.setText(String.format("%-14s :  %s%s", fpoLabel, rupeeSymbol, fpoPrices.get(position)));
+        marketPriceTextView.setText(String.format("%s : %s%s", marketLabel, rupeeSymbol, marketPrices.get(position)));
 
         return convertView;
     }

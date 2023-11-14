@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/aadhar_card_number"
                     android:id="@+id/register_id_aadhar_number"
-                    android:inputType="text" />
+                    android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout

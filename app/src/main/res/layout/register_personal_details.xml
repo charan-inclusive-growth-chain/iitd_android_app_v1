@@ -113,6 +113,7 @@
                 app:boxBackgroundColor="@color/white"
                 android:id="@+id/reg_mobile"
                 app:boxStrokeWidth="2dp"
+
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginBottom="20dp"
@@ -123,13 +124,14 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/mobile"
                     android:id="@+id/register_mobile"
-                    android:inputType="text" />
+                    android:inputType="number" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:boxBackgroundColor="@color/white"
+
                 android:id="@+id/reg_dob"
                 app:boxStrokeWidth="2dp"
                 android:layout_marginLeft="20dp"

@@ -143,11 +143,12 @@
     <string name="aadhar_card">Aadhar Card</string>
     <string name="pan_card">PAN Card</string>
     <string name="choose_file">Choose File</string>
-    <string name="fpo">FPO</string>
+    <string name="fpo">FPO Price</string>
     <string name="personal_details">Personal Details</string>
     <string name="transaction">Transaction</string>
     <string name="history">History</string>
     <string name="crop">Crop</string>
+    <string name="rupee_symbol" translatable="false"> ₹</string>
     <string name="advisory">Advisory</string>
     <string name="training">Training</string>
     <string name="programs">Programs</string>

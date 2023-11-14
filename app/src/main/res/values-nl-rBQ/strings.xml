@@ -124,6 +124,7 @@
     <string name="aadhar_card">Aadhar Card</string>
     <string name="pan_card">PAN Card</string>
     <string name="choose_file">Choose File</string>
+    <string name="rupee_symbol" translatable="false"> ₹</string>
     <string name="fpo">FPO</string>
     <string name="personal_details">Personal Details</string>
     <string name="transaction">Personal Details</string>
