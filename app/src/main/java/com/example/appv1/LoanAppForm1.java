@@ -1,8 +1,10 @@
 package com.example.appv1;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,8 +71,59 @@ public class LoanAppForm1 extends Fragment
 		genderT = getView().findViewById(R.id.loan_gender);
 
 		loanApplicationJson = LoanApplication.getLoanApplicationJson();
-		loadData();
+		Log.d("Data start", String.valueOf(loanApplicationJson));
+		// Move network operations to background thread
+		new LoadDataTask().execute();
+		//loadData();
 		fetchFPOOptions();
+	}
+
+	private class LoadDataTask extends AsyncTask<Void, Void, String> {
+		@Override
+		protected String doInBackground(Void... voids) {
+			String url = getContext().getString(R.string.url) + "/profile";
+			String token = LoginActivity.getToken(getContext());
+
+			OkHttpClient client = new OkHttpClient();
+			Request request = new Request.Builder()
+					.url(url)
+					.header("Authorization", "Bearer " + token)
+					.build();
+
+			try {
+				Response response = client.newCall(request).execute();
+				if (response.isSuccessful()) {
+					return response.body().string();
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			return null;
+		}
+		@Override
+		protected void onPostExecute(String responseBody) {
+			super.onPostExecute(responseBody);
+
+			if (responseBody != null) {
+				try {
+					JSONObject jsonResponse = new JSONObject(responseBody);
+					Log.d("Response Data", String.valueOf(jsonResponse));
+
+					loanApplicationJson.put("profileData", responseBody);
+					nameT.setText(jsonResponse.getString("userName"));
+					mobileT.setText(jsonResponse.getString("contactNumber"));
+					genderT.setText(jsonResponse.getString("gender"));
+					bankT.setText(jsonResponse.getString("bankName"));
+					accountNumberT.setText(jsonResponse.getString("accountNumber"));
+					ifscT.setText(jsonResponse.getString("ifscCode"));
+					branchNameT.setText(jsonResponse.getString("branchName"));
+					fpo = jsonResponse.getString("fpoId");
+
+				} catch (JSONException e) {
+					throw new RuntimeException(e);
+				}
+			}
+		}
 	}
 
 	private void loadData() {
@@ -97,8 +150,14 @@ public class LoanAppForm1 extends Fragment
 						@Override
 						public void run() {
 							try {
+
+								assert response.body() != null;
+								// Log.d("Response Raw", response.body().string());
 								String responseBody = response.body().string();
+
 								JSONObject jsonResponse = new JSONObject(responseBody);
+								Log.d("Response Data", String.valueOf(jsonResponse));
+
 
 								loanApplicationJson.put("profileData", responseBody);
 								nameT.setText(jsonResponse.getString("userName"));
@@ -124,6 +183,8 @@ public class LoanAppForm1 extends Fragment
 
 		});
 	}
+
+
 
 	private void fetchFPOOptions() {
 		String url = getContext().getString(R.string.url) + "/list/fpo";
