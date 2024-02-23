@@ -157,73 +157,67 @@ public class ProfileFrag extends Fragment {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    Handler handler = new Handler(Looper.getMainLooper());
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                Log.d("Response toString ProfileFrag", response.body().toString());
-                                Log.d("Response String ProfileFrag", response.body().toString());
-                                String responseBody = response.body().string();
-                                JSONObject jsonResponse = new JSONObject(responseBody);
-                                name.setText(jsonResponse.getString("userName"));
-                                mobile.setText(jsonResponse.getString("contactNumber"));
-                                String dobString = jsonResponse.getString("DOB");
+                    try {
+                        String responseBody = response.body().string();
+                        JSONObject jsonResponse = new JSONObject(responseBody);
+
+                        // Use Handler to update UI on main thread
+                        new Handler(Looper.getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
                                 try {
+                                    name.setText(jsonResponse.getString("userName"));
+                                    mobile.setText(jsonResponse.getString("contactNumber"));
+                                    String dobString = jsonResponse.getString("DOB");
                                     SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
                                     Date date = inputFormat.parse(dobString);
                                     SimpleDateFormat outputFormat = new SimpleDateFormat("dd/MM/yyyy");
                                     formattedDate = outputFormat.format(date);
-                                }catch (ParseException e) {
+                                    dob.setText(formattedDate);
+                                    gender.setText(jsonResponse.getString("gender"));
+                                    fatherName.setText(jsonResponse.getString("fathersName"));
+                                    motherName.setText(jsonResponse.getString("mothersName"));
+                                    String doorNumber = jsonResponse.getString("doorNumber");
+                                    String street = jsonResponse.getString("streetName");
+                                    String village = jsonResponse.getString("village");
+                                    String taluk = jsonResponse.getString("taluk");
+                                    String district = jsonResponse.getString("district");
+                                    String state = jsonResponse.getString("state");
+                                    String pinCode = jsonResponse.getString("pinCode");
+                                    String addressString = doorNumber + ", " +
+                                            street + ", " +
+                                            village + ", " +
+                                            taluk + ", " +
+                                            district + ", " +
+                                            state + " - " +
+                                            pinCode;
+                                    address.setText(addressString);
+                                    occupation.setText(jsonResponse.getString("occupation"));
+                                    education.setText(jsonResponse.getString("education"));
+                                    nop.setText(jsonResponse.getString("natureOfplace"));
+                                    residence.setText(jsonResponse.getString("residence"));
+                                    caste.setText(jsonResponse.getString("caste"));
+                                    religion.setText(jsonResponse.getString("religion"));
+                                    bankName.setText(jsonResponse.getString("bankName"));
+                                    accountNumber.setText(jsonResponse.getString("accountNumber"));
+                                    ifsc.setText(jsonResponse.getString("ifscCode"));
+                                    branchName.setText(jsonResponse.getString("branchName"));
+                                    aadharCardNo.setText(jsonResponse.getString("aadharCardNumber"));
+                                    panCardNo.setText(jsonResponse.getString("panCardNumber"));
+                                    aadharUrl = jsonResponse.getString("aadharCardImage");
+                                    panUrl = jsonResponse.getString("panCardImage");
+                                } catch (JSONException | ParseException e) {
                                     e.printStackTrace();
-                                    // Handle any date parsing errors
                                 }
-                                dob.setText(formattedDate);
-                                gender.setText(jsonResponse.getString("gender"));
-                                fatherName.setText(jsonResponse.getString("fathersName"));
-                                motherName.setText(jsonResponse.getString("mothersName"));
-
-                                String doorNumber = jsonResponse.getString("doorNumber");
-                                String street = jsonResponse.getString("streetName");
-                                String village = jsonResponse.getString("village");
-                                String taluk = jsonResponse.getString("taluk");
-                                String district = jsonResponse.getString("district");
-                                String state = jsonResponse.getString("state");
-                                String pinCode = jsonResponse.getString("pinCode");
-
-                                String addressString = doorNumber + ", " +
-                                        street + ", " +
-                                        village + ", " +
-                                        taluk + ", " +
-                                        district + ", " +
-                                        state + " - " +
-                                        pinCode;
-
-                                address.setText(addressString);
-                                occupation.setText(jsonResponse.getString("occupation"));
-                                education.setText(jsonResponse.getString("education"));
-                                nop.setText(jsonResponse.getString("natureOfplace"));
-                                residence.setText(jsonResponse.getString("residence"));
-                                caste.setText(jsonResponse.getString("caste"));
-                                religion.setText(jsonResponse.getString("religion"));
-                                bankName.setText(jsonResponse.getString("bankName"));
-                                accountNumber.setText(jsonResponse.getString("accountNumber"));
-                                ifsc.setText(jsonResponse.getString("ifscCode"));
-                                branchName.setText(jsonResponse.getString("branchName"));
-                                aadharCardNo.setText(jsonResponse.getString("aadharCardNumber"));
-                                panCardNo.setText(jsonResponse.getString("panCardNumber"));
-                                aadharUrl = jsonResponse.getString("aadharCardImage");
-                                panUrl = jsonResponse.getString("panCardImage");
-                            } catch (JSONException e) {
-                                throw new RuntimeException(e);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
                             }
-                        }
-                    });
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             }
-
         });
     }
 

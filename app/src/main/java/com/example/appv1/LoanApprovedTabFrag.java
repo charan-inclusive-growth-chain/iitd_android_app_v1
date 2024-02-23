@@ -129,8 +129,9 @@ public class LoanApprovedTabFrag extends Fragment {
                                     List<JSONObject> approvedLoans = new ArrayList<>();
                                     for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject object = jsonArray.getJSONObject(i);
-                                        String status = object.getString("status");
-                                        if (status.equals("approved")) {
+
+                                        String samunnatiApprovalStatus = object.getString("status");
+                                        if (samunnatiApprovalStatus.equals("approved")) {
                                             approvedLoans.add(object);
                                         }
                                     }

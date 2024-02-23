@@ -53,7 +53,7 @@ public class InitialSplashScreenActivity extends AppCompatActivity
                 Utils.loginUserBasedOnRole(getApplicationContext(), this);
                 //restartApp();
             } else {
-                showLanguageSelectionDialog();
+                    showLanguageSelectionDialog();
             }
         }
     }

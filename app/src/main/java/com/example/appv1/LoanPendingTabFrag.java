@@ -132,8 +132,9 @@ public class LoanPendingTabFrag extends Fragment {
                                     List<JSONObject> pendingLoans = new ArrayList<>();
                                     for (int i = 0; i < jsonArray.length(); i++) {
                                         JSONObject object = jsonArray.getJSONObject(i);
-                                        String status = object.getString("status");
-                                        if (status.equals("in-process")) {
+                                        String fpoApprovalStatus = object.getString("fpoApprovalStatus");
+                                        String samunnatiApprovalStatus = object.getString("status");
+                                        if (fpoApprovalStatus.equals("in-process") || (samunnatiApprovalStatus.equals("in-process") && fpoApprovalStatus.equals("approved"))) {
                                             pendingLoans.add(object);
                                         }
                                     }

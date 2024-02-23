@@ -338,13 +338,29 @@ public class LoanAppForm4 extends Fragment
 		client.newCall(request).enqueue(new Callback() {
 			@Override
 			public void onFailure(Call call, IOException e) {
+				Log.e("TAG", "Request failed: " + e.getMessage()); // Log the error
 				e.printStackTrace();
 			}
 
 			@Override
 			public void onResponse(Call call, Response response) throws IOException {
-				if (response.isSuccessful()) {
-					// Handle the response here if needed
+				try {
+					if (response.isSuccessful()) {
+						String responseBody = response.body().string();
+						Log.d("TAG", "Response: " + responseBody); // Log the response
+						// Handle the response here if needed
+					} else {
+						String errorBody = response.body() != null ? response.body().string() : "No error body";
+						String errorMessage = response.message();
+						Log.e("TAG", "Request not successful: " + response.code() + " - " + errorMessage + " - " + errorBody); // Log the error response
+					}
+				} catch (IOException ioException) {
+					ioException.printStackTrace();
+				} finally {
+					// Make sure to close the response to release resources
+					if (response.body() != null) {
+						response.body().close();
+					}
 				}
 			}
 		});

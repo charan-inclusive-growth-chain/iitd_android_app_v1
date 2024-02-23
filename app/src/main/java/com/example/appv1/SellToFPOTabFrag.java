@@ -141,8 +141,8 @@ public class SellToFPOTabFrag extends Fragment {
             try {
                 JSONObject trainingObj = dataArray.getJSONObject(i);
 
-                String available = trainingObj.getString("isDeleted");
-                if (available.equals("true")) continue;
+                String available = trainingObj.getString("isProcurable");
+                if (available.equals("false")) continue;
 
                 String productName = trainingObj.getString("productName");
                 String capitalizedProductName = productName.substring(0, 1).toUpperCase() + productName.substring(1);
