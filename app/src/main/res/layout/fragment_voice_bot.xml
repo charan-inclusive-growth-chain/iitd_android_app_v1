@@ -29,7 +29,7 @@
             style="@style/Widget.MaterialComponents.Chip.Choice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="बिहान लाख" />
+            android:text="ब्रूड लाख" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chip2"

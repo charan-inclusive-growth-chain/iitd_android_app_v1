@@ -1,3 +1,4 @@
+
 package com.example.appv1;
 
 import static android.app.Activity.RESULT_OK;
@@ -27,6 +28,7 @@ import androidx.fragment.app.FragmentTransaction;
 import com.google.android.material.chip.Chip;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -50,6 +52,9 @@ public class VoiceBotFrag extends Fragment implements TextToSpeech.OnInitListene
     private Button prevQuestionButton;
     private TextView percentageTextView;
     private TextView brandValue;
+    private TextView placeholder;
+
+
     private TextView quantityValue;
     private TextView monthValue;
     private Chip chip1;
@@ -61,17 +66,24 @@ public class VoiceBotFrag extends Fragment implements TextToSpeech.OnInitListene
     private TextToSpeech textToSpeech;
     private int totalQuestions = 4;
     private int questionsAsked = 0;
-    private List<String> responses = new ArrayList<>(Collections.nCopies(totalQuestions, ""));
+    private String requirementType = "";
+    private String quantity = "";
+    private String brand = "";
+    private String month = "";
+
+    private TextView[] allTextView = {placeholder, brandValue, quantityValue, monthValue};
 
     private String[] hindiQuestions = {
-            "पहला प्रश्न है: प्रकार चुनें: बिहान लाख, कीटनाशक, नायलों का बैग, में से कोई एक चुनिए ?",
+            "पहला प्रश्न है: प्रकार चुनें: ब्रूड लाख, कीटनाशक, नायलों का बैग, में से कोई एक चुनिए ?",
             "दूसरा प्रश्न: ब्रांड चुनें: ब्रांड का नाम क्या है?",
             "तीसरा प्रश्न: मात्रा चुनें: कितने मात्रा में चाहिए?",
             "चौथा प्रश्न: महीना चुनें: किस महीने में चाहिए?"
     };
 
     // Your other variables, methods, and UI elements should be here.
-    private String[] AcceptedInputs = {"बिहान लाख", "कीटनाशक", "नायलों का बैग"};
+    private String[] AcceptedInputsFirstQuestion = {"ब्रूड लाख", "कीटनाशक", "नायलों का बैग"};
+
+    private String[] AcceptedInputsFinalQuestion = {"जनवरी", "फरवरी", "मार्च",  "अप्रैल", "मई", "जून", "जुलाई", "अगस्त", "सितंबर", "अक्टूबर", "नवंबर", "दिसंबर"};
 
     // Use ActivityResultLauncher for voice recognition
     private ActivityResultLauncher<Intent> voiceRecognitionLauncher;
@@ -87,6 +99,7 @@ public class VoiceBotFrag extends Fragment implements TextToSpeech.OnInitListene
         questionDisplay = view.findViewById(R.id.questionDisplay);
         startButton = view.findViewById(R.id.startButton);
         progressBar = view.findViewById(R.id.progressBar);
+
         brandValue = view.findViewById(R.id.brandValue);
         monthValue = view.findViewById(R.id.monthValue);
         quantityValue = view.findViewById(R.id.quantityValue);
@@ -96,8 +109,10 @@ public class VoiceBotFrag extends Fragment implements TextToSpeech.OnInitListene
 
         startButton.setOnClickListener(this::onStartClick);
         micImageView.setOnClickListener(this::onMicClick);
-        nextQuestionButton.setOnClickListener(this::askNextQuestion);
-        prevQuestionButton.setOnClickListener(this::askPrevQuestion);
+
+
+        nextQuestionButton.setOnClickListener(this::nullFunction);
+        prevQuestionButton.setOnClickListener(this::nullFunction);
 
 
         // Initialize the Text-to-Speech engine
@@ -121,31 +136,22 @@ public class VoiceBotFrag extends Fragment implements TextToSpeech.OnInitListene
                                 if(questionsAsked < totalQuestions) {
                                     Log.d("Debug Questions Asked", String.valueOf(questionsAsked));
                                     if(questionsAsked == 0) {
-                                        highlightMatchingChip(recognizedText);
-
+//                                        validateVoiceInput(recognizedText, placeholder, questionsAsked);
+                                        askNextQuestion(view, recognizedText);
                                     }
-
                                     else if(questionsAsked == 1) {
-
-                                        brandValue.setText(recognizedText);
-                                        responses.set(questionsAsked, recognizedText);
+                                           askNextQuestion(view, recognizedText);
+//                                        validateVoiceInput(recognizedText, brandValue, questionsAsked);
                                     }
                                     else if(questionsAsked == 2) {
-                                        quantityValue.setText(recognizedText);
-                                        responses.set(questionsAsked, recognizedText);
+//                                        validateVoiceInput(recognizedText, quantityValue, questionsAsked);
+                                        askNextQuestion(view, recognizedText);
                                     }
                                     else if(questionsAsked == 3 ) {
-                                        monthValue.setText(recognizedText);
-                                        responses.set(questionsAsked, recognizedText);
+//                                        validateVoiceInput(recognizedText, monthValue, questionsAsked);
+                                        askNextQuestion(view, recognizedText);
                                     }
-
-                                    questionsAsked++;
-
-
-
-
                                 }
-//
                             }
                         }
                     }
@@ -154,6 +160,10 @@ public class VoiceBotFrag extends Fragment implements TextToSpeech.OnInitListene
 
         return view;
     }
+
+    private void nullFunction(View view) {
+    }
+
     private void displayQuestion(int questionIndex) {
         // Update UI to display the question at index questionIndex
         String fullQuestion = hindiQuestions[questionIndex];
@@ -189,39 +199,123 @@ public class VoiceBotFrag extends Fragment implements TextToSpeech.OnInitListene
 
     private void highlightMatchingChip(String recognizedText) {
 
-        int closestMatchIndex = -1;
-        int minDistance = Integer.MAX_VALUE;
-        for (int i = 0; i < AcceptedInputs.length; i++) {
-            String acceptedInput = AcceptedInputs[i];
-            int distance = calculateLevenshteinDistance(recognizedText, acceptedInput);
-
-            if (distance < minDistance) {
-                closestMatchIndex = i;
-                minDistance = distance;
-            }
-        }
-        // Map the indices to the Chip variables
-        Chip selectedChip = null;
-        if (closestMatchIndex == 0) {
-            selectedChip = chip1;
-        } else if (closestMatchIndex == 1) {
-            selectedChip = chip2;
-        } else if (closestMatchIndex == 2) {
-            selectedChip = chip3;
-        }
-
-
-        Log.d("Debug",String.valueOf(closestMatchIndex));
-        responses.set(questionsAsked, AcceptedInputs[closestMatchIndex]);
-
-        if(selectedChip != null) {
-            selectedChip.setChipBackgroundColorResource(R.color.green);
-        }
-
-
-
-
     }
+
+    public boolean containsOnlyNumbers(String input) {
+        // Define a regex pattern to match only numbers
+        String regex = "^[0-9]+$";
+
+        // Use the matches() method to check if the input matches the pattern
+        return input.matches(regex);
+    }
+    private boolean validateVoiceInput(String recognizedText, TextView[] correspondingTextView, int questionNumber, View view) {
+        switch (questionNumber) {
+            case 0:
+                int closestMatchIndex = -1;
+                int minDistance = Integer.MAX_VALUE;
+                boolean acceptedInputFound = false;
+
+                for (int i = 0; i < AcceptedInputsFirstQuestion.length; i++) {
+                    String acceptedInput = AcceptedInputsFirstQuestion[i];
+                    int distance = calculateLevenshteinDistance(recognizedText, acceptedInput);
+
+                    if (distance < minDistance && distance <= 5) {
+                        closestMatchIndex = i;
+                        minDistance = distance;
+                        acceptedInputFound = true;
+                    }
+                }
+                Chip selectedChip = null;
+                if (acceptedInputFound) {
+                    // Map the index to the corresponding Chip variable
+                    if (closestMatchIndex == 0) {
+                        selectedChip = chip1;
+                    } else if (closestMatchIndex == 1) {
+                        selectedChip = chip2;
+                    } else if (closestMatchIndex == 2) {
+                        selectedChip = chip3;
+                    }
+
+                    // Check if the selectedChip is not null before setting its background color
+                    if (selectedChip != null) {
+                        // Update the requirementType variable with the selected chip value
+                        requirementType = AcceptedInputsFirstQuestion[closestMatchIndex];
+
+                        selectedChip.setChipBackgroundColorResource(R.color.green);
+                        return true;
+                    }
+                } else {
+                    // Handle the case where no accepted input is found within the threshold
+                    Toast.makeText(requireContext(), "Invalid input", Toast.LENGTH_SHORT).show();
+                    textToSpeech.speak("प्रदान किया गया इनपुट अमान्य था, कृपया ब्रूड लाख, कीटनाक या नायलों का बैग चुनें", TextToSpeech.QUEUE_FLUSH, null, null);
+                    requirementType = "";
+                    // selectedChip might be null here, so avoid calling its methods
+                    if (selectedChip != null) {
+                        selectedChip.setChipBackgroundColorResource(R.color.grey);
+                    }
+                    return false;
+                }
+
+
+            case 1:
+                brandValue.setText(recognizedText);
+                brand = recognizedText;
+                return true;
+
+            case 2:
+                if (containsOnlyNumbers(recognizedText)) {
+                    if(Integer.parseInt(recognizedText) <= 100){
+                        quantity = recognizedText;
+                        quantityValue.setText(recognizedText);
+                        // Check if correspondingTextView is not null before setting its text
+                        if (correspondingTextView[2] != null) {
+                            correspondingTextView[2].setText(recognizedText);
+                        }
+                        return true;
+                    }else{
+
+                    }
+                    textToSpeech.speak("कृपया 100 से कम या उसके बराबर का मान चुनें", TextToSpeech.QUEUE_FLUSH, null, null);
+                    return false;
+                } else {
+                    textToSpeech.speak("आपके इनपुट में केवल संख्याएँ होनी चाहिए", TextToSpeech.QUEUE_FLUSH, null, null);
+                    return false;
+                }
+
+            case 3:
+                closestMatchIndex = -1;
+                minDistance = Integer.MAX_VALUE;
+                acceptedInputFound = false;
+
+                for (int i = 0; i < AcceptedInputsFinalQuestion.length; i++) {
+                    String acceptedInput = AcceptedInputsFinalQuestion[i];
+                    int distance = calculateLevenshteinDistance(recognizedText, acceptedInput);
+
+                    if (distance < minDistance && distance <= 2) {
+                        closestMatchIndex = i;
+                        minDistance = distance;
+                        acceptedInputFound = true;
+                    }
+                }
+                if (acceptedInputFound) {
+                    Log.v("MONTH", String.valueOf(month));
+                    month = AcceptedInputsFinalQuestion[closestMatchIndex];
+                    Log.v("MONTH", String.valueOf(month));
+
+                    monthValue.setText(month); // Update the TextView to display the selected month
+                    submitForm();
+
+                    return true;
+                } else {
+                    Toast.makeText(requireContext(), "Invalid input", Toast.LENGTH_SHORT).show();
+                    textToSpeech.speak("आपके इनपुट में वर्ष का केवल एक महीना शामिल होना चाहिए", TextToSpeech.QUEUE_FLUSH, null, null);
+                    return false;
+                }
+
+        }
+        return false; // Return false by default if questionNumber doesn't match any case
+    }
+
     public void onMicClick(View view) {
         // Start voice recognition for the current question
         Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
@@ -231,21 +325,27 @@ public class VoiceBotFrag extends Fragment implements TextToSpeech.OnInitListene
         voiceRecognitionLauncher.launch(intent);
     }
     public void onStartClick(View view) {
+//        questionsAsked = 1;
         startButton.setVisibility(View.GONE);
         micImageView.setVisibility(View.VISIBLE);
-        prevQuestionButton.setVisibility(View.VISIBLE);
-        nextQuestionButton.setVisibility(View.VISIBLE);
         displayQuestion(0);
-        askNextQuestion(null);
+        speakQuestion(hindiQuestions[0]);
+//        askNextQuestion(null);
 
     }
 
     @Override
     public void onInit(int status) {
+        prevQuestionButton.setVisibility(View.INVISIBLE);
+        nextQuestionButton.setVisibility(View.INVISIBLE);
         if (status == TextToSpeech.SUCCESS) {
             int result = textToSpeech.setLanguage(Locale.forLanguageTag("hi-IN"));
+//            int result = textToSpeech.setLanguage(new Locale ("hi","IN"));
+//            String availableLangs = textToSpeech.getAvailableLanguages();
+
             if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
                 // Handle the case where Hindi language is not available or not supported
+                speakQuestion("hindi has not been configured for text to speech, please allow the phone to use text to speech in hindi by navigating to settings");
             } else {
                 // Successfully initialized and set the language
                 // Speak the first question when the fragment starts
@@ -253,115 +353,106 @@ public class VoiceBotFrag extends Fragment implements TextToSpeech.OnInitListene
             }
         } else {
             // Handle TTS initialization error
+            textToSpeech.speak("Text to speech failed to initialize", TextToSpeech.QUEUE_FLUSH, null, null);
         }
     }
     private void speakQuestion(String question) {
+
         if (textToSpeech != null) {
             textToSpeech.speak(question, TextToSpeech.QUEUE_FLUSH, null, null);
         }
     }
-    public void askNextQuestion(View view) {
-        if(questionsAsked < totalQuestions) {
-            int progress = ((questionsAsked+1) * 100) / totalQuestions;
-            progressBar.setProgress(progress);
-            displayQuestion(questionsAsked);
 
+    public void askNextQuestion(View view, String recognizedText) {
 
-            // Speak the next question in Hindi
-            if (questionsAsked < hindiQuestions.length) {
-                speakQuestion(hindiQuestions[questionsAsked]);
+            // Validate the input for the current question
+            if (validateVoiceInput(recognizedText, allTextView, questionsAsked, view)) {
+                // If input is valid, proceed to the next question
+                questionsAsked++;
+                progressBar.setProgress((questionsAsked * 100) / totalQuestions);
+                if(questionsAsked < 4){
 
-            }
-            Log.d("Debug", String.valueOf(questionsAsked));
-        }
-        else {
-            prevQuestionButton.setVisibility(View.GONE);
-            nextQuestionButton.setVisibility(View.GONE);
-            questionDisplay.setText("दर्ज हो गए");
-            micImageView.setVisibility(View.GONE);
-
-            String selectedMonth = responses.get(3);
-            String inputType = responses.get(0);
-            String brandName = responses.get(1);
-            String quantity = responses.get(2);
-
-            // Build the JSON request body
-            MediaType mediaType = MediaType.parse("application/json");
-            String requestBodyJson = String.format(
-                    "{\n" +
-                            "    \"type\":\"%s\",\n" +
-                            "    \"quantity\":%s,\n" +
-                            "    \"month\":\"%s\",\n" +
-                            "    \"Brand\":\"%s\"\n" +
-                            "}",
-                    inputType, quantity,selectedMonth, brandName
-            );
-            // Create an OkHttpClient instance
-            OkHttpClient client = new OkHttpClient();
-
-            // Create the request with the JSON body
-            RequestBody body = RequestBody.create(mediaType, requestBodyJson);
-            Request request = new Request.Builder()
-                    .url(getString(R.string.url) + "/farmer/requirements")
-                    .post(body)
-                    .addHeader("Content-Type", "application/json")
-                    .addHeader("Authorization", "Bearer " + LoginActivity.getToken(getContext()))
-                    .build();
-
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    if(response.isSuccessful()) {
-                        Log.d("Form Submitted", response.toString());
-
-                        requireActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                Toast.makeText(requireContext(), "Requirement Submitted Successfully", Toast.LENGTH_LONG).show();
-                            }
-                        });
-
-                        speakQuestion("धन्यवाद! आपके उत्तर दर्ज हो गए");
-                        Log.d("Result", responses.toString());
-
-                        DashboardFrag dashboardFrag = new DashboardFrag();
-                        FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.frameLayout, dashboardFrag);
-                        transaction.addToBackStack(null);
-                        transaction.commit();
-
-                    }
-                    else {
-                        Log.d("Failed", "Request Failed");
-                    }
-
+                    displayQuestion(questionsAsked);
+                    speakQuestion(hindiQuestions[questionsAsked]);
                 }
 
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    e.printStackTrace();
-
-                }
-            });
-
-
-        }
-
-
-    }
-
-    public void askPrevQuestion(View view) {
-        if(questionsAsked > 0) {
-            questionsAsked--;
-            int progress = ((questionsAsked+1) * 100) / totalQuestions;
-            progressBar.setProgress(progress);
-            displayQuestion(questionsAsked);
-            // Speak the next question in Hindi
-            if (questionsAsked < hindiQuestions.length) {
-                speakQuestion(hindiQuestions[questionsAsked]);
             }
-        }
     }
+
+    private void submitForm() {
+        // Proceed with final submission
+        questionDisplay.setText("दर्ज हो गए");
+        micImageView.setVisibility(View.GONE);
+
+        // Build the JSON request body
+        MediaType mediaType = MediaType.parse("application/json");
+        String requestBodyJson = String.format(
+                "{\n" +
+                        "    \"type\":\"%s\",\n" +
+                        "    \"quantity\":%s,\n" +
+                        "    \"month\":\"%s\",\n" +
+                        "    \"Brand\":\"%s\"\n" +
+                        "}",
+                requirementType, quantity, month, brand
+        );
+        // Create an OkHttpClient instance
+        OkHttpClient client = new OkHttpClient();
+
+        // Create the request with the JSON body
+        RequestBody body = RequestBody.create(mediaType, requestBodyJson);
+        Request request = new Request.Builder()
+                .url(getString(R.string.url) + "/farmer/requirements")
+                .post(body)
+                .addHeader("Content-Type", "application/json")
+                .addHeader("Authorization", "Bearer " + LoginActivity.getToken(getContext()))
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if (response.isSuccessful()) {
+                    Log.d("Form Submitted", response.toString());
+
+                    requireActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(requireContext(), "Requirement Submitted Successfully", Toast.LENGTH_LONG).show();
+                        }
+                    });
+
+                    speakQuestion("धन्यवाद! आपके उत्तर दर्ज हो गए");
+
+                    DashboardFrag dashboardFrag = new DashboardFrag();
+                    FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                    transaction.replace(R.id.frameLayout, dashboardFrag);
+                    transaction.addToBackStack(null);
+                    transaction.commit();
+
+                } else {
+                    Log.d("Failed", "Request Failed");
+                    Log.d("Failed", response.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+//    public void askPrevQuestion(View view) {
+//        if(questionsAsked > 0) {
+//            questionsAsked--;
+//            int progress = ((questionsAsked+1) * 100) / totalQuestions;
+//            progressBar.setProgress(progress);
+//            displayQuestion(questionsAsked);
+//            // Speak the next question in Hindi
+//            if (questionsAsked < hindiQuestions.length) {
+//                speakQuestion(hindiQuestions[questionsAsked]);
+//            }
+//        }
+//    }
     @Override
     public void onDestroy() {
         if (textToSpeech != null) {
@@ -370,6 +461,7 @@ public class VoiceBotFrag extends Fragment implements TextToSpeech.OnInitListene
         }
         super.onDestroy();
     }
+
 
     // Your other methods, such as onMicClick, onStartClick, askNextQuestion, askPrevQuestion, etc.
 }

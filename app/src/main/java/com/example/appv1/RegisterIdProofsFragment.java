@@ -157,10 +157,10 @@ public class RegisterIdProofsFragment extends Fragment
             aadharCardButton.setError("Upload aadhar");
             return false;
         }
-        if(panCardUrl.equals("")) {
-            panCardButton.setError("Upload PAN");
-            return false;
-        }
+//        if(panCardUrl.equals("")) {
+//            panCardButton.setError("Upload PAN");
+//            return false;
+//        }
 
         if (aadharNoS.isEmpty()) {
             aadharno.setError("Enter Aadhar number");
@@ -176,12 +176,12 @@ public class RegisterIdProofsFragment extends Fragment
         }
 
 
-        if (panNoS.isEmpty()) {
-            panno.setError("Enter PAN number");
-            return false;
-        } else {
-            panno.setError(null);
-        }
+//        if (panNoS.isEmpty()) {
+//            panno.setError("Enter PAN number");
+//            return false;
+//        } else {
+//            panno.setError(null);
+//        }
 
         if (fpoS.isEmpty()) {
             fpoT.setError("Select FPO");
