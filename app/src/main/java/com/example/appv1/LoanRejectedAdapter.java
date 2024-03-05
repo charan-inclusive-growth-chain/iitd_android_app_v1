@@ -35,7 +35,7 @@ public class LoanRejectedAdapter extends ArrayAdapter<JSONObject> {
         try {
             String loanAppDate = loanObject.getString("createdAt").substring(0, 10);
             String loanAmount = loanObject.getString("requestedAmount");
-            String loanInterestRate = loanObject.getString("intrest") + "%";
+            String loanInterestRate = loanObject.getString("fpointrest") + "%";
             String windowId = loanObject.getString("loanWindowId");
             String loanId = loanObject.getString("loanId");
 

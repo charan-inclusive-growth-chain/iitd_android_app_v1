@@ -68,8 +68,8 @@ public class LoanAppForm4 extends Fragment
 	static TextView amountT;
 	static TextView purposeT;
 	static TextView tenureT;
-	static String interestS;
-
+	static int interestS;
+	static int fpointrest;
 	static String fpoNameS;
 
 	static String idS;
@@ -80,7 +80,7 @@ public class LoanAppForm4 extends Fragment
 	static String windowIdS;
 	RadioButton male, female;
 	RadioGroup genderRadioGroup;
-	static String gender;
+	static String gender = "Male";
 	static JSONObject loanApplicationJson;
 
 
@@ -141,9 +141,9 @@ public class LoanAppForm4 extends Fragment
 		genderRadioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
 			@Override
 			public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
-				if (checkedId == R.id.radio_pirates) {
+				if (checkedId == 2131231103) {
 					gender = "Male";
-				} else if (checkedId == R.id.radio_ninjas) {
+				} else if (checkedId == 2131231091) {
 					gender = "Female";
 				}
 			}
@@ -264,7 +264,8 @@ public class LoanAppForm4 extends Fragment
 				requestData.put("loanWindowId",windowIdS);
 				requestData.put("fpoId", fpoIdS);
 				requestData.put("loanId", loanIdS);
-				requestData.put("intrest",interestS);
+				requestData.put("intrest", interestS);
+				requestData.put("fpointrest", fpointrest);
 
 
 			}
@@ -323,6 +324,7 @@ public class LoanAppForm4 extends Fragment
 	}
 
 	private static void loanApply(JSONObject requestData) {
+		Log.v("FINAL DATA ", String.valueOf(requestData));
 		String url = context.getString(R.string.url) + "/loanwindow/" + idS + "/loan";
 		Log.d("API URL", url);
 		String token = LoginActivity.getToken(context);
@@ -432,11 +434,16 @@ public class LoanAppForm4 extends Fragment
 							try {
 								String responseBody = response.body().string();
 								Log.d("Interest", responseBody);
+
 								JSONObject jsonResponse = new JSONObject(responseBody);
+								JSONArray dataArray = jsonResponse.getJSONArray("data");
 								interest.setText(String.valueOf(jsonResponse.getInt("fpoInterestRate")));
-								interestS = String.valueOf(jsonResponse.getInt("fpoInterestRate"));
+								JSONObject dataObject = dataArray.getJSONObject(0);
+								fpointrest = jsonResponse.getInt("fpoInterestRate");
+								interestS = dataObject.getInt("intrest");
 								JSONArray data = jsonResponse.getJSONArray("data");
 								if(data.length() > 0) {
+
 									JSONObject firstItem = data.getJSONObject(0);
 									idS = firstItem.getString("id");
 									windowIdS = firstItem.getString("windowId");

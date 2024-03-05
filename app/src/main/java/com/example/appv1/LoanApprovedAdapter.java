@@ -38,7 +38,7 @@ public class LoanApprovedAdapter extends ArrayAdapter<JSONObject> {
         try {
             String LoanAppDate = loanObject.getString("createdAt").substring(0, 10);
             String LoanAmount = loanObject.getString("requestedAmount");
-            String LoanInterestRate = loanObject.getString("intrest") + "%";
+            String LoanInterestRate = loanObject.getString("fpointrest") + "%";
             String LoanDate = loanObject.getString("approvalAt").substring(0, 10);
             JSONArray repay = loanObject.getJSONArray("farmerWindowRepaymentStructure");
             String OutstandingAmount = "";

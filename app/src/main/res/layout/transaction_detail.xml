@@ -9,7 +9,7 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
+        android:layout_marginStart="12dp"
         android:layout_marginTop="52dp"
         android:text="@string/transaction_details"
         android:textSize="30sp"
@@ -54,7 +54,7 @@
             android:id="@+id/transaction_table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
+            android:padding="8dp"
 
             android:stretchColumns="*">
 
@@ -98,8 +98,8 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="252dp"
+        android:layout_marginEnd="28dp"
         android:text="@string/total_amount"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -107,12 +107,12 @@
 
     <TextView
         android:id="@+id/textView5"
-        android:textSize="35sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginEnd="4dp"
         android:text="114 Rs."
+        android:textSize="35sp"
         app:layout_constraintEnd_toEndOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/textView4" />
 </androidx.constraintlayout.widget.ConstraintLayout>

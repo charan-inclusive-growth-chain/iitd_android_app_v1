@@ -50,7 +50,7 @@ public class LoanDetailApprovedActivity extends AppCompatActivity {
                 String loanId = loanObject.getString("loanId");
                 String appliedDate = loanObject.getString("createdAt").substring(0, 10);
                 String amount = "₹" + loanObject.getString("requestedAmount");
-                String interestRate = loanObject.getString("intrest") + "%";
+                String interestRate = loanObject.getString("fpointrest") + "%";
 
                 loanIdTextView.setText(loanId);
                 appliedDateTextView.setText(appliedDate);

@@ -162,7 +162,7 @@ public class LoanApplicationDetailsActivity extends AppCompatActivity {
                 amount.setText("₹" + loanObject.getString("requestedAmount"));
                 purpose.setText(loanObject.getString("purpose"));
                 tenure.setText(String.valueOf(loanObject.getInt("loanTenure")));
-                interest.setText(loanObject.isNull("intrest") ? "" : loanObject.getString("intrest") + "%");
+                interest.setText(loanObject.isNull("fpointrest") ? "" : loanObject.getString("fpointrest") + "%");
                 id.setText(loanObject.getString("loanId"));
 
 
