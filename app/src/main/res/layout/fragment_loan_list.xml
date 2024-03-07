@@ -1,63 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:tabIndicatorColor="@color/primary_green"
         app:tabTextColor="@color/primary_green"
-        android:layout_marginBottom="35dp">
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/approved_tab"
-            tools:layout_editor_absoluteX="0dp"
-            tools:layout_editor_absoluteY="62dp" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pending_tab"
-            tools:layout_editor_absoluteX="158dp"
-            tools:layout_editor_absoluteY="113dp" />
-
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/rejected_tab"
-            tools:layout_editor_absoluteX="158dp"
-            tools:layout_editor_absoluteY="113dp" />
-
-
-    </com.google.android.material.tabs.TabLayout>
+        android:layout_marginBottom="12dp" />
 
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/viewpager2"
         android:layout_width="match_parent"
-        android:layout_height="550dp">
-
-    </androidx.viewpager2.widget.ViewPager2>
-
+        android:layout_height="0dp"
+        android:layout_below="@id/tabLayout"
+        android:layout_above="@id/apply_loan" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/apply_loan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="0dp"
+        android:layout_alignParentBottom="true"
         android:backgroundTint="@color/primary_green"
         android:text="@string/apply_loan"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp" />
 
-
-</LinearLayout>
+</RelativeLayout>
